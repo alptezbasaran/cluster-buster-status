@@ -20,6 +20,7 @@ export default defineConfig({
       { text: 'The Project', link: '/the-project' },
       { text: 'Investigation', link: '/investigation' },
       { text: 'Sets', link: '/sets' },
+      { text: 'Overlays', link: '/subjects' },
       { text: 'Workflow', link: '/workflow' },
       {
         text: 'Classify ↗',
@@ -38,6 +39,7 @@ export default defineConfig({
         text: 'Live status',
         items: [
           { text: 'Sets', link: '/sets' },
+          { text: 'Overlays', link: '/subjects' },
           { text: 'Pipeline & Workflow', link: '/workflow' },
         ],
       },

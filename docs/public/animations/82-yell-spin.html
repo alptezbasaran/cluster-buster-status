@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — SPIIIN!</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">yell spin</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // SPIIIN! — every piled 'I' cranks the arms' spin another notch; the '!'
+    // slams the brakes and the spiral skids to a stop exactly on register,
+    // with a dizzy wobble and a centrifugal bulge while it lasts.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const word = 'SPIIIN!'
+    const letters = []
+    let spawned = 0, landed = 0
+    let ang = 0, omega = 0, braking = false, springing = false, target = 0, dizzy = -1, faded = false
+    const spawnAt = i => 0.25 + i * 0.16
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      while (spawned < word.length && t > spawnAt(spawned)) {
+        const i = spawned++
+        const ch = word[i]
+        const x = C.cx + (i - (word.length - 1) / 2) * 17
+        const el = mk('text', {
+          x, y: vb.y + 42, 'text-anchor': 'middle', fill: '#fff',
+          'font-size': ch === '!' ? '30' : ch === 'I' ? '27' : '24', 'font-weight': '900',
+          'font-family': 'system-ui, sans-serif', 'data-temp': '',
+        })
+        el.textContent = ch
+        el.style.cssText = `opacity:0; transform: scale(2.5); transform-origin: ${x}px ${vb.y + 42}px`
+        svg.appendChild(el)
+        void el.getBoundingClientRect()
+        el.style.transition = 'transform 180ms cubic-bezier(.2,1.6,.4,1), opacity 120ms ease'
+        el.style.transform = 'scale(1)'
+        el.style.opacity = '1'
+        letters.push(el)
+      }
+      while (landed < word.length && t > spawnAt(landed) + 0.19) {
+        const ch = word[landed++]
+        if (ch === 'I') { omega += 135; ring(svg, C.cx, C.cy, { r1: 40, ms: 300, width: 1 }) }
+        else if (ch === '!') {
+          braking = true
+          ring(svg, C.cx, C.cy, { r1: 90, ms: 500, width: 1.8 })
+        } else omega += 40
+      }
+      if (!braking) {
+        ang += omega * dt
+      } else if (!springing) {
+        omega = Math.max(60, omega - 1500 * dt)
+        ang += omega * dt
+        if (omega <= 60) {
+          springing = true
+          target = Math.ceil(ang / 360) * 360
+        }
+      } else if (dizzy < 0) {
+        omega += (-40 * (ang - target) - 9 * omega) * dt
+        ang += omega * dt
+        if (Math.abs(ang - target) < 0.15 && Math.abs(omega) < 2) {
+          ang = target
+          omega = 0
+          dizzy = t
+        }
+      }
+      let show = ang % 360
+      if (dizzy > 0) {
+        const w = t - dizzy
+        show = 1.4 * Math.exp(-3 * w) * Math.sin(12 * w)
+        if (!faded && w > 0.7) {
+          faded = true
+          letters.forEach((el, i) => {
+            el.style.transition = `opacity 300ms ease ${i * 35}ms`
+            el.style.opacity = '0'
+          })
+        }
+        if (w > 1.15) {
+          arms.forEach(a => { a.el.style.transform = '' })
+          svg.style.transform = ''
+          chip(svg, 'say it, spin it')
+          finish()
+          return
+        }
+      }
+      arms.forEach(a => {
+        a.el.style.transformOrigin = `${C.cx}px ${C.cy}px`
+        a.el.style.transform = `rotate(${show.toFixed(2)}deg)`
+      })
+      const bulge = 1 + Math.min(0.035, Math.abs(omega) / 485 * 0.035)
+      svg.style.transformOrigin = '50% 50%'
+      svg.style.transform = `scale(${bulge.toFixed(4)})`
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

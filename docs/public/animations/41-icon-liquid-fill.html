@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Liquid Fill</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon liquid fill</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, paths, raf, finish }) {
+    paths.forEach(p => p.style.cssText = 'opacity:0; transition: opacity 320ms ease')
+    const vb = svg.viewBox.baseVal
+    const dur = 1500, t0 = performance.now()
+    const centers = paths.map(p => { const b = pathBBox(p); return { p, y: b.y + b.height/2 } })
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const water = vb.y + vb.height - t * vb.height
+      centers.forEach(c => { if (c.y > water) c.p.style.opacity = '1' })
+      if (t < 1) raf(tick)
+      else { paths.forEach(p => p.style.opacity = '1'); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

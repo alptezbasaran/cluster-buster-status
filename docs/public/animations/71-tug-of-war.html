@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Tug of War</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">tug of war</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // Two teams of arms tug an elastic rope through the spiral's center — it
+    // stretches, strains, SNAPS — and both sides recoil home with overshoot.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const TL = [], TR = []
+    arms.forEach(arm => {
+      const b = arm.el.getBBox()
+      ;((b.x + b.width / 2) < C.cx ? TL : TR).push(arm)
+    })
+    const span = arms.map(arm => {
+      const strands = arm.paths.slice().sort((a, b) => {
+        const A = pathBBox(a), B = pathBBox(b)
+        return B.width * B.height - A.width * A.height
+      })
+      return { arm, strands, side: TL.includes(arm) ? -1 : 1 }
+    })
+    const lx = Math.min(...TL.map(a => a.el.getBBox().x)) - 6
+    const rx = Math.max(...TR.map(a => { const b = a.el.getBBox(); return b.x + b.width })) + 6
+    const ay = C.cy - 8
+    const rope = mk('path', { fill: 'none', stroke: '#e8e8e8', 'stroke-width': 1.3, opacity: 0, 'data-temp': '' })
+    svg.appendChild(rope)
+    const PULLS = 3, T_ROPE = 0.3, T_PULL = 0.46, T_STRAIN = 0.8
+    let snapped = false, halves = null, landL = false, landR = false
+    const sL = { x: 0, v: 0 }, sR = { x: 0, v: 0 }
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      let dL = 0, dR = 0, strain = 0
+      if (t < T_ROPE) {
+        rope.setAttribute('opacity', String(t / T_ROPE * 0.9))
+      } else if (t < T_ROPE + PULLS * T_PULL) {
+        const k = Math.floor((t - T_ROPE) / T_PULL)
+        const u = ((t - T_ROPE) % T_PULL) / T_PULL
+        const lurch = Math.sin(Math.min(1, u * 1.4) * Math.PI) * 5
+        const base = 2.5 * (k + Math.min(1, u * 2))
+        dL = -(base + lurch); dR = base + lurch
+      } else if (!snapped) {
+        const u = Math.min(1, (t - T_ROPE - PULLS * T_PULL) / T_STRAIN)
+        strain = u
+        const reach = 7.5 + 8 * u * u
+        dL = -reach; dR = reach
+        if (u >= 1) {
+          snapped = true
+          sL.x = dL; sL.v = -25; sR.x = dR; sR.v = 25
+          rope.remove()
+          ring(svg, C.cx, ay, { r1: 34, ms: 360, width: 1.6 })
+          const half = (x1, x2) => {
+            const h = mk('path', { d: `M ${x1.toFixed(1)} ${ay} Q ${((x1 + x2) / 2).toFixed(1)} ${ay + 2} ${x2.toFixed(1)} ${ay}`, fill: 'none', stroke: '#e8e8e8', 'stroke-width': 1.3, 'data-temp': '' })
+            svg.appendChild(h)
+            return h
+          }
+          halves = { a: half(lx + sL.x, C.cx), b: half(rx + sR.x, C.cx), ts: t }
+          halves.a.style.transformOrigin = `${lx + sL.x}px ${ay}px`
+          halves.b.style.transformOrigin = `${rx + sR.x}px ${ay}px`
+        }
+      }
+      if (snapped) {
+        sL.v += (-70 * sL.x - 6.5 * sL.v) * dt; sL.x += sL.v * dt
+        sR.v += (-70 * sR.x - 6.5 * sR.v) * dt; sR.x += sR.v * dt
+        dL = sL.x; dR = sR.x
+        if (!landL && sL.x > 0) { landL = true; ring(svg, lx + 10, ay, { r1: 16, ms: 320, color: '#777', width: 1 }) }
+        if (!landR && sR.x < 0) { landR = true; ring(svg, rx - 10, ay, { r1: 16, ms: 320, color: '#777', width: 1 }) }
+        const u = Math.min(1, (t - halves.ts) / 0.45)
+        halves.a.style.transform = `rotate(${(-30 * u).toFixed(1)}deg)`
+        halves.b.style.transform = `rotate(${(30 * u).toFixed(1)}deg)`
+        halves.a.setAttribute('opacity', String(1 - u))
+        halves.b.setAttribute('opacity', String(1 - u))
+      }
+      span.forEach(s => {
+        const d = s.side < 0 ? dL : dR
+        s.strands.forEach((p, j) => {
+          const spread = (j - (s.strands.length - 1) / 2) * 1.5 *
+            (strain + (snapped ? Math.min(1, Math.abs(d) / 10) * 0.4 : 0))
+          const jit = strain > 0 ? Math.sin(t * 55 + j * 9) * 0.5 * strain : 0
+          p.style.transform = `translate(${(d + spread * s.side).toFixed(2)}px, ${jit.toFixed(2)}px)` + bake(p)
+        })
+      })
+      if (!snapped && t >= T_ROPE) {
+        const sag = Math.max(1.5, 13 - (dR - dL) * 0.55) + (strain > 0 ? Math.sin(t * 60) * 1.3 * strain : 0)
+        rope.setAttribute('d', `M ${(lx + dL).toFixed(1)} ${ay} Q ${C.cx.toFixed(1)} ${(ay + sag).toFixed(1)} ${(rx + dR).toFixed(1)} ${ay}`)
+      }
+      const done = snapped && Math.abs(sL.x) < 0.2 && Math.abs(sL.v) < 1 &&
+        Math.abs(sR.x) < 0.2 && Math.abs(sR.v) < 1
+      if (done) {
+        span.forEach(s => s.strands.forEach(p => { p.style.transform = '' }))
+        chip(svg, 'tension → snap-back')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

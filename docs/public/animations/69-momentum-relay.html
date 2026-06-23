@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Momentum Relay</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">momentum relay</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1600,
+  run({ svg, arms, paths, raf, finish }) {
+    // Newton's cradle bent into a circle: one impulse dot hops arm to arm
+    // around the spiral, each handoff hitting harder. Amber takes the last and
+    // biggest knock, flies out, and rubber-bands home.
+    showAll(paths)
+    const R = rng(69)
+    const C = iconCenter(arms)
+    const info = arms.map(arm => {
+      const b = arm.el.getBBox()
+      const x = b.x + b.width / 2, y = b.y + b.height / 2
+      const n = Math.hypot(x - C.cx, y - C.cy) || 1
+      return { arm, x, y, nx: (x - C.cx) / n, ny: (y - C.cy) / n,
+               ang: Math.atan2(y - C.cy, x - C.cx), s: 0, v: 0 }
+    })
+    const byAng = info.slice().sort((a, b) => a.ang - b.ang)
+    const ai = byAng.findIndex(i => i.arm.name === 'amber')
+    const order = byAng.slice(ai + 1).concat(byAng.slice(0, ai + 1))
+    const entry = { x: order[0].x + order[0].nx * 70, y: order[0].y + order[0].ny * 70 - 30 }
+    const dot = mk('circle', { cx: entry.x, cy: entry.y, r: 4.2, fill: '#fff', opacity: 0, 'data-temp': '' })
+    svg.appendChild(dot)
+    const burst = []
+    let phase = 0, hop = 0, hopT = 0, dwell = 0
+    const t0 = performance.now()
+    let last = t0
+    function strike(inf, k) {
+      inf.v += 95 * Math.pow(1.15, k) * (inf.arm.name === 'amber' ? 1.6 : 1)
+      ring(svg, inf.x, inf.y, { r1: 14 + k * 5, ms: 320 + k * 40, color: inf.arm.color, width: 1.3 })
+    }
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      if (phase === 0) {
+        dot.setAttribute('opacity', String(Math.min(1, t / 0.18)))
+        if (t > 0.22) { phase = 1; hopT = 0 }
+      } else if (phase === 1) {
+        hopT += dt
+        const dur = 0.3 * Math.pow(0.92, hop)
+        const u = Math.min(1, hopT / dur)
+        const e = u * (2 - u)
+        const from = hop === 0 ? entry : order[hop - 1]
+        const to = order[hop]
+        const mx = (from.x + to.x) / 2 - to.ny * 18
+        const my = (from.y + to.y) / 2 + to.nx * 18
+        dot.setAttribute('cx', String((1 - e) * (1 - e) * from.x + 2 * (1 - e) * e * mx + e * e * to.x))
+        dot.setAttribute('cy', String((1 - e) * (1 - e) * from.y + 2 * (1 - e) * e * my + e * e * to.y))
+        if (u >= 1) {
+          strike(to, hop)
+          if (hop === order.length - 1) {
+            phase = 3
+            dot.setAttribute('opacity', '0')
+            for (let i = 0; i < 6; i++) {
+              const a = i / 6 * Math.PI * 2 + R()
+              const el = mk('circle', { cx: to.x, cy: to.y, r: 1.6, fill: '#fff', 'data-temp': '' })
+              svg.appendChild(el)
+              burst.push({ el, a, ts: t, x: to.x, y: to.y })
+            }
+          } else { phase = 2; dwell = 0 }
+        }
+      } else if (phase === 2) {
+        dwell += dt
+        if (dwell > 0.1) { phase = 1; hop++; hopT = 0 }
+      }
+      burst.forEach(b => {
+        const u = Math.min(1, (t - b.ts) / 0.5)
+        b.el.setAttribute('cx', String(b.x + Math.cos(b.a) * 26 * u))
+        b.el.setAttribute('cy', String(b.y + Math.sin(b.a) * 26 * u))
+        b.el.setAttribute('opacity', String(1 - u))
+      })
+      let live = false
+      info.forEach(inf => {
+        inf.v += (-130 * inf.s - 9 * inf.v) * dt
+        inf.s += inf.v * dt
+        if (Math.abs(inf.s) > 0.05 || Math.abs(inf.v) > 0.5) live = true
+        inf.arm.el.style.transform = `translate(${(inf.nx * inf.s).toFixed(2)}px, ${(inf.ny * inf.s).toFixed(2)}px)`
+      })
+      if (phase === 3 && !live) {
+        info.forEach(inf => { inf.arm.el.style.transform = '' })
+        chip(svg, 'momentum, passed around')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

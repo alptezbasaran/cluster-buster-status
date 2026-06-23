@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Paths Shimmer</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">paths shimmer</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ paths, raf, finish }) {
+    const order = paths.map((p, i) => ({ p, t: Math.random() * 1.0 + i*0.02 })).sort((a,b) => a.t - b.t)
+    const dur = 1300, t0 = performance.now()
+    let done = false
+    order.forEach(o => { o.p.style.cssText = 'opacity:0' })
+    function tick(now) {
+      const t = (now - t0) / 1000
+      order.forEach(o => {
+        const k = Math.max(0, Math.min(1, (t - o.t) * 2))
+        const flick = k < 1 ? 0.5 + 0.5 * Math.sin(k * 35) : 1
+        o.p.style.opacity = String(k * flick)
+      })
+      if (now - t0 < dur) raf(tick)
+      else if (!done) {
+        done = true
+        order.forEach(o => { o.p.style.opacity = '1' })
+        finish()
+      }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

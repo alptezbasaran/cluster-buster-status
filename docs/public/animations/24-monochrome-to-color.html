@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Monochrome to Color</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">monochrome to color</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => {
+      p.style.cssText = 'opacity:1; fill:#3a3a3a; transition: fill 600ms ease'
+    })
+    const vb = svg.viewBox.baseVal
+    const x0 = vb.x - 10, x1 = vb.x + vb.width + 10
+    const dur = 1500, t0 = performance.now()
+    let done = false
+    const centers = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const b = pathBBox(p)
+      centers.push({ p, x: b.x + b.width/2, color: arm.color })
+    }))
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const x = x0 + (x1 - x0) * t
+      centers.forEach(c => { if (c.x < x) c.p.style.fill = c.color })
+      if (t < 1) raf(tick)
+      else if (!done) { done = true; finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

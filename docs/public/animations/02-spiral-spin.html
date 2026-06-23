@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Spiral Spin</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">spiral spin</div>
+<div id="stage"></div>
+<script type="module">
+import { anim } from '../lib/runtime.js'
+anim({
+  hold: 2000,
+  run({ svg, paths, raf, finish }) {
+    // Rotate the whole logo in around its center while arms fade up.
+    svg.style.transformOrigin = '50% 50%'
+    const dur = 1400
+    const t0 = performance.now()
+    paths.forEach(p => p.style.opacity = '0')
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const k = 1 - Math.pow(1 - t, 3)              // ease-out cubic
+      const angle = -540 * (1 - k)                  // 1.5 turns
+      const scale = 0.2 + 0.8 * k
+      svg.style.transform = `rotate(${angle}deg) scale(${scale})`
+      paths.forEach(p => p.style.opacity = String(k))
+      if (t < 1) raf(tick)
+      else finish()
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

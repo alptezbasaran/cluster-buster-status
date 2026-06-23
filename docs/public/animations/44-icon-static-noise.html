@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Static Noise</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon static noise</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, raf, finish }) {
+    paths.forEach(p => p.style.cssText = 'opacity:0')
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const vb = svg.viewBox.baseVal
+    const dots = []
+    for (let k = 0; k < 200; k++) {
+      const d = mk('circle', {
+        cx: vb.x + Math.random() * vb.width,
+        cy: vb.y + Math.random() * vb.height,
+        r: 0.7 + Math.random() * 0.7,
+        fill: Math.random() < 0.5 ? '#fff' : '#888',
+        opacity: 0.6,
+      })
+      layer.appendChild(d); dots.push(d)
+    }
+    const dur = 1300, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      dots.forEach(d => d.setAttribute('opacity', String((1 - t) * (0.3 + Math.random() * 0.6))))
+      paths.forEach(p => p.style.opacity = String(t))
+      if (t < 1) raf(tick)
+      else { layer.remove(); paths.forEach(p => p.style.opacity = '1'); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

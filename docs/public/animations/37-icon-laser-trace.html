@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Laser Trace</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon laser trace</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, finish }) {
+    const items = []
+    arms.forEach((arm, i) => arm.paths.forEach((p, j) => {
+      const len = p.getTotalLength()
+      const delay = i * 200 + j * 30
+      p.style.cssText = `opacity:1; fill:transparent; stroke:${arm.color}; stroke-width:1.4; filter:drop-shadow(0 0 3px ${arm.color}); stroke-dasharray:${len}; stroke-dashoffset:${len}`
+      items.push({ p, arm, delay })
+    }))
+    void svg.getBoundingClientRect()
+    items.forEach(({ p, arm, delay }) => {
+      p.style.transition = `stroke-dashoffset 700ms ease ${delay}ms, fill 350ms ease ${delay+700}ms`
+      p.style.strokeDashoffset = '0'
+      setTimeout(() => { p.style.fill = arm.color }, delay + 700)
+    })
+    setTimeout(finish, arms.length * 200 + 1300)
+  },
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Pulse Cycle</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">pulse cycle</div>
+<div id="stage"></div>
+<script type="module">
+import { anim } from '../lib/runtime.js'
+anim({
+  hold: 1200,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => { p.style.opacity = '0.18'; p.style.transition = 'opacity 240ms ease, filter 240ms ease' })
+
+    // Add a glow filter once.
+    const NS = 'http://www.w3.org/2000/svg'
+    let defs = svg.querySelector('defs')
+    if (!defs) { defs = document.createElementNS(NS,'defs'); svg.prepend(defs) }
+    if (!svg.querySelector('#glow')) {
+      defs.insertAdjacentHTML('beforeend',
+        `<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+           <feGaussianBlur stdDeviation="2.4" result="b"/>
+           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+         </filter>`)
+    }
+
+    let i = 0, cycles = 0
+    const step = 320
+    function next() {
+      arms.forEach(a => a.paths.forEach(p => { p.style.opacity = '0.18'; p.style.filter = '' }))
+      const arm = arms[i]
+      arm.paths.forEach(p => { p.style.opacity = '1'; p.style.filter = 'url(#glow)' })
+      i = (i + 1) % arms.length
+      if (i === 0) cycles++
+      if (cycles >= 2) {
+        // Settle to all-on and finish.
+        setTimeout(() => {
+          paths.forEach(p => { p.style.opacity = '1'; p.style.filter = '' })
+          finish()
+        }, step)
+        return
+      }
+      setTimeout(next, step)
+    }
+    next()
+  },
+})
+</script>
+</body>
+</html>

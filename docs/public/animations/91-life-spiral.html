@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Life Spiral</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">life spiral</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Conway's Game of Life runs over the icon; every cell that dies inside
+    // an arm's footprint leaves that arm's color behind — the spiral
+    // develops from the debris of computation.
+    paths.forEach(p => { p.style.cssText = 'opacity:0.18; transition: opacity 600ms ease' })
+    const R = rng(91)
+    const vb = svg.viewBox.baseVal
+    const CS = 6
+    const cols = Math.floor(vb.width / CS), rows = Math.floor(vb.height / CS)
+    // arm ownership: cells within ~7px of any sampled strand point
+    const samples = []
+    arms.forEach((arm, ai) => {
+      arm.paths.forEach(p => {
+        const n = Math.max(6, Math.round(p.getTotalLength() / 9))
+        for (let i = 0; i <= n; i++) {
+          const pt = pathPoint(p, i / n)
+          samples.push({ x: pt.x, y: pt.y, ai })
+        }
+      })
+    })
+    const owner = new Int8Array(cols * rows).fill(-1)
+    for (let cy = 0; cy < rows; cy++) {
+      for (let cx = 0; cx < cols; cx++) {
+        const x = vb.x + (cx + 0.5) * CS, y = vb.y + (cy + 0.5) * CS
+        let bd = 49, bi = -1
+        for (const s of samples) {
+          const d2 = (s.x - x) * (s.x - x) + (s.y - y) * (s.y - y)
+          if (d2 < bd) { bd = d2; bi = s.ai }
+        }
+        owner[cy * cols + cx] = bi
+      }
+    }
+    let grid = new Uint8Array(cols * rows)
+    const seed = (cx, cy, pat) => pat.forEach(pr => {
+      const x = cx + pr[0], y = cy + pr[1]
+      if (x >= 0 && x < cols && y >= 0 && y < rows) grid[y * cols + x] = 1
+    })
+    seed(Math.floor(cols / 2), Math.floor(rows / 2), [[0, 0], [1, 0], [-1, 1], [0, 1], [0, 2]])
+    seed(4, 4, [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]])
+    seed(cols - 5, rows - 5, [[-1, 0], [-2, -1], [0, -2], [-1, -2], [-2, -2]])
+    for (let i = 0; i < Math.floor(cols * rows * 0.03); i++) grid[Math.floor(R() * cols * rows)] = 1
+    const resLayer = mk('g', { 'data-temp': '' })
+    const lifeLayer = mk('g', { 'data-temp': '' })
+    svg.appendChild(resLayer); svg.appendChild(lifeLayer)
+    const pool = []
+    const painted = new Uint8Array(cols * rows)
+    const STEP = 0.085
+    let acc = 0, stopped = false
+    const t0 = performance.now()
+    let last = t0
+    function render() {
+      let pi = 0
+      for (let i = 0; i < cols * rows; i++) {
+        if (!grid[i]) continue
+        if (pi >= pool.length) {
+          const el = mk('rect', { width: CS - 0.7, height: CS - 0.7, fill: '#aab4be', opacity: 0.55, rx: 1 })
+          lifeLayer.appendChild(el)
+          pool.push(el)
+        }
+        const el = pool[pi++]
+        el.setAttribute('x', String(vb.x + (i % cols) * CS + 0.35))
+        el.setAttribute('y', String(vb.y + Math.floor(i / cols) * CS + 0.35))
+        el.setAttribute('display', '')
+      }
+      for (; pi < pool.length; pi++) pool[pi].setAttribute('display', 'none')
+    }
+    function step() {
+      const nx = new Uint8Array(cols * rows)
+      let pop = 0
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          let nb = 0
+          for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+            if (!dx && !dy) continue
+            const xx = x + dx, yy = y + dy
+            if (xx >= 0 && xx < cols && yy >= 0 && yy < rows && grid[yy * cols + xx]) nb++
+          }
+          const i = y * cols + x
+          const liv = grid[i] === 1
+          if (liv ? (nb === 2 || nb === 3) : nb === 3) { nx[i] = 1; pop++ }
+          else if (liv && owner[i] >= 0 && !painted[i]) {
+            painted[i] = 1
+            resLayer.appendChild(mk('rect', {
+              x: vb.x + x * CS + 0.35, y: vb.y + y * CS + 0.35,
+              width: CS - 0.7, height: CS - 0.7, fill: arms[owner[i]].color, opacity: 0.5, rx: 1,
+            }))
+          }
+        }
+      }
+      grid = nx
+      if (pop < 8) for (let i = 0; i < 30; i++) grid[Math.floor(R() * cols * rows)] = 1
+    }
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.05, (now - last) / 1000); last = now
+      if (!stopped) {
+        acc += dt
+        while (acc > STEP) { acc -= STEP; step() }
+        render()
+      }
+      if (!stopped && t > 3.4) {
+        stopped = true
+        lifeLayer.style.transition = 'opacity 500ms ease'
+        lifeLayer.style.opacity = '0'
+        resLayer.style.transition = 'opacity 900ms ease 200ms'
+        resLayer.style.opacity = '0'
+        paths.forEach(p => { p.style.opacity = '1' })
+        chip(svg, 'emergence builds the spiral')
+      }
+      if (t > 4.4) { finish(); return }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

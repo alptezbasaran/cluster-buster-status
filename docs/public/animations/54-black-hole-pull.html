@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Black Hole Pull</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">black hole pull</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, finish }) {
+    // Arms start huge and rotated far out, then spiral toward the icon center
+    // as if pulled by gravity.
+    const vb = svg.viewBox.baseVal
+    const cx = vb.x + vb.width/2, cy = vb.y + vb.height/2
+    arms.forEach((arm, i) => groupReveal(arm, {
+      from: `scale(2.4) rotate(${-280 + i*45}deg)`,
+      dur: 1400, delay: i * 60,
+      origin: [cx, cy],
+      ease: 'cubic-bezier(.6, 0, .2, 1)',
+    }))
+    setTimeout(finish, arms.length * 60 + 1500)
+  },
+})
+</script>
+</body>
+</html>

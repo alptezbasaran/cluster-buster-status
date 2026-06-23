@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Mosaic Tile</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon mosaic tile</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    showAll(paths)
+    const vb = svg.viewBox.baseVal
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const cols = 5, rows = 6
+    const w = vb.width / cols, h = vb.height / rows
+    const tiles = []
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const tile = mk('rect', { x: vb.x + c*w, y: vb.y + r*h, width: w, height: h, fill:'#0a0a0a' })
+      tile.style.opacity = '1'
+      layer.appendChild(tile); tiles.push(tile)
+    }
+    tiles.sort(() => Math.random() - 0.5)
+    tiles.forEach((t, i) => {
+      t.style.transition = `opacity 260ms ease ${i * 28}ms`
+      requestAnimationFrame(() => { t.style.opacity = '0' })
+    })
+    setTimeout(() => { layer.remove(); finish() }, tiles.length * 28 + 320)
+  },
+})
+</script>
+</body>
+</html>

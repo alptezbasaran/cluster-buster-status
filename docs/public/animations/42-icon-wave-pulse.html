@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Wave Pulse</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon wave pulse</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, raf, finish }) {
+    paths.forEach(p => p.style.cssText = 'opacity:0; transition: opacity 200ms ease')
+    const vb = svg.viewBox.baseVal
+    const xs = paths.map(p => { const b = pathBBox(p); return { p, x: b.x + b.width/2 } })
+    const dur = 1500, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const wave = vb.x - 50 + (vb.width + 100) * t
+      xs.forEach(({ p, x }) => { if (Math.abs(x - wave) < 35) p.style.opacity = '1' })
+      if (t < 1) raf(tick)
+      else { paths.forEach(p => p.style.opacity = '1'); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

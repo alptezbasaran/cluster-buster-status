@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Chromatic Shift</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">chromatic shift</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => { p.style.cssText = 'opacity:0; transition: opacity 400ms ease 600ms' })
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const ghosts = []
+    const tints = ['#ff3344', '#33ff88', '#3388ff']
+    arms.forEach(arm => arm.paths.forEach(p => {
+      tints.forEach((tint, i) => {
+        const clone = p.cloneNode()
+        clone.removeAttribute('class')
+        clone.setAttribute('fill', tint)
+        clone.style.opacity = '0.7'
+        clone.style.mixBlendMode = 'screen'
+        layer.appendChild(clone)
+        ghosts.push({ clone, ang: i * (Math.PI*2/3) })
+      })
+    }))
+    const dur = 900, t0 = performance.now()
+    let done = false
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const r = (1 - t) * 16
+      ghosts.forEach(g => {
+        const dx = Math.cos(g.ang) * r, dy = Math.sin(g.ang) * r
+        g.clone.setAttribute('transform', `translate(${dx}, ${dy}) translate(-24.78, -12.74)`)
+        g.clone.style.opacity = String(0.7 * (1 - t))
+      })
+      if (t < 1) raf(tick)
+      else if (!done) {
+        done = true
+        paths.forEach(p => { p.style.opacity = '1' })
+        layer.remove()
+        finish()
+      }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

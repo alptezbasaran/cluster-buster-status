@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Lightning Flash</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon lightning flash</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1100,
+  run({ svg, paths, finish }) {
+    paths.forEach(p => p.style.cssText = 'opacity:0')
+    const layer = mk('rect', { x:-200, y:-200, width:1000, height:1000, fill:'#ffffff', 'data-temp':'' })
+    layer.style.opacity = '0'
+    svg.appendChild(layer)
+    const flashes = [{t:80,on:50},{t:200,on:40},{t:330,on:80}]
+    flashes.forEach((f, idx) => {
+      setTimeout(() => {
+        layer.style.opacity = '0.85'
+        paths.forEach(p => p.style.opacity = '1')
+      }, f.t)
+      setTimeout(() => {
+        layer.style.opacity = '0'
+        if (idx < flashes.length - 1) paths.forEach(p => p.style.opacity = '0')
+      }, f.t + f.on)
+    })
+    setTimeout(() => { layer.remove(); finish() }, 700)
+  },
+})
+</script>
+</body>
+</html>

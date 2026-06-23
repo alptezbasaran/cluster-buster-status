@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Cathode Sweep</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">cathode sweep</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, paths, raf, finish }) {
+    // CRT-style top-to-bottom scanline with a phosphor-green glow. Paths reveal as
+    // the scanline crosses their centroid Y.
+    const vb = svg.viewBox.baseVal
+    paths.forEach(p => p.style.cssText = 'opacity:0; transition: opacity 240ms ease')
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const scan = mk('rect', { x: vb.x, y: vb.y - 1, width: vb.width, height: 2.4, fill: '#7cffaa', opacity: 0.85 })
+    scan.style.filter = 'drop-shadow(0 0 6px #7cffaa)'
+    layer.appendChild(scan)
+    const items = paths.map(p => {
+      const b = pathBBox(p)
+      return { p, y: b.y + b.height/2 }
+    })
+    const dur = 1200, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const y = vb.y + (vb.height + 6) * t
+      scan.setAttribute('y', String(y - 1.2))
+      items.forEach(it => { if (it.y < y) it.p.style.opacity = '1' })
+      if (t < 1) raf(tick)
+      else { layer.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

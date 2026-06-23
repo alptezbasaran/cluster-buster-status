@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Bloom Glow</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">bloom glow</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    // Soft luminous bloom — heavily blurred + over-bright initially, then sharpens
+    // and dims to neutral. Visually distinct from blur-focus (which has no brightness change).
+    showAll(paths)
+    svg.style.filter = 'blur(10px) brightness(2.4) saturate(1.6)'
+    svg.style.opacity = '0'
+    void svg.getBoundingClientRect()
+    svg.style.transition = 'filter 1300ms cubic-bezier(.2,1,.3,1), opacity 700ms ease'
+    svg.style.filter = 'blur(0) brightness(1) saturate(1)'
+    svg.style.opacity = '1'
+    setTimeout(finish, 1400)
+  },
+})
+</script>
+</body>
+</html>

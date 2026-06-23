@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Kuramoto Sync</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">kuramoto sync</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Five coupled oscillators: each arm pulses at its own natural frequency,
+    // visibly out of step. Coupling ramps, the phases lock — Kuramoto — and
+    // the synchronized spiral beats as one, ringing on every shared peak.
+    showAll(paths)
+    const R = rng(90)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const osc = arms.map(arm => {
+      const b = arm.el.getBBox()
+      return { arm, ox: b.x + b.width / 2, oy: b.y + b.height / 2,
+               th: R() * Math.PI * 2, w0: 2.4 + R() * 1.4 }
+    })
+    const N = osc.length
+    const meter = mk('path', { fill: 'none', stroke: '#e06060', 'stroke-width': 2, 'data-temp': '' })
+    svg.appendChild(meter)
+    const mLbl = mk('text', { x: vb.x + 10, y: vb.y + 46, fill: '#666', 'font-size': '6', 'font-family': 'system-ui, sans-serif', 'data-temp': '' })
+    mLbl.textContent = 'sync r'
+    svg.appendChild(mLbl)
+    const MX = vb.x + 22, MY = vb.y + 24, MR = 12
+    const arcPath = f => {
+      const a0 = -Math.PI / 2
+      const a1 = a0 + Math.max(0.02, f * Math.PI * 1.9)
+      return `M ${(MX + MR * Math.cos(a0)).toFixed(1)} ${(MY + MR * Math.sin(a0)).toFixed(1)} A ${MR} ${MR} 0 ${f > 0.52 ? 1 : 0} 1 ${(MX + MR * Math.cos(a1)).toFixed(1)} ${(MY + MR * Math.sin(a1)).toFixed(1)}`
+    }
+    let locked = false, lockT = 0, prevC = 1
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      const K = t < 0.8 ? 0 : Math.min(4.5, (t - 0.8) * 2.2)
+      let sx = 0, sy = 0
+      osc.forEach(o => { sx += Math.cos(o.th); sy += Math.sin(o.th) })
+      const r = Math.hypot(sx, sy) / N
+      const psi = Math.atan2(sy, sx)
+      osc.forEach(o => {
+        const w = locked ? 5.5 : o.w0 + K * r * Math.sin(psi - o.th)
+        o.th += w * dt
+      })
+      if (!locked && ((r > 0.96 && t > 1.8) || t > 3.6)) {
+        locked = true
+        lockT = t
+        osc.forEach(o => { o.th = psi })
+        ring(svg, C.cx, C.cy, { r1: 70, ms: 600, width: 1.4 })
+        meter.setAttribute('stroke', '#7ec97e')
+      }
+      if (locked) {
+        const c = Math.cos(osc[0].th)
+        if (prevC > 0 && c <= 0) ring(svg, C.cx, C.cy, { r1: 62, ms: 500, width: 1.1 })
+        prevC = c
+      }
+      const amp = locked ? 0.085 * Math.max(0.3, Math.exp(-(t - lockT) / 1.8)) : 0.05
+      osc.forEach(o => {
+        const s = 1 + amp * Math.sin(o.th)
+        o.arm.el.style.transformOrigin = `${o.ox}px ${o.oy}px`
+        o.arm.el.style.transform = `scale(${s.toFixed(4)})`
+        o.arm.el.style.opacity = String(0.62 + 0.38 * (0.5 + 0.5 * Math.sin(o.th)))
+      })
+      meter.setAttribute('d', arcPath(r))
+      if (locked && t > lockT + 2.2) {
+        osc.forEach(o => { o.arm.el.style.transform = ''; o.arm.el.style.opacity = '1' })
+        chip(svg, 'coupled → synchronized')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

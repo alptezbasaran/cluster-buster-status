@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Radial Reveal</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">radial reveal</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, fadeIn, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 2000,
+  run({ svg, paths, finish }) {
+    // Sort paths outside-in by bounding-box distance from icon center, then fade in.
+    const vb = svg.viewBox.baseVal
+    const cx = vb.x + vb.width / 2, cy = vb.y + vb.height / 2
+    const ranked = paths.map(p => {
+      const b = pathBBox(p)
+      const px = b.x + b.width / 2, py = b.y + b.height / 2
+      return { p, d: Math.hypot(px - cx, py - cy) }
+    }).sort((a, b) => b.d - a.d)
+    const total = 1500
+    ranked.forEach(({ p }, i) => fadeIn(p, 380, (i / ranked.length) * total))
+    setTimeout(finish, total + 600)
+  },
+})
+</script>
+</body>
+</html>

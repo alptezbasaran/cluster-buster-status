@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Yank</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm yank</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // The amber arm gets grabbed by its outer tip, dragged out of the spiral,
+    // and released — strands rubber-band back with overshoot (leader spring +
+    // lagging followers), and the icon shudders when it snaps home.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const amber = arms.find(a => a.name === 'amber')
+    let tip = { x: C.cx, y: C.cy }, best = -1
+    amber.paths.forEach(p => [0, 1].forEach(u => {
+      const pt = pathPoint(p, u)
+      const d = Math.hypot(pt.x - C.cx, pt.y - C.cy)
+      if (d > best) { best = d; tip = pt }
+    }))
+    const dir = { x: (tip.x - C.cx) / best, y: (tip.y - C.cy) / best }
+    // Strands outer→inner (bigger bbox = outer sweep); deeper strands lag more.
+    const strands = amber.paths.slice().sort((a, b) => {
+      const A = pathBBox(a), B = pathBBox(b)
+      return B.width * B.height - A.width * A.height
+    })
+    const followers = strands.map((p, j) => ({ p, x: 0, v: 0, k: 130 - j * 18, c: 14 - j * 1.4 }))
+    const grab = mk('circle', { r: 6, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, opacity: 0, 'data-temp': '' })
+    svg.appendChild(grab)
+    const T_IN = 0.45, T_DRAG = 1.15, T_HOLD = 1.3, PULL = 44
+    const lead = { x: 0, v: 0 }
+    let released = false, shudder = 0, settled = 0
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      if (t < T_IN) {
+        const u = t / T_IN, e = 1 - Math.pow(1 - u, 3)
+        grab.setAttribute('opacity', String(u))
+        grab.setAttribute('cx', String(tip.x + (dir.x * 80 + 20) * (1 - e)))
+        grab.setAttribute('cy', String(tip.y + (dir.y * 80 - 50) * (1 - e)))
+      } else if (!released) {
+        grab.setAttribute('cx', String(tip.x + dir.x * lead.x))
+        grab.setAttribute('cy', String(tip.y + dir.y * lead.x))
+      }
+      let target = 0
+      if (t >= T_IN && t < T_HOLD) target = PULL * Math.min(1, (t - T_IN) / (T_DRAG - T_IN))
+      if (t >= T_HOLD && !released) {
+        released = true
+        grab.style.transition = 'opacity 250ms ease'
+        grab.style.opacity = '0'
+      }
+      const k = released ? 90 : 50, c = released ? 7 : 16
+      lead.v += (-k * (lead.x - target) - c * lead.v) * dt
+      lead.x += lead.v * dt
+      if (released && shudder === 0 && lead.x < 0) {
+        shudder = t
+        ring(svg, C.cx, C.cy, { r1: 60, ms: 420, color: amber.color, width: 1 })
+      }
+      if (shudder > 0) {
+        const s = Math.max(0, 1 - (t - shudder) / 0.35)
+        svg.style.transformOrigin = '50% 50%'
+        svg.style.transform = s > 0 ? `rotate(${(Math.sin((t - shudder) * 70) * 0.9 * s).toFixed(3)}deg)` : ''
+      }
+      followers.forEach(f => {
+        f.v += (-f.k * (f.x - lead.x) - f.c * f.v) * dt
+        f.x += f.v * dt
+        f.p.style.transform = `translate(${(dir.x * f.x).toFixed(2)}px, ${(dir.y * f.x + f.x * 0.1).toFixed(2)}px)` + bake(f.p)
+      })
+      const calm = released && Math.abs(lead.x) < 0.2 && Math.abs(lead.v) < 1 &&
+        followers.every(f => Math.abs(f.x) < 0.25)
+      if (calm) settled++
+      if (settled > 8) {
+        followers.forEach(f => { f.p.style.transform = '' })
+        svg.style.transform = ''
+        chip(svg, 'yank → rubber-band → home')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

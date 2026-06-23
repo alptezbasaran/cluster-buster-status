@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Unravel & Braid</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">unravel braid</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // All 23 strands fan out about the center — the spiral unravels into a
+    // starburst of swooshes — shimmer, then re-braid with interleaved
+    // overshoot so the strands visibly cross while re-laminating.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const st = []
+    arms.forEach(arm => {
+      const ss = arm.paths.slice().sort((a, b) => {
+        const A = pathBBox(a), B = pathBBox(b)
+        return B.width * B.height - A.width * A.height
+      })
+      ss.forEach((p, j) => st.push({ p, j, nj: ss.length, g: 0, gv: 0, sprung: false }))
+    })
+    const T_OUT = 0.9, T_HOLD = 1.35
+    st.forEach((s, i) => {
+      s.spread = (s.j - (s.nj - 1) / 2) * 14
+      s.ret = T_HOLD + (s.j % 2) * 0.12 + (s.nj - 1 - s.j) * 0.05
+      s.ph = i * 0.7
+    })
+    let done = false
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      let alive = false
+      st.forEach(s => {
+        if (t < s.ret) {
+          const u = Math.min(1, t / T_OUT)
+          s.g = u * u * (3 - 2 * u)
+          if (t > T_OUT) s.p.style.opacity = String(0.85 + 0.15 * Math.sin(t * 6 + s.ph))
+        } else {
+          if (!s.sprung) { s.sprung = true; s.gv = 0; s.p.style.opacity = '1' }
+          s.gv += (-70 * s.g - 6.5 * s.gv) * dt
+          s.g += s.gv * dt
+          if (Math.abs(s.g) > 0.008 || Math.abs(s.gv) > 0.08) alive = true
+        }
+        s.p.style.transformOrigin = `${C.cx}px ${C.cy}px`
+        s.p.style.transform = `rotate(${(s.spread * s.g).toFixed(2)}deg)` + bake(s.p)
+      })
+      if (t > T_HOLD + 0.5 && !alive && !done) {
+        done = true
+        st.forEach(s => { s.p.style.transform = ''; s.p.style.opacity = '1' })
+        chip(svg, '23 strands, 5 braids, 1 spiral')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

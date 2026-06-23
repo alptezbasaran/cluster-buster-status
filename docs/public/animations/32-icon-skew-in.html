@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Icon Skew In</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon skew in</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1300,
+  run({ svg, paths, raf, finish }) {
+    showAll(paths)
+    svg.style.transformOrigin = '50% 50%'
+    const dur = 850, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const e = 1 - Math.pow(1 - t, 3)
+      const skew = 40 * (1 - e)
+      const tx = -100 * (1 - e)
+      svg.style.transform = `skewX(${skew.toFixed(2)}deg) translateX(${tx.toFixed(2)}px)`
+      svg.style.opacity = String(Math.min(1, t * 1.8))
+      if (t < 1) raf(tick)
+      else { svg.style.transform = 'none'; svg.style.opacity = '1'; finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

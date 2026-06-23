@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Inspiral Chirp</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">inspiral chirp</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 2000,
+  run({ svg, arms, paths, raf, finish }) {
+    // Two compact remnants ride two arms inward — the arms are their rails —
+    // accelerating like a GW chirp, then orbit each other and merge: flash,
+    // gravitational-wave rings, whole-icon ringdown, and a newborn IMBH.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const riders = ['purple', 'green'].map((nm, i) => {
+      const arm = arms.find(a => a.name === nm)
+      const rail = arm.paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+      const e0 = pathPoint(rail, 0), e1 = pathPoint(rail, 1)
+      const uOut = Math.hypot(e0.x - C.cx, e0.y - C.cy) > Math.hypot(e1.x - C.cx, e1.y - C.cy) ? 0 : 1
+      const dot = mk('circle', { r: 3.4, fill: i ? '#fff' : '#ffe9c4', 'data-temp': '' })
+      svg.appendChild(dot)
+      return { rail, uOut, uIn: 1 - uOut, dot, x: C.cx, y: C.cy, lx: 0, ly: 0 }
+    })
+    const ghosts = []
+    const armPulse = arms.map(a => {
+      const b = a.el.getBBox()
+      const x = b.x + b.width / 2, y = b.y + b.height / 2
+      const d = Math.hypot(x - C.cx, y - C.cy) || 1
+      return { a, nx: (x - C.cx) / d, ny: (y - C.cy) / d, d }
+    })
+    const T_LEAD = 0.15, T_IN = 2.0, T_BIN = 0.5
+    const tMerge = T_LEAD + T_IN + T_BIN
+    let merged = false, fr = 0
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      fr++
+      if (t < tMerge) {
+        if (t < T_LEAD + T_IN) {
+          const q = Math.max(0, (t - T_LEAD) / T_IN)
+          const u = 1 - Math.pow(1 - q, 2.6)
+          riders.forEach(r => {
+            const mix = r.uOut + (r.uIn - r.uOut) * (0.02 + 0.96 * u)
+            const pt = pathPoint(r.rail, mix)
+            r.x = pt.x; r.y = pt.y; r.lx = pt.x; r.ly = pt.y
+          })
+        } else {
+          const q = (t - T_LEAD - T_IN) / T_BIN
+          const rad = 8 * (1 - q) + 0.5
+          const ph = 22 * q * q + 6 * q
+          const blend = Math.min(1, q * 4)
+          riders.forEach((r, i) => {
+            const ox = C.cx + rad * Math.cos(ph + i * Math.PI)
+            const oy = C.cy + rad * Math.sin(ph + i * Math.PI)
+            r.x = r.lx + (ox - r.lx) * blend
+            r.y = r.ly + (oy - r.ly) * blend
+          })
+        }
+        riders.forEach(r => {
+          r.dot.setAttribute('cx', String(r.x))
+          r.dot.setAttribute('cy', String(r.y))
+          if (fr % 3 === 0) {
+            const g = mk('circle', { cx: r.x, cy: r.y, r: 1.4, fill: '#fff', opacity: 0.45, 'data-temp': '' })
+            svg.insertBefore(g, r.dot)
+            ghosts.push({ g, ts: t })
+          }
+        })
+      } else if (!merged) {
+        merged = true
+        riders.forEach(r => r.dot.remove())
+        const fl = mk('circle', { cx: C.cx, cy: C.cy, r: 12, fill: '#fff', 'data-temp': '' })
+        svg.appendChild(fl)
+        setTimeout(() => fl.remove(), 100)
+        for (let k = 0; k < 3; k++) {
+          setTimeout(() => ring(svg, C.cx, C.cy, { r1: 125, ms: 900, width: 1.6 - k * 0.4 }), k * 130)
+        }
+        const bh = mk('g', { 'data-temp': '' })
+        bh.appendChild(mk('circle', { cx: C.cx, cy: C.cy, r: 5.5, fill: '#000' }))
+        bh.appendChild(mk('circle', { cx: C.cx, cy: C.cy, r: 5.5, fill: 'none', stroke: '#fbb040', 'stroke-width': 1.3 }))
+        svg.appendChild(bh)
+      }
+      for (let i = ghosts.length - 1; i >= 0; i--) {
+        const u = (t - ghosts[i].ts) / 0.45
+        if (u >= 1) { ghosts[i].g.remove(); ghosts.splice(i, 1) }
+        else ghosts[i].g.setAttribute('opacity', String(0.45 * (1 - u)))
+      }
+      if (merged) {
+        const w = t - tMerge
+        const rd = Math.exp(-6 * w)
+        svg.style.transformOrigin = '50% 50%'
+        svg.style.transform = rd > 0.02 ? `rotate(${(1.1 * rd * Math.sin(40 * w)).toFixed(3)}deg)` : ''
+        armPulse.forEach(ap => {
+          let off = 0
+          for (let k = 0; k < 3; k++) {
+            const z = w - 0.13 * k - ap.d / 260
+            off += 3.0 * Math.exp(-90 * z * z)
+          }
+          ap.a.el.style.transform = `translate(${(ap.nx * off).toFixed(2)}px, ${(ap.ny * off).toFixed(2)}px)`
+        })
+        if (w > 1.1) {
+          armPulse.forEach(ap => { ap.a.el.style.transform = '' })
+          svg.style.transform = ''
+          chip(svg, 'two seeds → one IMBH — GW190521')
+          finish()
+          return
+        }
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

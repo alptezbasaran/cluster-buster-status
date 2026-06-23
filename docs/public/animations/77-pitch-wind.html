@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Pitch Wind</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">pitch wind</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 2000,
+  run({ svg, arms, paths, raf, finish }) {
+    // Five computed log-spiral ribbons unwind from tightly-wound (φ=6°) to
+    // open (φ=26°) over the ghosted icon. The central black hole shrinks as
+    // the arms loosen — looser wind, lighter heart — then the real arms
+    // flash in under the landed ribbons.
+    paths.forEach(p => { p.style.cssText = 'opacity:0.22; transition: opacity 450ms ease' })
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    // handedness from the real geometry: walk a rail inner→outer, sum crosses
+    const rail0 = arms[0].paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+    const e0 = pathPoint(rail0, 0), e1 = pathPoint(rail0, 1)
+    const uIn = Math.hypot(e0.x - C.cx, e0.y - C.cy) < Math.hypot(e1.x - C.cx, e1.y - C.cy) ? 0 : 1
+    let cross = 0
+    for (let i = 0; i < 8; i++) {
+      const p1 = pathPoint(rail0, uIn + (1 - 2 * uIn) * i / 8)
+      const p2 = pathPoint(rail0, uIn + (1 - 2 * uIn) * (i + 1) / 8)
+      cross += (p1.x - C.cx) * (p2.y - p1.y) - (p1.y - C.cy) * (p2.x - p1.x)
+    }
+    const HAND = cross >= 0 ? 1 : -1
+    const R0 = 14, R1 = 104, N = 110
+    const spiral = (phase, phi) => {
+      const tphi = Math.tan(phi * Math.PI / 180)
+      const thMax = Math.log(R1 / R0) / tphi
+      let d = ''
+      for (let i = 0; i <= N; i++) {
+        const th = thMax * i / N
+        const r = R0 * Math.exp(th * tphi)
+        const a = phase + HAND * th
+        d += (i ? ' L ' : 'M ') + (C.cx + r * Math.cos(a)).toFixed(1) + ' ' + (C.cy + r * Math.sin(a)).toFixed(1)
+      }
+      return d
+    }
+    const ribbons = arms.map((arm, k) => {
+      const rb = mk('path', { fill: 'none', stroke: arm.color, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: 0, 'data-temp': '' })
+      svg.appendChild(rb)
+      return { rb, phase: -Math.PI / 2 + k * 2 * Math.PI / 5 }
+    })
+    const bhDisk = mk('circle', { cx: C.cx, cy: C.cy, r: 9.9, fill: '#000', 'data-temp': '' })
+    const bhRim = mk('circle', { cx: C.cx, cy: C.cy, r: 9.9, fill: 'none', stroke: '#fff', 'stroke-width': 1, 'data-temp': '' })
+    svg.appendChild(bhDisk); svg.appendChild(bhRim)
+    const txtPhi = mk('text', { x: vb.x + 10, y: vb.y + 22, fill: '#bbb', 'font-size': '9', 'font-family': 'system-ui, sans-serif', 'data-temp': '' })
+    const txtM = mk('text', { x: vb.x + 10, y: vb.y + 34, fill: '#777', 'font-size': '8', 'font-family': 'system-ui, sans-serif', 'data-temp': '' })
+    svg.appendChild(txtPhi); svg.appendChild(txtM)
+    const T_IN = 0.4, T_WIND = 2.6, T_LAND = 2.95
+    let landed = false
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      let phi = 6
+      if (t > T_IN) {
+        const u = Math.min(1, (t - T_IN) / (T_WIND - T_IN))
+        phi = 6 + 20 * u * u * (3 - 2 * u)
+      }
+      const logM = 7.0 - 0.17 * (phi - 15)
+      if (!landed) {
+        ribbons.forEach(r => {
+          r.rb.setAttribute('opacity', String(Math.min(1, t / T_IN) * 0.85))
+          r.rb.setAttribute('d', spiral(r.phase, phi))
+        })
+        const br = Math.max(1.4, (logM - 3.6) * 2.0)
+        bhDisk.setAttribute('r', String(br))
+        bhRim.setAttribute('r', String(br))
+        txtPhi.textContent = `pitch φ = ${phi.toFixed(1)}°`
+        txtM.textContent = `log M• = ${logM.toFixed(1)}`
+      }
+      if (!landed && t > T_WIND) {
+        landed = true
+        ribbons.forEach(r => {
+          r.rb.style.transition = 'opacity 350ms ease'
+          r.rb.style.opacity = '0'
+        })
+        paths.forEach(p => { p.style.opacity = '1' })
+        ring(svg, C.cx, C.cy, { r1: 30, ms: 500, color: '#fbb040', width: 1.2 })
+        txtPhi.textContent = 'pitch φ = 26.0°'
+        txtM.textContent = 'log M• = 5.1  →  IMBH range'
+        txtM.setAttribute('fill', '#fbb040')
+        chip(svg, 'looser wind → lighter heart')
+      }
+      if (t > T_LAND + 0.4) { finish(); return }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

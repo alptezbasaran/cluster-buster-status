@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Bounce Roll</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm bounce roll</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ arms, finish }) {
+    arms.forEach((arm, i) => groupReveal(arm, {
+      from: `translate(220px, 0) rotate(${300 + i*30}deg)`,
+      dur: 950, delay: i * 140,
+      ease: 'cubic-bezier(.34,1.56,.64,1)',
+    }))
+    setTimeout(finish, arms.length*140 + 1050)
+  },
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Density Wave</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">density wave</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Spiral arms are traffic jams, not convoys. Stars on differentially-
+    // rotating orbits flow THROUGH the ghosted pattern, brightening and
+    // bunching where the real arms sit (loci sampled from the actual paths).
+    paths.forEach(p => { p.style.cssText = 'opacity:0.3; transition: opacity 700ms ease' })
+    const R = rng(76)
+    const C = iconCenter(arms)
+    const loci = []
+    arms.forEach(arm => {
+      const rail = arm.paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+      for (let i = 0; i <= 12; i++) loci.push(pathPoint(rail, i / 12))
+    })
+    const sky = mk('g', { 'data-temp': '' })
+    svg.insertBefore(sky, svg.firstChild)
+    const stars = []
+    for (let i = 0; i < 130; i++) {
+      const r = 18 + Math.sqrt(R()) * 92
+      const el = mk('circle', { r: 0.6 + R() * 0.8, fill: '#fff', opacity: 0 })
+      sky.appendChild(el)
+      stars.push({ el, r, a: R() * Math.PI * 2, w: 1.25 * Math.pow(40 / r, 0.9) })
+    }
+    const T_END = 3.6
+    let condensing = false
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const pull = t < T_END - 0.8 ? 0.5 : 0.5 + (t - (T_END - 0.8)) / 0.8 * 0.5
+      stars.forEach(s => {
+        const ang = s.a + s.w * t
+        const px = C.cx + s.r * Math.cos(ang), py = C.cy + s.r * Math.sin(ang)
+        let best = 1e9, bx = 0, by = 0
+        for (const L of loci) {
+          const d2 = (L.x - px) * (L.x - px) + (L.y - py) * (L.y - py)
+          if (d2 < best) { best = d2; bx = L.x; by = L.y }
+        }
+        const g = Math.exp(-best / 280)
+        const k = g * pull * 0.55
+        s.el.setAttribute('cx', String(px + (bx - px) * k))
+        s.el.setAttribute('cy', String(py + (by - py) * k))
+        const fin = Math.min(1, t / 0.5)
+        const fout = condensing ? Math.max(0, 1 - (t - (T_END + 0.1)) / 0.7) : 1
+        s.el.setAttribute('opacity', String((0.12 + 0.75 * g) * fin * fout))
+      })
+      if (!condensing && t > T_END) {
+        condensing = true
+        paths.forEach(p => { p.style.opacity = '1' })
+        chip(svg, 'arms are traffic jams, not convoys')
+      }
+      if (t > T_END + 0.9) { finish(); return }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

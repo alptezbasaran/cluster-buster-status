@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Mimosa Fold</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">mimosa fold</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // Touch-shy spiral: a fingertip taps the center and the arms fold inward
+    // in a chain — strands trailing like Mimosa leaflets — hold closed,
+    // breathe, then reopen with an elastic flourish past flat.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const st = []
+    arms.forEach((arm, k) => {
+      const ss = arm.paths.slice().sort((a, b) => {
+        const A = pathBBox(a), B = pathBBox(b)
+        return B.width * B.height - A.width * A.height
+      })
+      ss.forEach((p, j) => st.push({ p, k, j, h: 0, hv: 0 }))
+    })
+    const foldAt = k => 0.5 + k * 0.09
+    const T_OPEN = 0.5 + 4 * 0.09 + 0.55 + 0.6
+    const openAt = k => T_OPEN + (4 - k) * 0.07
+    const tip = mk('circle', { cx: C.cx, cy: C.cy - 90, r: 5, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, opacity: 0, 'data-temp': '' })
+    svg.appendChild(tip)
+    let tapped = false, done = false
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      if (t < 0.38) {
+        const e = 1 - Math.pow(1 - t / 0.38, 3)
+        tip.setAttribute('opacity', String(t / 0.38))
+        tip.setAttribute('cy', String(C.cy - 90 * (1 - e)))
+      } else if (!tapped) {
+        tapped = true
+        ring(svg, C.cx, C.cy, { r1: 24, ms: 380, width: 1.2 })
+        tip.style.transition = 'opacity 400ms ease 500ms'
+        tip.style.opacity = '0'
+      }
+      let alive = false
+      st.forEach(s => {
+        const opening = t > openAt(s.k)
+        let target = 0
+        if (!opening) {
+          const u = Math.min(1, Math.max(0, (t - foldAt(s.k)) / 0.5))
+          target = u * u * (3 - 2 * u)
+          if (target >= 1) target = 1 + 0.015 * Math.sin(t * 7)
+        }
+        const K = opening ? 55 : 60, D = opening ? 5.5 : 10
+        s.hv += (-K * (s.h - target) - D * s.hv) * dt
+        s.h += s.hv * dt
+        if (opening && (Math.abs(s.h) > 0.01 || Math.abs(s.hv) > 0.1)) alive = true
+        const sc = Math.max(0.5, 1 - 0.45 * s.h)
+        s.p.style.transformOrigin = `${C.cx}px ${C.cy}px`
+        s.p.style.transform = `rotate(${(-25 * s.h).toFixed(2)}deg) scale(${sc.toFixed(3)})` + bake(s.p)
+      })
+      if (t > openAt(0) + 0.5 && !alive && !done) {
+        done = true
+        st.forEach(s => { s.p.style.transform = '' })
+        chip(svg, 'touch-shy spiral')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

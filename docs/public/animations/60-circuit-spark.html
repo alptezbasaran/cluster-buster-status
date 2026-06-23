@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Circuit Spark</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">circuit spark</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // A glowing white dot rides along each arm path, drawing the stroke behind it.
+    // Once the dot finishes, the path's solid fill reasserts.
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const items = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const len = p.getTotalLength()
+      const t = p.getAttribute('transform')
+      const m = t && t.match(/translate\(\s*([-\d.]+)[\s,]+([-\d.]+)\s*\)/)
+      const tx = m ? parseFloat(m[1]) : 0, ty = m ? parseFloat(m[2]) : 0
+      p.style.cssText = `opacity:1; fill:transparent; stroke:${arm.color}; stroke-width:1.4; stroke-dasharray:${len}; stroke-dashoffset:${len}`
+      const dot = mk('circle', { r: 1.8, fill: '#ffffff', opacity: 0 })
+      dot.style.filter = `drop-shadow(0 0 5px ${arm.color})`
+      layer.appendChild(dot)
+      items.push({ p, len, tx, ty, dot, arm })
+    }))
+    void svg.getBoundingClientRect()
+    const dur = 1200, t0 = performance.now()
+    function tick(now) {
+      const k = Math.min(1, (now - t0) / dur)
+      items.forEach(it => {
+        it.p.style.strokeDashoffset = String(it.len * (1 - k))
+        if (k > 0 && k < 0.92) {
+          const pt = it.p.getPointAtLength(k * it.len)
+          it.dot.setAttribute('cx', pt.x + it.tx)
+          it.dot.setAttribute('cy', pt.y + it.ty)
+          it.dot.setAttribute('opacity', '1')
+        } else {
+          it.dot.setAttribute('opacity', '0')
+        }
+        if (k > 0.85) it.p.style.fill = it.arm.color
+      })
+      if (k < 1) raf(tick)
+      else { layer.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Ink Blot</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">ink blot</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, finish }) {
+    paths.forEach(p => { p.style.cssText = 'opacity:0; transition: opacity 360ms ease 200ms' })
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    arms.forEach((arm, i) => {
+      const b = arm.el.getBBox()
+      const cx = b.x + b.width/2, cy = b.y + b.height/2
+      const blot = mk('circle', { cx, cy, r: 0, fill: arm.color, opacity: 0.6 })
+      layer.appendChild(blot)
+      const r = Math.max(b.width, b.height) * 0.7
+      blot.style.transition = `r 700ms cubic-bezier(.2,1,.3,1) ${i*100}ms, opacity 500ms ease ${i*100 + 600}ms`
+      requestAnimationFrame(() => {
+        blot.setAttribute('r', String(r))
+        setTimeout(() => { blot.setAttribute('opacity', '0') }, i*100 + 500)
+      })
+      arm.paths.forEach(p => {
+        p.style.transition = `opacity 360ms ease ${i*100 + 200}ms`
+        p.style.opacity = '1'
+      })
+    })
+    setTimeout(() => { layer.remove(); finish() }, arms.length*100 + 1200)
+  },
+})
+</script>
+</body>
+</html>

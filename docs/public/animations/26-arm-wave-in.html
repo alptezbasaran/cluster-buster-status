@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Wave In</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm wave in</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ arms, finish }) {
+    arms.forEach((arm, i) => groupReveal(arm, {
+      from: 'translateY(80px) scale(0.85)',
+      dur: 700, delay: i * 120,
+    }))
+    setTimeout(finish, arms.length * 120 + 800)
+  },
+})
+</script>
+</body>
+</html>

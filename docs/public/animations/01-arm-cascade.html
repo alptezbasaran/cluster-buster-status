@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Cascade</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm cascade</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, fadeIn } from '../lib/runtime.js'
+anim({
+  hold: 2200,
+  run({ arms, finish }) {
+    arms.forEach((arm, i) => {
+      arm.paths.forEach(p => fadeIn(p, 500, i * 380))
+    })
+    setTimeout(finish, arms.length * 380 + 600)
+  },
+})
+</script>
+</body>
+</html>

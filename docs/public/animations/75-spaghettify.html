@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Spaghettify</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">spaghettify</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    // A small black hole appears in the open just outside the rose arm. Its
+    // nearest strand strays too close, tidally stretches toward it — flare at
+    // periapsis — then the hole evaporates and the strand snaps back home.
+    showAll(paths)
+    const R = rng(75)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const rose = arms.find(a => a.name === 'rose')
+    const byArea = rose.paths.slice().sort((a, b) => {
+      const A = pathBBox(a), B = pathBBox(b)
+      return A.width * A.height - B.width * B.height
+    })
+    let strand = byArea[0]
+    let sc = null
+    for (const p of byArea) {
+      const b = pathBBox(p)
+      const x = b.x + b.width / 2, y = b.y + b.height / 2
+      if (Math.hypot(x - C.cx, y - C.cy) >= 30) { strand = p; sc = { x, y }; break }
+    }
+    if (!sc) { const b = pathBBox(strand); sc = { x: b.x + b.width / 2, y: b.y + b.height / 2 } }
+    const siblings = rose.paths.filter(p => p !== strand)
+    let ux = sc.x - C.cx, uy = sc.y - C.cy
+    const un = Math.hypot(ux, uy) || 1
+    ux /= un; uy /= un
+    const bx = Math.min(vb.x + vb.width - 14, Math.max(vb.x + 14, sc.x + ux * 48))
+    const by = Math.min(vb.y + vb.height - 14, Math.max(vb.y + 14, sc.y + uy * 48))
+    const th = Math.atan2(by - sc.y, bx - sc.x) * 180 / Math.PI
+    const dist = Math.hypot(bx - sc.x, by - sc.y)
+    const bhc = mk('circle', { cx: bx, cy: by, r: 0.1, fill: '#000' })
+    const bhr = mk('circle', { cx: bx, cy: by, r: 0.1, fill: 'none', stroke: rose.color, 'stroke-width': 1.2 })
+    const bh = mk('g', { 'data-temp': '' })
+    bh.appendChild(bhc); bh.appendChild(bhr)
+    svg.appendChild(bh)
+    const place = g => {
+      const dx = ux * dist * 0.58 * g, dy = uy * dist * 0.58 * g
+      const sx = 1 + 1.5 * g, sy = 1 - 0.42 * Math.min(1, Math.abs(g))
+      strand.style.transformOrigin = `${sc.x}px ${sc.y}px`
+      strand.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) rotate(${th.toFixed(1)}deg) scale(${sx.toFixed(3)}, ${sy.toFixed(3)}) rotate(${(-th).toFixed(1)}deg)` + bake(strand)
+    }
+    const T_BH = 0.45, T_PULL = 1.6, T_GONE = 2.05
+    let q = 1, qv = -1, flared = false, evap = false
+    const sparks = []
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      let bhR = 5.5
+      if (t < T_BH) bhR = 5.5 * (1 - Math.pow(1 - t / T_BH, 3))
+      else if (evap) bhR = Math.max(0.1, 5.5 * (1 - (t - T_GONE) / 0.3))
+      bhc.setAttribute('r', String(Math.max(0.1, bhR)))
+      bhr.setAttribute('r', String(Math.max(0.1, bhR)))
+      let shiver = 0
+      if (t < T_BH) {
+        place(0)
+      } else if (t < T_PULL) {
+        const g = Math.pow((t - T_BH) / (T_PULL - T_BH), 2.2)
+        place(g)
+        shiver = g * 0.5
+      } else if (t < T_GONE) {
+        if (!flared) {
+          flared = true
+          const fx = sc.x + ux * dist * 0.58, fy = sc.y + uy * dist * 0.58
+          ring(svg, fx, fy, { r1: 24, ms: 400, color: rose.color, width: 1.2 })
+          for (let i = 0; i < 8; i++) {
+            const s = (i % 2 ? 1 : -1) * (0.4 + R())
+            const el = mk('circle', { cx: fx, cy: fy, r: 1.3, fill: '#fff', 'data-temp': '' })
+            svg.appendChild(el)
+            sparks.push({ el, fx, fy, s, ts: t })
+          }
+        }
+        place(1 + Math.sin((t - T_PULL) * 50) * 0.02)
+        shiver = 0.5
+      } else {
+        if (!evap) { evap = true }
+        qv += (-80 * q - 7 * qv) * dt
+        q += qv * dt
+        place(q)
+        if (Math.abs(q) < 0.012 && Math.abs(qv) < 0.08) {
+          strand.style.transform = ''
+          siblings.forEach(p => { p.style.transform = '' })
+          bh.remove()
+          chip(svg, 'tidal stretch at periapsis')
+          finish()
+          return
+        }
+      }
+      const ca = Math.cos(th * Math.PI / 180), sa = Math.sin(th * Math.PI / 180)
+      sparks.forEach(sp => {
+        const u = Math.min(1, (t - sp.ts) / 0.5)
+        sp.el.setAttribute('cx', String(sp.fx + ca * sp.s * 30 * u))
+        sp.el.setAttribute('cy', String(sp.fy + sa * sp.s * 30 * u))
+        sp.el.setAttribute('opacity', String(1 - u))
+      })
+      siblings.forEach((p, j) => {
+        const jit = shiver > 0 ? Math.sin(t * 47 + j * 9) * shiver : 0
+        p.style.transform = `translate(${jit.toFixed(2)}px, ${(-jit * 0.6).toFixed(2)}px)` + bake(p)
+      })
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

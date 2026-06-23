@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Firework Burst</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon firework burst</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => p.style.cssText = 'opacity:0; transition: opacity 280ms ease')
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const vb = svg.viewBox.baseVal
+    const cx = vb.x + vb.width/2, cy = vb.y + vb.height/2
+    const seeds = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const b = pathBBox(p)
+      const tx = b.x + b.width/2, ty = b.y + b.height/2
+      for (let k = 0; k < 4; k++) {
+        const ang = Math.random() * Math.PI * 2
+        const r = vb.width * (0.3 + Math.random() * 0.4)
+        const apx = cx + Math.cos(ang) * r, apy = cy + Math.sin(ang) * r
+        const dot = mk('circle', { cx, cy, r:1.4, fill:arm.color, opacity:0.95 })
+        layer.appendChild(dot)
+        seeds.push({ dot, apx, apy, tx, ty, p })
+      }
+    }))
+    const burstDur = 500, condenseDur = 700, total = burstDur + condenseDur
+    const t0 = performance.now()
+    const arrived = new Set()
+    function tick(now) {
+      const elapsed = now - t0
+      if (elapsed < burstDur) {
+        const k = elapsed / burstDur
+        seeds.forEach(s => {
+          s.dot.setAttribute('cx', cx + (s.apx - cx) * k)
+          s.dot.setAttribute('cy', cy + (s.apy - cy) * k)
+        })
+      } else if (elapsed < total) {
+        const k = (elapsed - burstDur) / condenseDur
+        const e = 1 - Math.pow(1 - k, 3)
+        seeds.forEach(s => {
+          s.dot.setAttribute('cx', s.apx + (s.tx - s.apx) * e)
+          s.dot.setAttribute('cy', s.apy + (s.ty - s.apy) * e)
+          s.dot.setAttribute('opacity', String(1 - e * 0.6))
+          if (e > 0.85 && !arrived.has(s.p)) { arrived.add(s.p); s.p.style.opacity = '1' }
+        })
+      }
+      if (elapsed < total) raf(tick)
+      else { layer.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

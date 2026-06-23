@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Boids Condense</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">boids condense</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Seventy boids with real separation/alignment/cohesion rules flock over
+    // the ghosted icon — then a homing force ramps and each bird streams onto
+    // its own arm, painting the spiral in arm by arm.
+    paths.forEach(p => { p.style.cssText = 'opacity:0.22' })
+    const R = rng(89)
+    const C = iconCenter(arms)
+    const PER = 14
+    const sky = mk('g', { 'data-temp': '' })
+    svg.appendChild(sky)
+    const boids = []
+    arms.forEach((arm, ai) => {
+      const rail = arm.paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+      for (let k = 0; k < PER; k++) {
+        const tgt = pathPoint(rail, (k + 0.5) / PER)
+        const a = R() * Math.PI * 2, rr = 60 + R() * 50, va = R() * Math.PI * 2
+        const el = mk('circle', { r: 1.5, fill: arm.color, opacity: 0.9 })
+        sky.appendChild(el)
+        boids.push({ el, ai, arm, x: C.cx + Math.cos(a) * rr, y: C.cy + Math.sin(a) * rr,
+                     vx: Math.cos(va) * 45, vy: Math.sin(va) * 45, tx: tgt.x, ty: tgt.y, there: false })
+      }
+    })
+    const arrived = [0, 0, 0, 0, 0]
+    let arrivedTotal = 0, endT = -1
+    const arrive = b => {
+      b.there = true; b.vx = 0; b.vy = 0
+      b.x = b.tx; b.y = b.ty
+      b.el.setAttribute('cx', String(b.tx)); b.el.setAttribute('cy', String(b.ty))
+      arrived[b.ai]++
+      arrivedTotal++
+      b.arm.paths.forEach(p => { p.style.opacity = String(0.22 + 0.78 * arrived[b.ai] / PER) })
+    }
+    const T_HOME = 1.6
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.025, (now - last) / 1000); last = now
+      const hw = t < T_HOME ? 0 : Math.min(6, (t - T_HOME) * 3)
+      boids.forEach(b => {
+        if (b.there) return
+        let sx = 0, sy = 0, avx = 0, avy = 0, cxx = 0, cyy = 0, na = 0, nc = 0
+        boids.forEach(o => {
+          if (o === b) return
+          const dx = o.x - b.x, dy = o.y - b.y
+          const d2 = dx * dx + dy * dy
+          if (d2 < 64) { sx -= dx / (d2 + 4); sy -= dy / (d2 + 4) }
+          if (d2 < 400 && !o.there) { avx += o.vx; avy += o.vy; na++ }
+          if (d2 < 900) { cxx += o.x; cyy += o.y; nc++ }
+        })
+        let ax = sx * 900, ay = sy * 900
+        if (na) { ax += (avx / na - b.vx) * 2.0; ay += (avy / na - b.vy) * 2.0 }
+        if (nc) { ax += (cxx / nc - b.x) * 1.2; ay += (cyy / nc - b.y) * 1.2 }
+        const dC = Math.hypot(b.x - C.cx, b.y - C.cy)
+        if (dC > 112) { ax += (C.cx - b.x) * 1.5; ay += (C.cy - b.y) * 1.5 }
+        ax += (b.tx - b.x) * hw; ay += (b.ty - b.y) * hw
+        b.vx += ax * dt; b.vy += ay * dt
+        const sp = Math.hypot(b.vx, b.vy) || 1
+        const cap = hw > 3 ? 115 : 75
+        const lo = 22
+        if (sp > cap) { b.vx *= cap / sp; b.vy *= cap / sp }
+        else if (sp < lo) { b.vx *= lo / sp; b.vy *= lo / sp }
+        b.x += b.vx * dt; b.y += b.vy * dt
+        b.el.setAttribute('cx', String(b.x)); b.el.setAttribute('cy', String(b.y))
+        if (hw > 0 && Math.hypot(b.tx - b.x, b.ty - b.y) < 2.5) arrive(b)
+      })
+      if (t > 5 && arrivedTotal < boids.length) boids.forEach(b => { if (!b.there) arrive(b) })
+      if (arrivedTotal === boids.length && endT < 0) {
+        endT = t
+        paths.forEach(p => { p.style.transition = 'opacity 400ms ease'; p.style.opacity = '1' })
+        sky.style.transition = 'opacity 700ms ease 150ms'
+        sky.style.opacity = '0'
+        chip(svg, 'flock → cluster')
+      }
+      if (endT > 0 && t > endT + 0.6) { finish(); return }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

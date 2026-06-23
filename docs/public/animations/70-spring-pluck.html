@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Spring Pluck</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">spring pluck</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, arms, paths, raf, finish }) {
+    // A fingertip presses the spiral's center and lets go — a radial ripple
+    // travels outward through all 23 strands, each one a damped oscillator
+    // on the spring lattice.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const nodes = paths.map(p => {
+      const b = pathBBox(p)
+      const x = b.x + b.width / 2, y = b.y + b.height / 2
+      const d = Math.hypot(x - C.cx, y - C.cy) || 1
+      return { p, nx: (x - C.cx) / d, ny: (y - C.cy) / d, tau: d / 130, amp: 13 * Math.exp(-d / 150) }
+    })
+    const tMax = Math.max(...nodes.map(n => n.tau))
+    const tip = mk('circle', { cx: C.cx, cy: C.cy - 90, r: 5, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, opacity: 0, 'data-temp': '' })
+    svg.appendChild(tip)
+    const T_IN = 0.4, T_PRESS = 0.75
+    let rel = false
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      if (t < T_IN) {
+        const e = 1 - Math.pow(1 - t / T_IN, 3)
+        tip.setAttribute('opacity', String(t / T_IN))
+        tip.setAttribute('cy', String(C.cy - 90 * (1 - e)))
+      } else if (t < T_PRESS) {
+        const u = (t - T_IN) / (T_PRESS - T_IN)
+        svg.style.transformOrigin = '50% 50%'
+        svg.style.transform = `scale(${(1 - 0.035 * u).toFixed(4)})`
+      } else {
+        if (!rel) {
+          rel = true
+          tip.style.transition = 'opacity 200ms ease'
+          tip.style.opacity = '0'
+          ring(svg, C.cx, C.cy, { r1: 110, ms: 800, color: '#888', width: 1 })
+        }
+        const w = t - T_PRESS
+        const sc = 1 - 0.035 * Math.exp(-7 * w) * Math.cos(16 * w)
+        svg.style.transformOrigin = '50% 50%'
+        svg.style.transform = `scale(${sc.toFixed(4)})`
+        nodes.forEach(n => {
+          const u = w - n.tau
+          const off = u > 0 ? n.amp * Math.exp(-4.5 * u) * Math.sin(15 * u) : 0
+          n.p.style.transform = `translate(${(n.nx * off).toFixed(2)}px, ${(n.ny * off).toFixed(2)}px)` + bake(n.p)
+        })
+        if (w > tMax + 1.1) {
+          nodes.forEach(n => { n.p.style.transform = '' })
+          svg.style.transform = ''
+          chip(svg, 'one pluck, whole-body ripple')
+          finish()
+          return
+        }
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

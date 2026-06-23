@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Domino Fall</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon domino fall</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    paths.forEach((p, i) => {
+      p.style.cssText = `opacity:0; transform: rotate(-90deg) translateY(-30px); transform-origin: center bottom`
+    })
+    void svg.getBoundingClientRect()
+    paths.forEach((p, i) => {
+      const delay = i * 40
+      p.style.transition = `transform 600ms cubic-bezier(.2,1,.3,1) ${delay}ms, opacity 400ms ease ${delay}ms`
+      p.style.transform = 'rotate(0) translateY(0)'
+      p.style.opacity = '1'
+    })
+    setTimeout(finish, paths.length * 40 + 700)
+  },
+})
+</script>
+</body>
+</html>

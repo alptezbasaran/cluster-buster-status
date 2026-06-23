@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Melt Form</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">melt form</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1800,
+  run({ svg, paths, finish }) {
+    // Paths drip from above the viewBox with gravity-like easing, settling into
+    // place. Top-of-icon paths land first; bottom paths fall further and land last.
+    const vb = svg.viewBox.baseVal
+    const items = paths.map(p => {
+      const b = pathBBox(p)
+      return { p, y: b.y + b.height/2, px: b.x + b.width/2, py: b.y + b.height/2 }
+    }).sort((a, b) => a.y - b.y)
+    items.forEach(({ p, px, py }) => {
+      const dy = -(py - vb.y) - 80 - Math.random() * 40
+      p.style.cssText = `opacity:0; transform: translateY(${dy.toFixed(1)}px); transform-origin: ${px}px ${py}px`
+    })
+    void svg.getBoundingClientRect()
+    const stagger = 1200 / items.length
+    items.forEach(({ p }, i) => {
+      const delay = i * stagger
+      p.style.transition = `transform 700ms cubic-bezier(.5, 0, .15, 1.05) ${delay}ms, opacity 350ms ease ${delay}ms`
+      p.style.transform = 'translateY(0)'
+      p.style.opacity = '1'
+    })
+    setTimeout(finish, items.length * stagger + 800)
+  },
+})
+</script>
+</body>
+</html>

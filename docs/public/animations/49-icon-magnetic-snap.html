@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Magnetic Snap</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon magnetic snap</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, arms, paths, finish }) {
+    const items = []
+    arms.forEach((arm, i) => arm.paths.forEach((p, j) => {
+      const dx = (Math.random() - 0.5) * 200
+      const dy = (Math.random() - 0.5) * 200
+      const delay = i * 80 + j * 40
+      p.style.cssText = `opacity:0; transform: translate(${dx}px, ${dy}px)`
+      items.push({ p, delay })
+    }))
+    void svg.getBoundingClientRect()
+    items.forEach(({ p, delay }) => {
+      p.style.transition = `transform 500ms cubic-bezier(.2,1.4,.3,1) ${delay}ms, opacity 400ms ease ${delay}ms`
+      p.style.transform = 'translate(0, 0)'
+      p.style.opacity = '1'
+    })
+    setTimeout(finish, paths.length * 40 + 700)
+  },
+})
+</script>
+</body>
+</html>

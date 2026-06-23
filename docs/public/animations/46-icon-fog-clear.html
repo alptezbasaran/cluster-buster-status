@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Fog Clear</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon fog clear</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    showAll(paths)
+    const layer = mk('rect', { x:-200, y:-200, width:1000, height:1000, fill:'#888', 'data-temp':'' })
+    svg.appendChild(layer)
+    layer.style.opacity = '0.6'
+    svg.style.filter = 'blur(12px)'
+    void svg.getBoundingClientRect()
+    layer.style.transition = 'opacity 900ms ease 200ms'
+    svg.style.transition = 'filter 1100ms cubic-bezier(.2,1,.3,1)'
+    layer.style.opacity = '0'
+    svg.style.filter = 'blur(0)'
+    setTimeout(() => { layer.remove(); finish() }, 1300)
+  },
+})
+</script>
+</body>
+</html>

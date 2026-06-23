@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — FOUND ONE!</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">yell found one</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // A telescope crosshair roams the spiral — wrong arm, wrong gap — then
+    // locks on amber's core: a tiny IMBH fades in, FOUND ONE! piles up with
+    // tremble and sound rings, and amber does a victory wiggle.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const amber = arms.find(a => a.name === 'amber')
+    const inner = amber.paths.slice().sort((a, b) => {
+      const A = pathBBox(a), B = pathBBox(b)
+      return A.width * A.height - B.width * B.height
+    })[0]
+    let core = pathPoint(inner, 0), dBest = 1e9
+    for (let u = 0; u <= 1.001; u += 0.25) {
+      const pt = pathPoint(inner, u)
+      const d = Math.hypot(pt.x - C.cx, pt.y - C.cy)
+      if (d < dBest) { dBest = d; core = pt }
+    }
+    const wp = []
+    ;['purple', 'green'].forEach(nm => {
+      const b = arms.find(a => a.name === nm).el.getBBox()
+      wp.push({ x: b.x + b.width / 2, y: b.y + b.height / 2 })
+    })
+    wp.push(core)
+    const ch = mk('g', { 'data-temp': '', opacity: 0 })
+    const chCirc = mk('circle', { r: 12, fill: 'none', stroke: '#9ad', 'stroke-width': 0.9 })
+    ch.appendChild(chCirc)
+    const ticks = []
+    for (let i = 0; i < 4; i++) {
+      const a = i * Math.PI / 2
+      const ln = mk('line', { x1: Math.cos(a) * 8, y1: Math.sin(a) * 8, x2: Math.cos(a) * 15, y2: Math.sin(a) * 15, stroke: '#9ad', 'stroke-width': 0.9 })
+      ch.appendChild(ln)
+      ticks.push(ln)
+    }
+    svg.appendChild(ch)
+    const bh = mk('g', { 'data-temp': '', opacity: 0 })
+    bh.appendChild(mk('circle', { cx: core.x, cy: core.y, r: 3.5, fill: '#000' }))
+    bh.appendChild(mk('circle', { cx: core.x, cy: core.y, r: 3.5, fill: 'none', stroke: amber.color, 'stroke-width': 1.1 }))
+    svg.appendChild(bh)
+    const word = 'FOUND ONE!'
+    const letters = []
+    const MOVE = 0.34, PAUSE = 0.24
+    const tLock = 0.1 + 2 * (MOVE + PAUSE) + MOVE
+    const tYell = tLock + 0.4
+    const ab = amber.el.getBBox()
+    const acx = ab.x + ab.width / 2, acy = ab.y + ab.height / 2
+    let spawned = 0, lockDone = false, rangs = 0, tW = -1
+    const start = { x: vb.x + vb.width - 20, y: vb.y + 16 }
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      // crosshair roams
+      let px = start.x, py = start.y
+      const seg = Math.floor((t - 0.1) / (MOVE + PAUSE))
+      if (t > 0.1) {
+        const k = Math.min(seg, wp.length - 1)
+        const w = (t - 0.1) - k * (MOVE + PAUSE)
+        const from = k === 0 ? start : wp[k - 1]
+        const u = Math.min(1, w / MOVE)
+        const e = u * u * (3 - 2 * u)
+        px = from.x + (wp[k].x - from.x) * e
+        py = from.y + (wp[k].y - from.y) * e
+        if (u >= 1 && k < wp.length - 1) {
+          px += Math.sin((w - MOVE) * 50) * 1.2 * Math.max(0, 1 - (w - MOVE) / 0.2)
+        }
+      }
+      ch.setAttribute('opacity', String(Math.min(1, t / 0.25)))
+      ch.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)})`)
+      if (t > tLock && !lockDone) {
+        lockDone = true
+        chCirc.setAttribute('stroke', amber.color)
+        ticks.forEach(l => l.setAttribute('stroke', amber.color))
+        ring(svg, core.x, core.y, { r1: 20, ms: 380, color: amber.color, width: 1.2 })
+        bh.style.transition = 'opacity 300ms ease'
+        bh.style.opacity = '1'
+      }
+      if (lockDone) {
+        const r = Math.max(7.5, 12 - (t - tLock) * 18)
+        chCirc.setAttribute('r', String(r))
+        const z = 1 + 0.07 * Math.min(1, (t - tLock) / 0.3) * (tW > 0 ? Math.max(0, 1 - (t - tW) / 0.4) : 1)
+        svg.style.transformOrigin = '50% 50%'
+        let tr = 0
+        if (t > tYell && tW < 0) tr = Math.sin((t - tYell) * 60) * 0.6 * Math.max(0, 1 - (t - tYell) / 0.6)
+        svg.style.transform = `scale(${z.toFixed(4)}) rotate(${tr.toFixed(3)}deg)`
+      }
+      if (t > tYell) {
+        const idx = Math.floor((t - tYell) / 0.07)
+        while (spawned < word.length && spawned <= idx) {
+          const i = spawned++
+          const c = word[i]
+          const x = C.cx + (i - (word.length - 1) / 2) * 14
+          const el = mk('text', {
+            x, y: vb.y + 40, 'text-anchor': 'middle', fill: '#fff',
+            'font-size': c === '!' ? '26' : '21', 'font-weight': '900',
+            'font-family': 'system-ui, sans-serif', 'data-temp': '',
+          })
+          el.textContent = c
+          el.style.cssText = `opacity:0; transform: scale(2.4); transform-origin: ${x}px ${vb.y + 40}px`
+          svg.appendChild(el)
+          void el.getBoundingClientRect()
+          el.style.transition = 'transform 190ms cubic-bezier(.2,1.6,.4,1), opacity 120ms ease'
+          el.style.transform = 'scale(1)'
+          el.style.opacity = '1'
+          letters.push(el)
+          if (c === '!') {
+            ring(svg, core.x, core.y, { r1: 30, ms: 400, color: amber.color, width: 1.2 })
+            ring(svg, core.x, core.y, { r1: 50, ms: 550, color: '#fff', width: 0.9 })
+            tW = t + 0.25
+          }
+        }
+      }
+      if (tW > 0 && t > tW) {
+        const w = t - tW
+        const wig = 3 * Math.exp(-4 * w) * Math.sin(18 * w)
+        amber.el.style.transformOrigin = `${acx}px ${acy}px`
+        amber.el.style.transform = `rotate(${wig.toFixed(2)}deg)`
+        if (w > 0.7 && letters.length && letters[0].style.opacity !== '0') {
+          letters.forEach((el, i) => {
+            el.style.transition = `opacity 300ms ease ${i * 30}ms`
+            el.style.opacity = '0'
+          })
+          ch.style.transition = 'opacity 300ms ease'
+          ch.style.opacity = '0'
+        }
+        if (w > 1.0) {
+          amber.el.style.transform = ''
+          svg.style.transform = ''
+          chip(svg, 'IMBH: found one')
+          finish()
+          return
+        }
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

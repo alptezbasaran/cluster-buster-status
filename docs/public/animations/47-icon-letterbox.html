@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Letterbox</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon letterbox</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1300,
+  run({ svg, paths, raf, finish }) {
+    // Animate the rect attributes directly via rAF — CSS transform: scaleY transitions
+    // on SVG <rect> are flaky on iOS, attributes are bulletproof.
+    showAll(paths)
+    const vb = svg.viewBox.baseVal
+    const half = vb.height / 2
+    const top = mk('rect', { x:vb.x, y:vb.y, width:vb.width, height:half, fill:'#0a0a0a', 'data-temp':'' })
+    const bot = mk('rect', { x:vb.x, y:vb.y+half, width:vb.width, height:half, fill:'#0a0a0a', 'data-temp':'' })
+    svg.appendChild(top); svg.appendChild(bot)
+    const dur = 720, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const e = 1 - Math.pow(1 - t, 3)
+      const remaining = half * (1 - e)
+      top.setAttribute('height', String(remaining))
+      bot.setAttribute('y', String(vb.y + half + (half - remaining)))
+      bot.setAttribute('height', String(remaining))
+      if (t < 1) raf(tick)
+      else { top.remove(); bot.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

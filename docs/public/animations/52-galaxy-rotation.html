@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Galaxy Rotation</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">galaxy rotation</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Differential rotation driven per-frame: each arm spins at a different angular
+    // velocity so they unwind at different rates. They settle to their final positions
+    // simultaneously, but the journey there reads as a swirling galactic mess —
+    // distinct from synchronized arm-pinwheel.
+    const vb = svg.viewBox.baseVal
+    const cx = vb.x + vb.width/2, cy = vb.y + vb.height/2
+    arms.forEach(arm => {
+      arm.paths.forEach(p => { p.style.cssText = 'opacity:1' })
+      arm.el.style.transformOrigin = `${cx}px ${cy}px`
+      arm.el.style.opacity = '0'
+    })
+    const dur = 1700, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const e = 1 - Math.pow(1 - t, 3)
+      arms.forEach((arm, i) => {
+        // Inner arms (i=0) make ~0.8 turns; outer arms (i=4) make ~2.4 turns.
+        const turns = 0.8 + i * 0.4
+        const angle = -360 * turns * (1 - e)
+        arm.el.style.transform = `rotate(${angle.toFixed(2)}deg)`
+        const reveal = Math.max(0, Math.min(1, t * 1.5 - i * 0.06))
+        arm.el.style.opacity = String(reveal)
+      })
+      if (t < 1) raf(tick)
+      else {
+        arms.forEach(arm => { arm.el.style.transform = 'none'; arm.el.style.opacity = '1' })
+        finish()
+      }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

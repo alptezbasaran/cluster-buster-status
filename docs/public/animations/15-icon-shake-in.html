@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Shake In</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon shake in</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1300,
+  run({ svg, paths, raf, finish }) {
+    showAll(paths)
+    const dur = 1100
+    const t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const k = 1 - t
+      const dx = (Math.random() - 0.5) * 18 * k
+      const dy = (Math.random() - 0.5) * 18 * k
+      svg.style.transform = `translate(${dx}px, ${dy}px) scale(${0.85 + 0.15*t})`
+      svg.style.opacity = String(t)
+      if (t < 1) raf(tick)
+      else { svg.style.transform = 'none'; finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

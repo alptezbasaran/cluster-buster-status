@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Weave In</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">weave in</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1800,
+  run({ svg, arms, paths, raf, finish }) {
+    // The icon weaves itself from nothing, strand by strand — round-robin
+    // across the arms so the spiral builds in laminate layers. Every landing
+    // bumps the icon. Amber's strands arrive last, squeezing in late.
+    const R = rng(87)
+    const C = iconCenter(arms)
+    const amber = arms.find(a => a.name === 'amber')
+    const queues = arms.map(a => a.paths.slice().sort((x, y) => {
+      const A = pathBBox(x), B = pathBBox(y)
+      return B.width * B.height - A.width * A.height
+    }))
+    const seq = []
+    const maxd = Math.max(...queues.map(q => q.length))
+    for (let d = 0; d < maxd; d++) {
+      arms.forEach((a, i) => { if (a !== amber && queues[i][d]) seq.push(queues[i][d]) })
+    }
+    const amberQ = queues[arms.indexOf(amber)]
+    const lands = []
+    const fly = (p, delay, dur, hardKick) => {
+      const b = pathBBox(p)
+      const px = b.x + b.width / 2, py = b.y + b.height / 2
+      const side = lands.length % 2 ? 1 : -1
+      const dx = side * (180 + R() * 80), dy = (R() - 0.5) * 160
+      const rot = side * (40 + R() * 50)
+      p.style.cssText = `opacity:0; transform-origin: ${px}px ${py}px`
+      p.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) rotate(${rot.toFixed(1)}deg) scale(0.7)` + bake(p)
+      lands.push({ at: (delay + dur * 0.8) / 1000, kick: hardKick ? 20 : 10, fired: false })
+      return { p, delay, dur }
+    }
+    const plans = []
+    seq.forEach((p, i) => plans.push(fly(p, i * 90, 480, false)))
+    const amberStart = seq.length * 90 + 350
+    amberQ.forEach((p, j) => plans.push(fly(p, amberStart + j * 170, 560, true)))
+    void svg.getBoundingClientRect()
+    plans.forEach(({ p, delay, dur }) => {
+      const ease = delay >= amberStart ? 'cubic-bezier(.2,1.8,.4,1)' : 'cubic-bezier(.2,1.2,.3,1)'
+      p.style.transition = `transform ${dur}ms ${ease} ${delay}ms, opacity 240ms ease ${delay}ms`
+      p.style.transform = 'translate(0px, 0px) rotate(0deg) scale(1)' + bake(p)
+      p.style.opacity = '1'
+    })
+    const tEnd = (amberStart + (amberQ.length - 1) * 170 + 560) / 1000 + 0.45
+    let dip = 0, dipV = 0
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      lands.forEach(l => { if (!l.fired && t > l.at) { l.fired = true; dipV += l.kick } })
+      dipV += (-220 * dip - 13 * dipV) * dt
+      dip += dipV * dt
+      svg.style.transformOrigin = '50% 50%'
+      svg.style.transform = `translate(0px, ${(dip * 0.05).toFixed(2)}px)`
+      if (t > tEnd) {
+        svg.style.transform = ''
+        chip(svg, 'woven, strand by strand')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Lensing Pass</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">lensing pass</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1800,
+  run({ svg, arms, paths, raf, finish }) {
+    // An invisible mass transits in front of the spiral. Nothing is ever drawn
+    // for it — the only signature is the warp: strands and background stars
+    // bulge away from the lens, and a faint Einstein ring glides across.
+    showAll(paths)
+    const R = rng(73)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const sky = mk('g', { 'data-temp': '' })
+    svg.insertBefore(sky, svg.firstChild)
+    const stars = []
+    for (let i = 0; i < 70; i++) {
+      const x = vb.x + R() * vb.width, y = vb.y + R() * vb.height
+      const s = mk('circle', { cx: x, cy: y, r: 0.5 + R() * 0.8, fill: '#fff', opacity: 0.25 + R() * 0.45 })
+      sky.appendChild(s)
+      stars.push({ s, x, y })
+    }
+    const nodes = paths.map(p => {
+      const b = pathBBox(p)
+      return { p, x: b.x + b.width / 2, y: b.y + b.height / 2 }
+    })
+    const ering = mk('circle', { r: 16, fill: 'none', stroke: '#cfd8ff', 'stroke-width': 0.7, opacity: 0, 'data-temp': '' })
+    svg.appendChild(ering)
+    const T = 3.2, PAD = 60
+    const y0 = C.cy - 18
+    const defl = (x, y, lx, ly) => {
+      const dx = x - lx, dy = y - ly
+      const d = Math.hypot(dx, dy) || 1
+      const m = 26 * (d / 34) * Math.exp(-d / 34)   // smooth bump, peak ~9.6px at d=34
+      return { x: dx / d * m, y: dy / d * m }
+    }
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const u = Math.min(1, t / T)
+      const lx = vb.x - PAD + (vb.width + 2 * PAD) * u
+      const ly = y0 + Math.sin(u * Math.PI) * 10
+      ering.setAttribute('cx', String(lx))
+      ering.setAttribute('cy', String(ly))
+      ering.setAttribute('opacity', String(0.45 * Math.sin(Math.PI * u)))
+      nodes.forEach(n => {
+        const o = defl(n.x, n.y, lx, ly)
+        n.p.style.transform = `translate(${o.x.toFixed(2)}px, ${o.y.toFixed(2)}px)` + bake(n.p)
+      })
+      stars.forEach(st => {
+        const o = defl(st.x, st.y, lx, ly)
+        st.s.setAttribute('cx', String(st.x + o.x))
+        st.s.setAttribute('cy', String(st.y + o.y))
+      })
+      if (u >= 1) {
+        nodes.forEach(n => { n.p.style.transform = '' })
+        chip(svg, 'seen only by its pull')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

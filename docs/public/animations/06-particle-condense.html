@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Particle Condense</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">particle condense</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1800,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => p.style.opacity = '0')
+
+    // Drop a particle layer above the arms.
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+
+    const vb = svg.viewBox.baseVal
+    const seed = []
+    arms.forEach(arm => {
+      arm.paths.forEach(p => {
+        const b = pathBBox(p)
+        const tx = b.x + b.width / 2, ty = b.y + b.height / 2
+        for (let k = 0; k < 4; k++) {
+          const sx = vb.x + Math.random() * vb.width
+          const sy = vb.y + Math.random() * vb.height
+          const dot = mk('circle', { cx: sx, cy: sy, r: 1.2, fill: arm.color, opacity: 0.9 })
+          layer.appendChild(dot)
+          seed.push({ dot, sx, sy, tx, ty, p })
+        }
+      })
+    })
+
+    const dur = 1300
+    const t0 = performance.now()
+    const arrived = new Set()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const k = 1 - Math.pow(1 - t, 3)
+      seed.forEach(s => {
+        const x = s.sx + (s.tx - s.sx) * k
+        const y = s.sy + (s.ty - s.sy) * k
+        s.dot.setAttribute('cx', x)
+        s.dot.setAttribute('cy', y)
+        s.dot.setAttribute('opacity', String(1 - k * 0.7))
+        if (k > 0.85 && !arrived.has(s.p)) {
+          arrived.add(s.p)
+          s.p.style.transition = 'opacity 280ms ease'
+          s.p.style.opacity = '1'
+        }
+      })
+      if (t < 1) raf(tick)
+      else {
+        layer.remove()
+        finish()
+      }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

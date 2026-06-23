@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Cosmic Dust Accretion</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">cosmic dust accretion</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 2400,
+  run({ svg, arms, paths, raf, finish }) {
+    // Phased animation so the final form actually reads:
+    //   DRIFT  — dust drifts from random viewBox positions to sampled points along arms
+    //   DWELL  — particles arrive and hold at full brightness, briefly settling
+    //   REVEAL — paths fade in over the dust, dust fades out underneath
+    // Then `hold` keeps the clean final form visible long enough to read.
+    paths.forEach(p => p.style.cssText = 'opacity:0')
+    const vb = svg.viewBox.baseVal
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const dust = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const len = p.getTotalLength()
+      const t = p.getAttribute('transform')
+      const m = t && t.match(/translate\(\s*([-\d.]+)[\s,]+([-\d.]+)\s*\)/)
+      const tx = m ? parseFloat(m[1]) : 0, ty = m ? parseFloat(m[2]) : 0
+      const N = Math.max(4, Math.round(len * 0.12))
+      for (let k = 0; k < N; k++) {
+        const pt = p.getPointAtLength(Math.random() * len)
+        const fx = pt.x + tx, fy = pt.y + ty
+        const sx = vb.x + Math.random() * vb.width
+        const sy = vb.y + Math.random() * vb.height
+        const dot = mk('circle', { cx: sx, cy: sy, r: 1.0, fill: arm.color, opacity: 0.4 })
+        dot.style.filter = `drop-shadow(0 0 2px ${arm.color})`
+        layer.appendChild(dot)
+        dust.push({ dot, sx, sy, fx, fy })
+      }
+    }))
+    const DRIFT = 1500, DWELL = 350, REVEAL = 700
+    const total = DRIFT + DWELL + REVEAL
+    const t0 = performance.now()
+    function tick(now) {
+      const elapsed = now - t0
+      if (elapsed < DRIFT) {
+        const t = elapsed / DRIFT
+        const e = 1 - Math.pow(1 - t, 3)
+        dust.forEach(d => {
+          d.dot.setAttribute('cx', d.sx + (d.fx - d.sx) * e)
+          d.dot.setAttribute('cy', d.sy + (d.fy - d.sy) * e)
+          d.dot.setAttribute('opacity', String(0.4 + e * 0.55))
+        })
+      } else if (elapsed < DRIFT + DWELL) {
+        // Particles snap fully to targets and brighten briefly — settling beat.
+        dust.forEach(d => {
+          d.dot.setAttribute('cx', d.fx)
+          d.dot.setAttribute('cy', d.fy)
+          d.dot.setAttribute('opacity', '0.95')
+        })
+      } else {
+        // Cross-fade: paths come up, dust drops out underneath them.
+        const t = Math.min(1, (elapsed - DRIFT - DWELL) / REVEAL)
+        const e = 1 - Math.pow(1 - t, 2)
+        paths.forEach(p => p.style.opacity = String(e))
+        dust.forEach(d => d.dot.setAttribute('opacity', String(0.95 * (1 - e))))
+      }
+      if (elapsed < total) raf(tick)
+      else {
+        paths.forEach(p => p.style.opacity = '1')
+        layer.remove()
+        finish()
+      }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

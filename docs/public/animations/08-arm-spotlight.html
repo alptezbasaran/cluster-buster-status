@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Spotlight</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm spotlight</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1400,
+  run({ arms, paths, finish }) {
+    paths.forEach(p => { p.style.cssText = 'opacity:0.18; transition: opacity 280ms ease' })
+    let i = 0, cycles = 0
+    const step = 320
+    const tick = () => {
+      arms.forEach(a => a.paths.forEach(p => { p.style.opacity = '0.18' }))
+      arms[i].paths.forEach(p => { p.style.opacity = '1' })
+      i = (i + 1) % arms.length
+      if (i === 0) cycles++
+      if (cycles >= 2) {
+        setTimeout(() => {
+          paths.forEach(p => { p.style.opacity = '1' })
+          finish()
+        }, step)
+        return
+      }
+      setTimeout(tick, step)
+    }
+    tick()
+  },
+})
+</script>
+</body>
+</html>

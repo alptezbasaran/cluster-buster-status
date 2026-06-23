@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Pitch Fit</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">pitch fit</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Measure the amber arm's pitch by fitting: a white log-spiral sweeps φ in
+    // a damped search anchored on amber's body, the strands fan out as the
+    // error envelope and re-laminate as the fit converges — lock, stamp, weigh.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const amber = arms.find(a => a.name === 'amber')
+    arms.forEach(a => { if (a !== amber) a.paths.forEach(p => { p.style.cssText = 'opacity:0.25; transition: opacity 400ms ease' }) })
+    const rail0 = amber.paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+    const e0 = pathPoint(rail0, 0), e1 = pathPoint(rail0, 1)
+    const uIn = Math.hypot(e0.x - C.cx, e0.y - C.cy) < Math.hypot(e1.x - C.cx, e1.y - C.cy) ? 0 : 1
+    let cross = 0
+    for (let i = 0; i < 8; i++) {
+      const p1 = pathPoint(rail0, uIn + (1 - 2 * uIn) * i / 8)
+      const p2 = pathPoint(rail0, uIn + (1 - 2 * uIn) * (i + 1) / 8)
+      cross += (p1.x - C.cx) * (p2.y - p1.y) - (p1.y - C.cy) * (p2.x - p1.x)
+    }
+    const HAND = cross >= 0 ? 1 : -1
+    const ab = amber.el.getBBox()
+    const acx = ab.x + ab.width / 2, acy = ab.y + ab.height / 2
+    const rC = Math.hypot(acx - C.cx, acy - C.cy) || 1
+    const angC = Math.atan2(acy - C.cy, acx - C.cx)
+    const R0 = 14, R1 = 104, N = 90, PHI = 26.4
+    const fit = mk('path', { fill: 'none', stroke: '#fff', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0.9, 'data-temp': '' })
+    svg.appendChild(fit)
+    const strands = amber.paths.slice().sort((a, b) => {
+      const A = pathBBox(a), B = pathBBox(b)
+      return B.width * B.height - A.width * A.height
+    })
+    const bar = mk('rect', { x: vb.x + 8, width: 3, fill: '#e06060', 'data-temp': '' })
+    svg.appendChild(bar)
+    const barLbl = mk('text', { x: vb.x + 6, y: C.cy + 44, fill: '#666', 'font-size': '5.5', 'font-family': 'system-ui, sans-serif', 'data-temp': '' })
+    barLbl.textContent = 'residual'
+    svg.appendChild(barLbl)
+    const txt = mk('text', { x: vb.x + 10, y: vb.y + 22, fill: '#ccc', 'font-size': '9', 'font-family': 'system-ui, sans-serif', 'data-temp': '' })
+    svg.appendChild(txt)
+    const spiral = phi => {
+      const tphi = Math.tan(phi * Math.PI / 180)
+      const thMax = Math.log(R1 / R0) / tphi
+      const phase = angC - HAND * Math.log(rC / R0) / tphi
+      let d = ''
+      for (let i = 0; i <= N; i++) {
+        const th = thMax * i / N
+        const r = R0 * Math.exp(th * tphi)
+        const a = phase + HAND * th
+        d += (i ? ' L ' : 'M ') + (C.cx + r * Math.cos(a)).toFixed(1) + ' ' + (C.cy + r * Math.sin(a)).toFixed(1)
+      }
+      return d
+    }
+    let locked = false, lockT = 0
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      if (!locked) {
+        const phi = PHI + 14 * Math.exp(-1.1 * t) * Math.cos(4.2 * t)
+        const err = Math.min(1, Math.abs(phi - PHI) / 14)
+        fit.setAttribute('d', spiral(Math.max(8, phi)))
+        bar.setAttribute('y', String(C.cy + 36 - 60 * err))
+        bar.setAttribute('height', String(Math.max(0.5, 60 * err)))
+        txt.textContent = `φ = ${phi.toFixed(1)}°`
+        strands.forEach((p, j) => {
+          const spread = (j - (strands.length - 1) / 2) * 5 * err
+          p.style.transformOrigin = `${C.cx}px ${C.cy}px`
+          p.style.transform = `rotate(${spread.toFixed(2)}deg)` + bake(p)
+        })
+        if (t > 2.7 && err < 0.06) {
+          locked = true
+          lockT = t
+          fit.setAttribute('d', spiral(PHI))
+          fit.setAttribute('stroke', amber.color)
+          strands.forEach(p => { p.style.transform = '' })
+          ring(svg, acx, acy, { r1: 30, ms: 450, color: amber.color, width: 1.4 })
+          txt.textContent = `φ★ = ${PHI.toFixed(1)}°   →   log M• ≈ 5.0  (IMBH candidate)`
+          txt.setAttribute('fill', amber.color)
+          amber.el.style.transformOrigin = `${acx}px ${acy}px`
+          amber.el.style.transform = 'scale(1.06)'
+          void amber.el.getBoundingClientRect()
+          amber.el.style.transition = 'transform 320ms cubic-bezier(.2,1.6,.4,1)'
+          amber.el.style.transform = 'scale(1)'
+        }
+      } else if (t > lockT + 0.55) {
+        arms.forEach(a => a.paths.forEach(p => { p.style.opacity = '1' }))
+        fit.style.transition = 'opacity 400ms ease'
+        fit.style.opacity = '0.35'
+        chip(svg, 'fit the wind, weigh the hole')
+        finish()
+        return
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

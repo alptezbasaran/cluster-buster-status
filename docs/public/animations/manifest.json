@@ -1,0 +1,378 @@
+[
+  {
+    "slug": "01-arm-cascade",
+    "title": "Arm Cascade"
+  },
+  {
+    "slug": "02-spiral-spin",
+    "title": "Spiral Spin"
+  },
+  {
+    "slug": "03-path-trace",
+    "title": "Path Trace"
+  },
+  {
+    "slug": "04-pulse-cycle",
+    "title": "Pulse Cycle"
+  },
+  {
+    "slug": "05-radial-reveal",
+    "title": "Radial Reveal"
+  },
+  {
+    "slug": "06-particle-condense",
+    "title": "Particle Condense"
+  },
+  {
+    "slug": "07-arm-rotate-in",
+    "title": "Arm Rotate In"
+  },
+  {
+    "slug": "08-arm-spotlight",
+    "title": "Arm Spotlight"
+  },
+  {
+    "slug": "09-arm-stagger-scale",
+    "title": "Arm Stagger Scale"
+  },
+  {
+    "slug": "10-arm-flip",
+    "title": "Arm Flip"
+  },
+  {
+    "slug": "11-arm-paint-sweep",
+    "title": "Arm Paint Sweep"
+  },
+  {
+    "slug": "12-arm-pinwheel",
+    "title": "Arm Pinwheel"
+  },
+  {
+    "slug": "13-icon-zoom-in",
+    "title": "Icon Zoom"
+  },
+  {
+    "slug": "14-icon-blur-focus",
+    "title": "Blur Focus"
+  },
+  {
+    "slug": "15-icon-shake-in",
+    "title": "Shake In"
+  },
+  {
+    "slug": "16-icon-jelly",
+    "title": "Jelly Settle"
+  },
+  {
+    "slug": "17-icon-bounce-drop",
+    "title": "Bounce Drop"
+  },
+  {
+    "slug": "18-icon-color-burst",
+    "title": "Color Burst"
+  },
+  {
+    "slug": "19-particle-rain",
+    "title": "Particle Rain"
+  },
+  {
+    "slug": "20-starfield-condense",
+    "title": "Starfield Condense"
+  },
+  {
+    "slug": "21-ink-blot",
+    "title": "Ink Blot"
+  },
+  {
+    "slug": "22-paths-shimmer",
+    "title": "Paths Shimmer"
+  },
+  {
+    "slug": "23-chromatic-shift",
+    "title": "Chromatic Shift"
+  },
+  {
+    "slug": "24-monochrome-to-color",
+    "title": "Monochrome to Color"
+  },
+  {
+    "slug": "25-arm-orbit",
+    "title": "Arm Orbit"
+  },
+  {
+    "slug": "26-arm-wave-in",
+    "title": "Arm Wave In"
+  },
+  {
+    "slug": "27-arm-zigzag",
+    "title": "Arm Zigzag"
+  },
+  {
+    "slug": "28-arm-fan-out",
+    "title": "Arm Fan Out"
+  },
+  {
+    "slug": "29-arm-stretch-squash",
+    "title": "Arm Stretch Squash"
+  },
+  {
+    "slug": "30-arm-bounce-roll",
+    "title": "Arm Bounce Roll"
+  },
+  {
+    "slug": "31-icon-vortex",
+    "title": "Icon Vortex"
+  },
+  {
+    "slug": "32-icon-skew-in",
+    "title": "Icon Skew In"
+  },
+  {
+    "slug": "33-icon-glitch-snap",
+    "title": "Glitch Snap"
+  },
+  {
+    "slug": "34-icon-typewriter",
+    "title": "Icon Typewriter"
+  },
+  {
+    "slug": "35-icon-mosaic-tile",
+    "title": "Mosaic Tile"
+  },
+  {
+    "slug": "36-icon-neon-flicker",
+    "title": "Neon Flicker"
+  },
+  {
+    "slug": "37-icon-laser-trace",
+    "title": "Laser Trace"
+  },
+  {
+    "slug": "38-icon-radar-sweep",
+    "title": "Radar Sweep"
+  },
+  {
+    "slug": "39-icon-lightning-flash",
+    "title": "Lightning Flash"
+  },
+  {
+    "slug": "40-icon-plasma-glow",
+    "title": "Plasma Glow"
+  },
+  {
+    "slug": "41-icon-liquid-fill",
+    "title": "Liquid Fill"
+  },
+  {
+    "slug": "42-icon-wave-pulse",
+    "title": "Wave Pulse"
+  },
+  {
+    "slug": "43-icon-shutter",
+    "title": "Shutter"
+  },
+  {
+    "slug": "44-icon-static-noise",
+    "title": "Static Noise"
+  },
+  {
+    "slug": "45-icon-firework-burst",
+    "title": "Firework Burst"
+  },
+  {
+    "slug": "46-icon-fog-clear",
+    "title": "Fog Clear"
+  },
+  {
+    "slug": "47-icon-letterbox",
+    "title": "Letterbox"
+  },
+  {
+    "slug": "48-icon-pulse-rings",
+    "title": "Pulse Rings"
+  },
+  {
+    "slug": "49-icon-magnetic-snap",
+    "title": "Magnetic Snap"
+  },
+  {
+    "slug": "50-icon-domino-fall",
+    "title": "Domino Fall"
+  },
+  {
+    "slug": "51-radial-outward",
+    "title": "Radial Outward"
+  },
+  {
+    "slug": "52-galaxy-rotation",
+    "title": "Galaxy Rotation"
+  },
+  {
+    "slug": "53-orbit-condense",
+    "title": "Orbit Condense"
+  },
+  {
+    "slug": "54-black-hole-pull",
+    "title": "Black Hole Pull"
+  },
+  {
+    "slug": "55-stellar-nursery",
+    "title": "Stellar Nursery"
+  },
+  {
+    "slug": "56-supernova-ignition",
+    "title": "Supernova Ignition"
+  },
+  {
+    "slug": "57-cosmic-dust-accretion",
+    "title": "Cosmic Dust Accretion"
+  },
+  {
+    "slug": "58-spectrum-hue",
+    "title": "Spectrum Hue"
+  },
+  {
+    "slug": "59-bloom-glow",
+    "title": "Bloom Glow"
+  },
+  {
+    "slug": "60-circuit-spark",
+    "title": "Circuit Spark"
+  },
+  {
+    "slug": "61-singularity-explode",
+    "title": "Singularity Explode"
+  },
+  {
+    "slug": "62-cathode-sweep",
+    "title": "Cathode Sweep"
+  },
+  {
+    "slug": "63-ink-bleed",
+    "title": "Ink Bleed"
+  },
+  {
+    "slug": "64-shatter-assemble",
+    "title": "Shatter Assemble"
+  },
+  {
+    "slug": "65-melt-form",
+    "title": "Melt Form"
+  },
+  {
+    "slug": "66-arm-yank",
+    "title": "Arm Yank"
+  },
+  {
+    "slug": "67-pool-break",
+    "title": "Pool Break"
+  },
+  {
+    "slug": "68-arm-pendulum",
+    "title": "Pendulum Arm"
+  },
+  {
+    "slug": "69-momentum-relay",
+    "title": "Momentum Relay"
+  },
+  {
+    "slug": "70-spring-pluck",
+    "title": "Spring Pluck"
+  },
+  {
+    "slug": "71-tug-of-war",
+    "title": "Tug of War"
+  },
+  {
+    "slug": "72-imbh-busted",
+    "title": "IMBH Busted"
+  },
+  {
+    "slug": "73-lensing-pass",
+    "title": "Lensing Pass"
+  },
+  {
+    "slug": "74-inspiral-chirp",
+    "title": "Inspiral Chirp"
+  },
+  {
+    "slug": "75-spaghettify",
+    "title": "Spaghettify"
+  },
+  {
+    "slug": "76-density-wave",
+    "title": "Density Wave"
+  },
+  {
+    "slug": "77-pitch-wind",
+    "title": "Pitch Wind"
+  },
+  {
+    "slug": "78-pitch-fit",
+    "title": "Pitch Fit"
+  },
+  {
+    "slug": "79-m-phi-relation",
+    "title": "The M\u2013\u03c6 Relation"
+  },
+  {
+    "slug": "80-yell-cluster",
+    "title": "CLUSTERRR!"
+  },
+  {
+    "slug": "81-yell-bust",
+    "title": "BUST!"
+  },
+  {
+    "slug": "82-yell-spin",
+    "title": "SPIIIN!"
+  },
+  {
+    "slug": "83-yell-found-one",
+    "title": "FOUND ONE!"
+  },
+  {
+    "slug": "84-strand-peel",
+    "title": "Strand Peel"
+  },
+  {
+    "slug": "85-unravel-braid",
+    "title": "Unravel & Braid"
+  },
+  {
+    "slug": "86-strand-snap",
+    "title": "Strand Snap"
+  },
+  {
+    "slug": "87-weave-in",
+    "title": "Weave In"
+  },
+  {
+    "slug": "88-mimosa-fold",
+    "title": "Mimosa Fold"
+  },
+  {
+    "slug": "89-boids-condense",
+    "title": "Boids Condense"
+  },
+  {
+    "slug": "90-kuramoto-sync",
+    "title": "Kuramoto Sync"
+  },
+  {
+    "slug": "91-life-spiral",
+    "title": "Life Spiral"
+  },
+  {
+    "slug": "92-canes-morph",
+    "title": "Canes Morph"
+  },
+  {
+    "slug": "93-canes-windup",
+    "title": "Canes Wind-Up"
+  },
+  {
+    "slug": "94-canes-tighten",
+    "title": "Canes Tighten"
+  }
+]

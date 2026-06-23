@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Pendulum Arm</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm pendulum</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 1600,
+  run({ svg, arms, paths, raf, finish }) {
+    // The amber arm unlocks, swings about the spiral center like a damped
+    // pendulum — the other arms lean against the torque — then snaps back
+    // into register with a shudder.
+    showAll(paths)
+    const C = iconCenter(arms)
+    const amber = arms.find(a => a.name === 'amber')
+    const others = arms.filter(a => a !== amber)
+    let tip = { x: C.cx, y: C.cy }, best = -1
+    amber.paths.forEach(p => [0, 1].forEach(u => {
+      const pt = pathPoint(p, u)
+      const d = Math.hypot(pt.x - C.cx, pt.y - C.cy)
+      if (d > best) { best = d; tip = pt }
+    }))
+    const a0 = Math.atan2(tip.y - C.cy, tip.x - C.cx)
+    const A0 = -62 * Math.PI / 180
+    const p1 = { x: C.cx + best * Math.cos(a0 + A0), y: C.cy + best * Math.sin(a0 + A0) }
+    const p2 = { x: C.cx + best * Math.cos(a0 - A0 * 0.55), y: C.cy + best * Math.sin(a0 - A0 * 0.55) }
+    const arc = mk('path', {
+      d: `M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A ${best.toFixed(1)} ${best.toFixed(1)} 0 0 1 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`,
+      fill: 'none', stroke: '#555', 'stroke-width': 0.8, 'stroke-dasharray': '3 4', opacity: 0, 'data-temp': '',
+    })
+    svg.appendChild(arc)
+    const T_J = 0.3, T_L = 0.75
+    let th = 0, w = 0, mode = 0, shud = 0
+    const t0 = performance.now()
+    let last = t0
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const dt = Math.min(0.032, (now - last) / 1000); last = now
+      if (mode === 0) {
+        if (t < T_J) {
+          const j = Math.sin(t * 90) * 0.6 * (1 - t / T_J)
+          amber.el.style.transformOrigin = `${C.cx}px ${C.cy}px`
+          amber.el.style.transform = `rotate(${j.toFixed(2)}deg)`
+        } else {
+          mode = 1
+          arc.style.transition = 'opacity 300ms ease'
+          arc.style.opacity = '0.5'
+        }
+      } else if (mode === 1) {
+        const u = Math.min(1, (t - T_J) / (T_L - T_J))
+        th = A0 * (1 - Math.pow(1 - u, 3))
+        if (u >= 1) { mode = 2; w = 0 }
+      } else if (mode === 2) {
+        w += (-14 * Math.sin(th) - 2.0 * w) * dt
+        th += w * dt
+        if (14 * (1 - Math.cos(th)) + w * w / 2 < 0.12) mode = 3
+      } else if (mode === 3) {
+        w += (-260 * th - 26 * w) * dt
+        th += w * dt
+        if (Math.abs(th) < 0.012 && Math.abs(w) < 0.08) {
+          th = 0; mode = 4; shud = t
+          ring(svg, tip.x, tip.y, { r1: 26, ms: 380, color: amber.color, width: 1.2 })
+          arc.style.opacity = '0'
+          chip(svg, 'gravity is a metronome')
+        }
+      } else {
+        const s = Math.max(0, 1 - (t - shud) / 0.3)
+        svg.style.transformOrigin = '50% 50%'
+        svg.style.transform = s > 0 ? `rotate(${(Math.sin((t - shud) * 80) * 0.7 * s).toFixed(3)}deg)` : ''
+        if (s <= 0) {
+          amber.el.style.transform = ''
+          others.forEach(o => { o.el.style.transform = '' })
+          finish()
+          return
+        }
+      }
+      if (mode >= 1 && mode <= 3) {
+        const deg = th * 180 / Math.PI
+        amber.el.style.transformOrigin = `${C.cx}px ${C.cy}px`
+        amber.el.style.transform = `rotate(${deg.toFixed(2)}deg)`
+        others.forEach(o => {
+          o.el.style.transformOrigin = `${C.cx}px ${C.cy}px`
+          o.el.style.transform = `rotate(${(-deg * 0.05).toFixed(3)}deg)`
+        })
+      }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

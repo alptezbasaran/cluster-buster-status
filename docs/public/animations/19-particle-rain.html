@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Particle Rain</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">particle rain</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1700,
+  run({ svg, arms, paths, raf, finish }) {
+    paths.forEach(p => { p.style.cssText = 'opacity:0; transition: opacity 220ms ease' })
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const vb = svg.viewBox.baseVal
+    const drops = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const b = pathBBox(p)
+      const tx = b.x + b.width/2, ty = b.y + b.height/2
+      const dot = mk('circle', { cx: tx, cy: vb.y - 20 - Math.random()*60, r: 2.4, fill: arm.color, opacity: 0.95 })
+      layer.appendChild(dot)
+      drops.push({ dot, p, sy: parseFloat(dot.getAttribute('cy')), ty, delay: Math.random()*900 })
+    }))
+    const dur = 1100, t0 = performance.now()
+    let done = false
+    function tick(now) {
+      let allArrived = true
+      drops.forEach(d => {
+        const k = Math.max(0, Math.min(1, (now - t0 - d.delay) / dur * 1.6))
+        const e = 1 - Math.pow(1 - k, 2)
+        const y = d.sy + (d.ty - d.sy) * e
+        d.dot.setAttribute('cy', y)
+        if (k >= 1 && d.p.style.opacity !== '1') {
+          d.p.style.opacity = '1'
+          d.dot.setAttribute('opacity', '0')
+        }
+        if (k < 1) allArrived = false
+      })
+      if (!allArrived && now - t0 < 2200) raf(tick)
+      else if (!done) { done = true; layer.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

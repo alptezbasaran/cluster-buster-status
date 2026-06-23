@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Spectrum Hue</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">spectrum hue</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, raf, finish }) {
+    // rAF-driven multi-function filter. CSS transitions over multiple filter functions
+    // are very flaky on iOS Safari; per-frame JS is reliable.
+    showAll(paths)
+    const dur = 1300, t0 = performance.now()
+    function tick(now) {
+      const t = Math.min(1, (now - t0) / dur)
+      const e = 1 - Math.pow(1 - t, 3)
+      const hue = 280 * (1 - e)
+      const sat = 0.4 + 0.6 * e
+      const bright = 0.6 + 0.4 * e
+      svg.style.filter = `hue-rotate(${hue.toFixed(2)}deg) saturate(${sat.toFixed(2)}) brightness(${bright.toFixed(2)})`
+      svg.style.opacity = String(Math.min(1, t * 1.6))
+      if (t < 1) raf(tick)
+      else { svg.style.filter = 'none'; svg.style.opacity = '1'; finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

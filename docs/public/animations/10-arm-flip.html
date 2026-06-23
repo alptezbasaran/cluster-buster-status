@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Arm Flip</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">arm flip</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1600,
+  run({ arms, finish }) {
+    arms.forEach((arm, i) => groupReveal(arm, {
+      from: 'scaleX(-1) scaleY(0.6)',
+      dur: 700, delay: i * 160,
+      ease: 'cubic-bezier(.2,1,.3,1)',
+    }))
+    setTimeout(finish, arms.length * 160 + 850)
+  },
+})
+</script>
+</body>
+</html>

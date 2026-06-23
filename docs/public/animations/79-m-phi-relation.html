@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — The M–φ Relation</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">m phi relation</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox, hideAll, rng, bake, pathPoint, iconCenter, ring, chip } from '../lib/runtime.js'
+anim({
+  hold: 2100,
+  run({ svg, arms, paths, raf, finish }) {
+    // The thesis in one loop: as the overlay spirals wind through pitch values,
+    // a marker slides down the M–φ anticorrelation in the corner plot — and
+    // open arms land it square in the IMBH band.
+    paths.forEach(p => { p.style.cssText = 'opacity:0.45; transition: opacity 450ms ease' })
+    const C = iconCenter(arms)
+    const vb = svg.viewBox.baseVal
+    const rail0 = arms[0].paths.slice().sort((a, b) => b.getTotalLength() - a.getTotalLength())[0]
+    const e0 = pathPoint(rail0, 0), e1 = pathPoint(rail0, 1)
+    const uIn = Math.hypot(e0.x - C.cx, e0.y - C.cy) < Math.hypot(e1.x - C.cx, e1.y - C.cy) ? 0 : 1
+    let cross = 0
+    for (let i = 0; i < 8; i++) {
+      const p1 = pathPoint(rail0, uIn + (1 - 2 * uIn) * i / 8)
+      const p2 = pathPoint(rail0, uIn + (1 - 2 * uIn) * (i + 1) / 8)
+      cross += (p1.x - C.cx) * (p2.y - p1.y) - (p1.y - C.cy) * (p2.x - p1.x)
+    }
+    const HAND = cross >= 0 ? 1 : -1
+    const R0 = 14, R1 = 100, N = 80
+    const spiral = (phase, phi) => {
+      const tphi = Math.tan(phi * Math.PI / 180)
+      const thMax = Math.log(R1 / R0) / tphi
+      let d = ''
+      for (let i = 0; i <= N; i++) {
+        const th = thMax * i / N
+        const r = R0 * Math.exp(th * tphi)
+        const a = phase + HAND * th
+        d += (i ? ' L ' : 'M ') + (C.cx + r * Math.cos(a)).toFixed(1) + ' ' + (C.cy + r * Math.sin(a)).toFixed(1)
+      }
+      return d
+    }
+    const ribbons = arms.map((arm, k) => {
+      const rb = mk('path', { fill: 'none', stroke: arm.color, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: 0, 'data-temp': '' })
+      svg.appendChild(rb)
+      return { rb, phase: -Math.PI / 2 + k * 2 * Math.PI / 5 }
+    })
+    // corner plot
+    const PW = 88, PH = 64
+    const PX = vb.x + vb.width - PW - 6, PY = vb.y + vb.height - PH - 10
+    const mass = phi => 7.0 - 0.17 * (phi - 15)
+    const xOf = phi => PX + 8 + (phi - 5) / 30 * (PW - 16)
+    const yOf = m => PY + PH - 8 - (m - 3.6) / 5.1 * (PH - 18)
+    const panel = mk('g', { 'data-temp': '', opacity: 0 })
+    panel.appendChild(mk('rect', { x: PX, y: PY, width: PW, height: PH, fill: '#121212', stroke: '#333', 'stroke-width': 0.6, rx: 3 }))
+    const band = mk('rect', { x: PX + 8, y: yOf(5), width: PW - 16, height: yOf(3.6) - yOf(5), fill: '#ef5199', opacity: 0.13 })
+    panel.appendChild(band)
+    const bandLbl = mk('text', { x: PX + PW - 12, y: yOf(5) + 9, fill: '#ef5199', 'font-size': '5', 'font-family': 'system-ui, sans-serif', 'text-anchor': 'end', opacity: 0.8 })
+    bandLbl.textContent = 'IMBH'
+    panel.appendChild(bandLbl)
+    let ld = ''
+    for (let phi = 5; phi <= 35; phi += 2) ld += (phi > 5 ? ' L ' : 'M ') + xOf(phi).toFixed(1) + ' ' + yOf(mass(phi)).toFixed(1)
+    panel.appendChild(mk('path', { d: ld, fill: 'none', stroke: '#888', 'stroke-width': 0.8 }))
+    const title = mk('text', { x: PX + 6, y: PY + 9, fill: '#777', 'font-size': '5.5', 'font-family': 'system-ui, sans-serif' })
+    title.textContent = 'log M•  vs  pitch φ'
+    panel.appendChild(title)
+    const marker = mk('circle', { r: 2.2, fill: '#fff' })
+    panel.appendChild(marker)
+    svg.appendChild(panel)
+    const bhDisk = mk('circle', { cx: C.cx, cy: C.cy, r: 7, fill: '#000', 'data-temp': '' })
+    const bhRim = mk('circle', { cx: C.cx, cy: C.cy, r: 7, fill: 'none', stroke: '#fff', 'stroke-width': 0.9, 'data-temp': '' })
+    svg.appendChild(bhDisk); svg.appendChild(bhRim)
+    const PHIS = [8, 14, 20, 26.5], T0 = 0.5, MOVE = 0.5, PAUSE = 0.32
+    let lastPing = -9, pinged = -1, flashed = false
+    const t0 = performance.now()
+    function tick(now) {
+      const t = (now - t0) / 1000
+      const vis = Math.min(1, t / T0)
+      panel.setAttribute('opacity', String(vis))
+      ribbons.forEach(r => r.rb.setAttribute('opacity', String(vis * 0.5)))
+      // piecewise φ(t): move-pause through the stops
+      let phi = 5, k = Math.floor((t - T0) / (MOVE + PAUSE))
+      if (t > T0) {
+        if (k >= PHIS.length) { phi = PHIS[PHIS.length - 1] }
+        else {
+          const w = (t - T0) - k * (MOVE + PAUSE)
+          const prev = k === 0 ? 5 : PHIS[k - 1]
+          const u = Math.min(1, w / MOVE)
+          phi = prev + (PHIS[k] - prev) * u * u * (3 - 2 * u)
+          if (u >= 1 && pinged < k) {
+            pinged = k; lastPing = t
+            ring(svg, xOf(PHIS[k]), yOf(mass(PHIS[k])), { r1: 8, ms: 300, width: 0.8 })
+            const stamp = mk('circle', { cx: xOf(PHIS[k]), cy: yOf(mass(PHIS[k])), r: 1.2, fill: arms[k % 5].color })
+            panel.appendChild(stamp)
+          }
+        }
+      }
+      const m = mass(phi)
+      ribbons.forEach(r => r.rb.setAttribute('d', spiral(r.phase, phi)))
+      marker.setAttribute('cx', String(xOf(phi)))
+      marker.setAttribute('cy', String(yOf(m)))
+      const br = Math.max(1.4, (m - 3.6) * 1.6)
+      bhDisk.setAttribute('r', String(br))
+      bhRim.setAttribute('r', String(br))
+      const pulse = 1 + 0.02 * Math.exp(-Math.pow((t - lastPing) / 0.12, 2))
+      svg.style.transformOrigin = '50% 50%'
+      svg.style.transform = `scale(${pulse.toFixed(4)})`
+      const tEnd = T0 + PHIS.length * (MOVE + PAUSE)
+      if (t > tEnd && !flashed) {
+        flashed = true
+        band.setAttribute('opacity', '0.32')
+        bandLbl.setAttribute('opacity', '1')
+        ring(svg, C.cx, C.cy, { r1: 26, ms: 500, color: '#ef5199', width: 1.2 })
+        paths.forEach(p => { p.style.opacity = '1' })
+        ribbons.forEach(r => { r.rb.style.transition = 'opacity 400ms ease'; r.rb.style.opacity = '0' })
+        chip(svg, 'morphology weighs the black hole')
+      }
+      if (t > tEnd + 0.7) { svg.style.transform = ''; finish(); return }
+      raf(tick)
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

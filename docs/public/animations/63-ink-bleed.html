@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Ink Bleed</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">ink bleed</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    // Each path scales from a tiny dot at its own centroid up to full size while
+    // fading in. Subtle and per-path — different from the icon-level scale-ins
+    // (zoom-in, jelly) because the origin is per-path, not the whole icon.
+    paths.forEach(p => {
+      const b = pathBBox(p)
+      const px = b.x + b.width/2, py = b.y + b.height/2
+      p.style.cssText = `opacity:0; transform: scale(0.04); transform-origin: ${px}px ${py}px`
+    })
+    void svg.getBoundingClientRect()
+    paths.forEach((p, i) => {
+      const delay = (Math.random() * 400) | 0
+      p.style.transition = `transform 800ms cubic-bezier(.2,1.4,.3,1) ${delay}ms, opacity 500ms ease ${delay}ms`
+      p.style.transform = 'scale(1)'
+      p.style.opacity = '1'
+    })
+    setTimeout(finish, 1300)
+  },
+})
+</script>
+</body>
+</html>

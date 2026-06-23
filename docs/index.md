@@ -2,54 +2,42 @@
 layout: home
 hero:
   name: Cluster Buster
-  text: Validating spiral-arm clustering with citizen scientists
-  tagline: A live log of the hyperparameter study behind the Spiral Graph pitch-angle pipeline — and the data it is generating to teach a model what good clustering looks like.
+  text: Live status of the spiral-arm clustering sweep
+  tagline: A 126-config hyperparameter study, validated by Zooniverse volunteers — tracking which clustering settings produce good spiral arms.
   actions:
     - theme: brand
-      text: The Investigation
-      link: /investigation
+      text: Classify on Zooniverse
+      link: https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster
     - theme: alt
-      text: Live set status
+      text: All 126 sets
       link: /sets
     - theme: alt
-      text: How it works
-      link: /the-project
-features:
-  - icon: 🌀
-    title: Volunteers judge the grouping
-    details: Each galaxy's volunteer arm tracings are clustered into individual arms by an algorithm. Citizen scientists then label each result good or bad — validating whether the arms were correctly separated.
-  - icon: 🎛️
-    title: A systematic 126-config sweep
-    details: Rather than one hand-tuned setting, we sweep agreement, correction, and ratio across a full grid — each config uploaded as its own subject set of the same 500 galaxies.
-  - icon: 🧠
-    title: Teaching a model to see
-    details: The good/bad labels become training data for a model that learns the morphology of good clustering — to generalize, not to over-fit this one dataset.
+      text: Data archive (Zenodo)
+      link: https://zenodo.org/records/15882378
 ---
 
-<GalaxySpiral />
+<div class="cb-hero-anim">
+  <iframe src="/cluster-buster-status/animations/52-galaxy-rotation.html" title="Cluster Buster — rotating spiral galaxy" scrolling="no" loading="lazy"></iframe>
+</div>
 
 <StatChips />
 
+## Sweep status
+
+The headline view: every config in the Phase-1 grid, coloured by where it is in the
+pipeline. Two panels for the `ratio_limit` split; hover any cell for its set and subject count.
+
+<SweepGrid />
+
 ## Why this exists
 
-Spiral galaxies wind their arms at a characteristic **pitch angle**, and that angle
-correlates with the mass of the galaxy's central black hole. Measuring it well, at
-scale, is how the [Spiral Graph](https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster)
-team hunts for rare **intermediate-mass black holes**.
+Spiral arms wind at a characteristic **pitch angle** that tracks the mass of a galaxy's
+central black hole — but measuring it depends on first **clustering volunteer arm tracings**
+correctly, and that clustering has knobs. Cluster Buster sweeps those knobs across 126 configs
+and lets Zooniverse volunteers judge which settings actually produce good arms.
 
-The measurement starts with volunteers tracing arms. Those tracings are then
-**clustered into individual arms** — and that clustering has knobs. Pick them badly
-and arms merge or fragment; the pitch measurement inherits the error. The defaults
-we use today work well, but they were chosen by hand.
+<div class="cb-links">
 
-**Cluster Buster** replaces that guesswork with evidence: sweep the clustering
-hyperparameters, show the results to volunteers, and let their good/bad verdicts —
-and a model trained on them — tell us what actually works.
-
-<div class="cb-lead" style="margin-top: 1.5rem">
-
-➜ **[The Project](/the-project)** — the science and the pipeline, end to end.
-**[The Investigation](/investigation)** — the parameter grid and why these bounds.
-**[Sets](/sets)** — live status of every upload set.
+➜ **[All 126 sets](/sets)** · **[The investigation](/investigation)** · **[How it works](/the-project)**
 
 </div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Stellar Nursery</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">stellar nursery</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1900,
+  run({ svg, arms, paths, raf, finish }) {
+    // Stars are sampled along each arm path, twinkle in random offset positions,
+    // then drift to their true points as the path itself fades in.
+    paths.forEach(p => p.style.cssText = 'opacity:0; transition: opacity 600ms ease')
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const stars = []
+    arms.forEach(arm => arm.paths.forEach(p => {
+      const len = p.getTotalLength()
+      const t = p.getAttribute('transform')
+      const m = t && t.match(/translate\(\s*([-\d.]+)[\s,]+([-\d.]+)\s*\)/)
+      const tx = m ? parseFloat(m[1]) : 0, ty = m ? parseFloat(m[2]) : 0
+      const N = Math.max(4, Math.round(len * 0.08))
+      for (let k = 0; k < N; k++) {
+        const pt = p.getPointAtLength(((k + 0.5) / N) * len)
+        const fx = pt.x + tx, fy = pt.y + ty
+        const sx = fx + (Math.random() - 0.5) * 36
+        const sy = fy + (Math.random() - 0.5) * 36
+        const dot = mk('circle', { cx: sx, cy: sy, r: 0.5 + Math.random() * 0.7, fill: '#ffffff', opacity: 0 })
+        layer.appendChild(dot)
+        stars.push({ dot, sx, sy, fx, fy, color: arm.color })
+      }
+    }))
+    const TWINKLE = 700, MOVE = 700, dur = TWINKLE + MOVE
+    const t0 = performance.now()
+    function tick(now) {
+      const elapsed = now - t0
+      if (elapsed < TWINKLE) {
+        stars.forEach(s => s.dot.setAttribute('opacity', String(0.25 + Math.random() * 0.65)))
+      } else {
+        const t = Math.min(1, (elapsed - TWINKLE) / MOVE)
+        const e = 1 - Math.pow(1 - t, 3)
+        stars.forEach(s => {
+          s.dot.setAttribute('cx', s.sx + (s.fx - s.sx) * e)
+          s.dot.setAttribute('cy', s.sy + (s.fy - s.sy) * e)
+          if (e > 0.5) s.dot.setAttribute('fill', s.color)
+          s.dot.setAttribute('opacity', String(0.9 * (1 - e * 0.4)))
+        })
+        paths.forEach(p => p.style.opacity = String(t))
+      }
+      if (elapsed < dur) raf(tick)
+      else { layer.remove(); finish() }
+    }
+    raf(tick)
+  },
+})
+</script>
+</body>
+</html>

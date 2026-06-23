@@ -21,6 +21,10 @@ export default defineConfig({
       { text: 'Investigation', link: '/investigation' },
       { text: 'Sets', link: '/sets' },
       { text: 'Workflow', link: '/workflow' },
+      {
+        text: 'Classify ↗',
+        link: 'https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster',
+      },
     ],
     sidebar: [
       {
@@ -45,8 +49,9 @@ export default defineConfig({
     outline: { level: [2, 3] },
     footer: {
       message:
-        'Cluster Buster · NC Museum of Natural Sciences (Astronomy & Astrophysics Lab) · Coastal Carolina University',
-      copyright: 'Spiral Graph citizen science — built on volunteer arm tracings.',
+        '<a href="https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster">Classify on Zooniverse</a> · <a href="https://zenodo.org/records/15882378">Data archive (Zenodo)</a>',
+      copyright:
+        'Cluster Buster · NC Museum of Natural Sciences (Astronomy & Astrophysics Lab) · Coastal Carolina University · built on Spiral Graph volunteer tracings.',
     },
   },
 })

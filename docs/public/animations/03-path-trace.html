@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Path Trace</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">path trace</div>
+<div id="stage"></div>
+<script type="module">
+import { anim } from '../lib/runtime.js'
+anim({
+  hold: 2200,
+  run({ arms, finish }) {
+    // Stroke-dash draw-on, arm-by-arm, then fill-fade-in.
+    const drawMs = 600, fillMs = 400, gap = 220
+    arms.forEach((arm, i) => {
+      const start = i * gap
+      arm.paths.forEach(p => {
+        const len = p.getTotalLength()
+        p.style.opacity = '1'
+        p.style.fill = 'transparent'
+        p.style.stroke = arm.color
+        p.style.strokeWidth = '1.2'
+        p.style.strokeDasharray = String(len)
+        p.style.strokeDashoffset = String(len)
+        p.style.transition = `stroke-dashoffset ${drawMs}ms ease ${start}ms`
+        requestAnimationFrame(() => { p.style.strokeDashoffset = '0' })
+        setTimeout(() => {
+          p.style.transition = `fill ${fillMs}ms ease`
+          p.style.fill = arm.color
+        }, start + drawMs)
+      })
+    })
+    setTimeout(finish, arms.length * gap + drawMs + fillMs + 400)
+  },
+})
+</script>
+</body>
+</html>

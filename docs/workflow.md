@@ -61,9 +61,3 @@ counts) are written back to `set-status.json`, which drives the [Sets](/sets) ta
 | Match manifest ↔ run.json | guard before upload |
 | Upload to Zooniverse | `zooniverse_upload.py` (needs creds) |
 | Update this site | edit `set-status.json` → push → GitHub Actions redeploys |
-
-## This site
-
-A [VitePress](https://vitepress.dev) site, deployed by GitHub Actions on every push
-to `main`. The [Sets](/sets) table is generated at build time from
-`phase1-configs.csv` + `set-status.json`, so updating status is a one-file edit.

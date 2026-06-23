@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cluster Buster — Shutter</title>
+<link rel="stylesheet" href="../lib/page.css">
+</head>
+<body>
+<div class="title">icon shutter</div>
+<div id="stage"></div>
+<script type="module">
+import { anim, mk, fadeIn, ARMS, ARM_COLORS, NS, groupReveal, showAll, pathBBox } from '../lib/runtime.js'
+anim({
+  hold: 1500,
+  run({ svg, paths, finish }) {
+    showAll(paths)
+    const vb = svg.viewBox.baseVal
+    const layer = mk('g', { 'data-temp': '' })
+    svg.appendChild(layer)
+    const bars = 6
+    const bw = vb.width / bars
+    const els = []
+    for (let i = 0; i < bars; i++) {
+      const r = mk('rect', { x: vb.x + i*bw, y: vb.y, width: bw, height: vb.height, fill:'#0a0a0a' })
+      layer.appendChild(r); els.push(r)
+    }
+    els.forEach((r, i) => {
+      r.style.transformOrigin = `${vb.x + i*bw}px ${vb.y + vb.height/2}px`
+    })
+    void svg.getBoundingClientRect()
+    els.forEach((r, i) => {
+      r.style.transition = `transform 600ms cubic-bezier(.6,0,.2,1) ${i * 80}ms`
+      r.style.transform = 'scaleX(0)'
+    })
+    setTimeout(() => { layer.remove(); finish() }, els.length * 80 + 700)
+  },
+})
+</script>
+</body>
+</html>

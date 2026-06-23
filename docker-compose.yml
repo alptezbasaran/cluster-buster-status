@@ -1,0 +1,22 @@
+# Local development / build for the Cluster Buster status site.
+#
+#   docker compose up docs                  -> live dev server at
+#                                              http://localhost:5173/cluster-buster-status/
+#   docker compose run --rm docs npm run docs:build   -> production build into
+#                                                        docs/.vitepress/dist (host)
+#
+# CI uses the Dockerfile directly (see .github/workflows/deploy.yml).
+
+services:
+  docs:
+    image: node:20-alpine
+    working_dir: /src
+    volumes:
+      - .:/src
+      - cb_node_modules:/src/node_modules
+    command: sh -c "npm install && npm run docs:dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - "5173:5173"
+
+volumes:
+  cb_node_modules:

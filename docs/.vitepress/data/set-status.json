@@ -25,139 +25,139 @@
   },
   "cluster-buster-004": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "746d73d1",
     "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-005": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "e7ba151c",
     "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-006": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "b01a996c",
     "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-007": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "94558d0a",
     "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-008": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "41de63da",
     "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-009": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "84c6621e",
     "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-010": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "84651859",
     "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-011": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "c1d994a9",
     "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-012": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "d64410bd",
     "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-013": {
     "clustered": true,
-    "uploaded": false,
+    "uploaded": true,
     "hash": "7cd439bd",
     "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-014": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "a75f9ca4",
+    "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-015": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "decef556",
+    "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-016": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "0a7a239a",
+    "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-017": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "81dca886",
+    "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-018": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "a931ea15",
+    "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-019": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "afc07882",
+    "subjects": 500,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-020": {
-    "clustered": false,
-    "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "clustered": true,
+    "uploaded": true,
+    "hash": "7c201b32",
+    "subjects": 495,
     "classifications": 0,
-    "live": false
+    "live": true
   },
   "cluster-buster-021": {
     "clustered": false,

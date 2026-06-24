@@ -64,42 +64,42 @@
     "live": false
   },
   "cluster-buster-009": {
-    "clustered": false,
+    "clustered": true,
     "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "hash": "84c6621e",
+    "subjects": 500,
     "classifications": 0,
     "live": false
   },
   "cluster-buster-010": {
-    "clustered": false,
+    "clustered": true,
     "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "hash": "84651859",
+    "subjects": 495,
     "classifications": 0,
     "live": false
   },
   "cluster-buster-011": {
-    "clustered": false,
+    "clustered": true,
     "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "hash": "c1d994a9",
+    "subjects": 500,
     "classifications": 0,
     "live": false
   },
   "cluster-buster-012": {
-    "clustered": false,
+    "clustered": true,
     "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "hash": "d64410bd",
+    "subjects": 495,
     "classifications": 0,
     "live": false
   },
   "cluster-buster-013": {
-    "clustered": false,
+    "clustered": true,
     "uploaded": false,
-    "hash": null,
-    "subjects": null,
+    "hash": "7cd439bd",
+    "subjects": 500,
     "classifications": 0,
     "live": false
   },

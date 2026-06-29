@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperparameter impact · Cluster Buster</title>
+<meta name="description" content="Watch consensus spiral arms change as you tune the clustering hyperparameters — the Zooniverse study grid and the full tune set, served statically.">
+<style>
+  :root{
+    --bg:#0a0c13; --bg2:#11141e; --panel:#05070c; --inset:#181d2a;
+    --line:#232a3a; --text:#e7eaf0; --muted:#8b93a7; --faint:#5a6275;
+    --accent:#cf4fd0; --accent-deep:#92278f; --accent-soft:#2c1430; --good:#43d6a0;
+    --radius:14px;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{
+    background:radial-gradient(1200px 620px at 50% -10%, #19132a 0%, var(--bg) 62%);
+    color:var(--text); font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; padding:30px 20px 60px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  .mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+
+  header{margin-bottom:22px}
+  h1{font-size:clamp(21px,3.2vw,31px);font-weight:700;letter-spacing:-.02em;margin:0 0 8px}
+  h1 .em{color:var(--accent)}
+  .sub{color:var(--muted);max-width:74ch;font-size:14.5px;margin:0}
+
+  .viewtoggle{display:inline-flex;gap:4px;margin:18px 0 10px;background:var(--bg2);
+    border:1px solid var(--line);border-radius:11px;padding:4px}
+  .viewtoggle button{cursor:pointer;border:0;background:transparent;color:var(--muted);
+    font:inherit;font-weight:600;font-size:14px;padding:8px 18px;border-radius:8px;transition:.15s}
+  .viewtoggle button[aria-pressed="true"]{background:linear-gradient(180deg,var(--accent-deep),#6e1d6c);color:#fff}
+  .blurb{color:var(--faint);font-size:13px;margin:4px 0 0;max-width:74ch}
+  .blurb code{background:var(--inset);padding:1px 6px;border-radius:6px;font-size:11.5px;color:#cdd3e0}
+
+  .galaxies{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+  .gx{text-align:left;cursor:pointer;background:var(--bg2);color:inherit;border:1px solid var(--line);
+    border-radius:var(--radius);padding:13px 14px;transition:border-color .15s,background .15s,transform .08s}
+  .gx:hover{border-color:#39455c;background:#141826} .gx:active{transform:translateY(1px)}
+  .gx[aria-pressed="true"]{border-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),#11141e)}
+  .gx .name{font-weight:650;font-size:14.5px;display:flex;align-items:center;gap:7px}
+  .gx .dot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex:0 0 auto}
+  .gx[aria-pressed="true"] .dot{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .gx .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .gx .desc{color:var(--faint);font-size:11.5px;margin-top:6px;min-height:3.4em;line-height:1.35}
+
+  .stage{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .stagebar{display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:10px 16px;border-bottom:1px solid var(--line);background:#0d111b;flex-wrap:wrap}
+  .lanes{display:flex;gap:16px;color:var(--faint);font-size:11.5px;flex-wrap:wrap}
+  .lanes b{color:var(--muted);font-weight:600}
+  .right{display:flex;align-items:center;gap:14px}
+  .setbadge{display:none;font-size:11.5px;color:var(--accent);border:1px solid var(--accent-deep);
+    border-radius:999px;padding:3px 10px;background:var(--accent-soft);white-space:nowrap}
+  .setbadge.show{display:inline-block}
+  .arms{display:flex;align-items:baseline;gap:7px;white-space:nowrap}
+  .arms .n{font-size:25px;font-weight:750;color:var(--accent);min-width:1.3ch;text-align:right;
+    transition:transform .18s cubic-bezier(.2,1.4,.4,1)}
+  .arms .n.bump{transform:scale(1.3)} .arms .lab{color:var(--muted);font-size:12px}
+  .imgbox{position:relative;background:var(--panel);display:flex;justify-content:center;align-items:center;min-height:240px}
+  .imgbox img{display:block;width:100%;height:auto}
+  .empty{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;color:var(--muted);gap:6px;padding:20px}
+  .empty.show{display:flex} .empty .big{font-size:16px;font-weight:600;color:#c7ccd8}
+  .empty .cfg{font-size:11.5px;color:var(--faint)}
+  .robust{display:none;align-items:center;gap:8px;color:var(--good);font-size:12.5px;
+    padding:9px 16px;background:#0c1620;border-top:1px solid var(--line)}
+  .robust.show{display:flex}
+  .cfgline{font-size:11.5px;color:var(--faint);padding:9px 16px;border-top:1px solid var(--line);background:#0d111b}
+  .cfgline b{color:var(--muted);font-weight:600}
+
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px}
+  .knob{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+  .knob .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .knob .klabel{font-weight:600;font-size:13.5px} .knob .kval{font-size:17px;font-weight:700;color:var(--accent)}
+  .knob .khelp{color:var(--faint);font-size:11px;margin:5px 0 13px;min-height:2.4em;line-height:1.3}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
+    background:var(--inset);outline:none;margin:0;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:19px;height:19px;
+    border-radius:50%;background:var(--accent);border:3px solid #1a0f1a;box-shadow:0 0 0 1px var(--accent),0 2px 6px rgba(0,0,0,.5)}
+  input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(--accent);border:3px solid #1a0f1a}
+  .ticks{display:flex;justify-content:space-between;margin-top:8px}
+  .ticks span{font-size:10.5px;color:var(--faint)} .ticks span.on{color:var(--accent);font-weight:700}
+
+  .held{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:var(--faint)}
+  .held .lead{color:var(--muted);font-weight:600}
+  .chip{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;color:var(--muted)}
+  .chip b{color:var(--text)} .chip i{color:var(--faint);font-style:normal;font-size:10.5px;margin-left:5px}
+
+  footer{color:var(--faint);font-size:12px;margin-top:26px;line-height:1.7}
+  footer a{color:var(--muted)} footer a:hover{color:var(--accent)}
+  @media(max-width:820px){.galaxies{grid-template-columns:1fr 1fr}.gx .desc{min-height:0}}
+  @media(max-width:520px){.galaxies{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hyperparameter impact — <span class="em">spiral-arm clustering</span></h1>
+    <p class="sub">The same volunteer galaxy tracings, re-clustered into consensus arms. Drive the
+      sliders and watch the arms split, merge, and vanish. Every frame is a real clustering run,
+      rendered offline and served statically — no compute on this page.</p>
+    <div class="viewtoggle" id="viewtoggle">
+      <button data-view="simple">Zooniverse grid</button>
+      <button data-view="full">Full tune set</button>
+    </div>
+    <p class="blurb" id="blurb"></p>
+  </header>
+
+  <div class="galaxies" id="galaxies"></div>
+
+  <div class="stage">
+    <div class="stagebar">
+      <div class="lanes">
+        <span><b>Composite</b> arms over tracings</span>
+        <span><b>Consensus</b> arms only</span>
+        <span><b>Raw</b> volunteer tracings</span>
+      </div>
+      <div class="right">
+        <span class="setbadge mono" id="setBadge"></span>
+        <span class="arms"><span class="n" id="armN">–</span><span class="lab">consensus arms</span></span>
+      </div>
+    </div>
+    <div class="imgbox">
+      <img id="panel" alt="clustered galaxy panel">
+      <div class="empty" id="emptyMsg">
+        <div class="big">No consensus arms at this configuration</div>
+        <div class="cfg" id="emptyCfg"></div>
+      </div>
+    </div>
+    <div class="cfgline mono" id="cfgline"></div>
+    <div class="robust" id="robust">◆ Steadiest galaxy — the consensus barely moves across this grid. Compare with the sensitive ones.</div>
+  </div>
+
+  <div class="controls" id="controls"></div>
+  <div class="held" id="held"></div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script src="manifest.js"></script>
+<script>
+(function(){
+  const D = window.DEMO;
+  const r10 = r => Math.round(r*10);
+  const nearest = (v,arr)=>arr.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)?x:b, arr[0]);
+  const fmt = (knob,v)=> knob.key==='ratio' ? Number(v).toFixed(1) : v;
+  const byId = g => D.galaxies.find(x=>x.gid===g);
+
+  const state = {view:'simple', gid:D.galaxies[0].gid, vals:{agree:65, corr:55, ratio:1.5, supp:4}};
+  // deep link: ?v=&g=&agree=&corr=&ratio=&supp=
+  const Q=new URLSearchParams(location.search);
+  if(Q.get('v')==='full'||Q.get('v')==='simple')state.view=Q.get('v');
+  if(Q.has('g')&&byId(Q.get('g')))state.gid=Q.get('g');
+  ['agree','corr','supp'].forEach(k=>{ if(Q.has(k)&&!isNaN(+Q.get(k)))state.vals[k]=+Q.get(k); });
+  if(Q.has('ratio')&&!isNaN(+Q.get('ratio')))state.vals.ratio=+Q.get('ratio');
+
+  const view = ()=>D.views[state.view];
+  const preloaded={};
+  function preload(){
+    const tag=state.gid+'|'+state.view; if(preloaded[tag])return; preloaded[tag]=true;
+    const p=D.panels[state.gid][state.view];
+    for(const k in p){ if(p[k].f){const im=new Image();im.src=p[k].f;} }
+  }
+  // snap each knob of the active view into its axis
+  function snap(){ view().knobs.forEach(kn=>{ if(!kn.values.includes(state.vals[kn.key]))
+    state.vals[kn.key]=nearest(state.vals[kn.key] ?? kn.values[Math.floor(kn.values.length/2)], kn.values); }); }
+
+  // ---- galaxy cards ----
+  const gxWrap=document.getElementById('galaxies');
+  D.galaxies.forEach(g=>{
+    const b=document.createElement('button');
+    b.className='gx'; b.dataset.gid=g.gid;
+    b.innerHTML=`<div class="name"><span class="dot"></span>${g.label}</div>`+
+      `<div class="meta mono" data-range></div><div class="desc">${g.descriptor}</div>`;
+    b.onclick=()=>{ state.gid=g.gid; preload(); syncGalaxies(); renderPanel(); };
+    gxWrap.appendChild(b);
+  });
+  function syncGalaxies(){
+    [...gxWrap.children].forEach(c=>{
+      const g=byId(c.dataset.gid); const r=g[state.view];
+      c.setAttribute('aria-pressed', c.dataset.gid===state.gid);
+      c.querySelector('[data-range]').textContent=
+        `${g.traces} tracings · ${r.arm_min===r.arm_max?r.arm_min+' arms':r.arm_min+'–'+r.arm_max+' arms'}`;
+    });
+  }
+
+  // ---- controls (rebuilt per view) ----
+  const ctl=document.getElementById('controls'), heldEl=document.getElementById('held');
+  function buildControls(){
+    ctl.innerHTML='';
+    view().knobs.forEach(kn=>{
+      const i0=Math.max(0, kn.values.indexOf(state.vals[kn.key]));
+      const w=document.createElement('div'); w.className='knob';
+      w.innerHTML=`<div class="top"><span class="klabel">${kn.label}</span><span class="kval mono" data-v></span></div>`+
+        `<div class="khelp">${kn.help}</div>`+
+        `<input type="range" min="0" max="${kn.values.length-1}" step="1" value="${i0}">`+
+        `<div class="ticks">${kn.values.map(v=>`<span class="mono">${fmt(kn,v)}</span>`).join('')}</div>`;
+      const inp=w.querySelector('input'), vEl=w.querySelector('[data-v]'), ticks=w.querySelectorAll('.ticks span');
+      const paint=()=>{ const i=+inp.value; vEl.textContent=fmt(kn,kn.values[i]); ticks.forEach((t,k)=>t.classList.toggle('on',k===i)); };
+      inp.addEventListener('input',()=>{ state.vals[kn.key]=kn.values[+inp.value]; paint(); renderPanel(); });
+      paint(); ctl.appendChild(w);
+    });
+    heldEl.innerHTML='<span class="lead">held constant:</span>'+
+      view().held.map(h=>`<span class="chip">${h.label} <b>${h.value}</b>${h.note?`<i>${h.note}</i>`:''}</span>`).join('');
+  }
+
+  // ---- panel render ----
+  const panel=document.getElementById('panel'), armN=document.getElementById('armN'),
+        robust=document.getElementById('robust'), setBadge=document.getElementById('setBadge'),
+        emptyMsg=document.getElementById('emptyMsg'), emptyCfg=document.getElementById('emptyCfg'),
+        cfgline=document.getElementById('cfgline');
+  let lastArm=null;
+  function key(){ const v=state.vals; return state.view==='simple'
+      ? `a${v.agree}_c${v.corr}_r${r10(v.ratio)}`
+      : `c${v.corr}_t${v.supp}_a${v.agree}_r${r10(v.ratio)}`; }
+  function renderPanel(){
+    const g=byId(state.gid), rec=D.panels[state.gid][state.view][key()];
+    if(!rec)return;
+    const isEmpty = rec.empty || !rec.f;
+    panel.style.visibility = isEmpty ? 'hidden' : 'visible';
+    emptyMsg.classList.toggle('show', isEmpty);
+    if(!isEmpty) panel.src = rec.f;
+    if(isEmpty) emptyCfg.textContent = cfgText();
+    // arm badge
+    if(rec.arms!==lastArm){ armN.textContent=rec.arms; lastArm=rec.arms;
+      armN.classList.remove('bump'); void armN.offsetWidth; armN.classList.add('bump'); }
+    // subject-set badge (simple view only)
+    if(state.view==='simple' && rec.set){
+      setBadge.classList.add('show');
+      setBadge.textContent = rec.arms===0 ? `${rec.set} · galaxy skipped (0 arms)` : `≡ ${rec.set}`;
+    } else setBadge.classList.remove('show');
+    // config readout
+    cfgline.innerHTML = view().knobs.map(kn=>`<b>${kn.cfg.split('.').pop()}</b> ${fmt(kn,state.vals[kn.key])}`).join(' · ');
+    // robust banner
+    const r=g[state.view]; robust.classList.toggle('show', r.arm_min===r.arm_max);
+  }
+  function cfgText(){ return view().knobs.map(kn=>`${kn.cfg.split('.').pop()}=${fmt(kn,state.vals[kn.key])}`).join('  '); }
+
+  // ---- view toggle ----
+  const vt=document.getElementById('viewtoggle'), blurb=document.getElementById('blurb');
+  function setView(v){
+    state.view=v; snap();
+    [...vt.children].forEach(b=>b.setAttribute('aria-pressed', b.dataset.view===v));
+    blurb.innerHTML=view().blurb;
+    buildControls(); syncGalaxies(); preload(); renderPanel();
+  }
+  [...vt.children].forEach(b=>b.onclick=()=>setView(b.dataset.view));
+
+  document.getElementById('footer').innerHTML =
+    `Precomputed demo · ${D.galaxies.length} galaxies · Simple = the ${D.project.n_sets}-config Phase-1 grid volunteers classify · `+
+    `<a href="${D.project.zooniverse}" target="_blank" rel="noopener">Classify on Zooniverse ↗</a> · `+
+    `<a href="https://alptezbasaran.github.io/arm_grouping/usage/tune/" target="_blank" rel="noopener">Tune mode docs ↗</a>. `+
+    `The live tool re-clusters on every change in &lt;1&nbsp;s.`;
+
+  setView(state.view);
+})();
+</script>
+</body>
+</html>

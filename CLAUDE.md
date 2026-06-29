@@ -35,6 +35,10 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 - `run_set.py <set>` — cluster the 500-set with one config + build the bundle.
 - `upload_set.py <set>` — the **guard** (manifest ↔ run.json ↔ phase1-configs 3-way
   hyperparameter match) → `--verify-only` → upload → update `set-status.json`.
+- `docs/public/demo/` + `docs/demo.md` — the **interactive hyperparameter explorer** (the
+  *Explore* page). Static, precomputed, no server: 780 WebP panels for 4 galaxies, two views
+  (Simple = the 126-config Phase-1 grid with per-cell `cluster-buster-NNN` badges; Full = the
+  strong knobs, combinable). Generated in **arm_grouping**, synced here — see "Regenerating the demo".
 
 ## Run + upload a set
 
@@ -61,6 +65,22 @@ Base path is `/cluster-buster-status/`.
 - Don't re-enable `lastUpdated` in `config.mts` — it shells out to `git`, which the build
   container lacks (and `.dockerignore` excludes `.git`). It breaks the Docker build.
 - Use `node:20-slim`, not alpine (musl trips Vite's rollup native binary).
+
+## Regenerating the demo
+
+The *Explore* page (`docs/public/demo/`) is **precomputed in the arm_grouping repo** and
+copied here — the renderer and its `.venv` live there, not in this repo:
+
+```bash
+cd ~/Desktop/projects/arm_grouping
+.venv/bin/python -m analysis_scripts.gen_tune_demo               # → docs/demo/ (~780 WebP, 16 MB)
+rsync -a --delete docs/demo/ ../astro/cluster-buster-status/docs/public/demo/
+```
+
+Edit galaxies / knob axes at the top of `gen_tune_demo.py`. The Simple view's axes and the
+per-cell `cluster-buster-NNN` mapping are read from this repo's `phase1-configs.csv`, so the
+demo and the real subject sets stay in lockstep. `docs/demo.md` embeds the standalone page via
+an iframe (`layout: page`, no sidebar).
 
 ## Conventions
 

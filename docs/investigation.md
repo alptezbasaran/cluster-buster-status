@@ -35,6 +35,12 @@ galaxies.
 produce byte-identical clustering to 1.5 — duplicate examples would only bias the
 model.
 
+::: tip See it for yourself
+Drive these three knobs on real galaxies in the **[interactive explorer](/demo)** — the
+*Zooniverse grid* tab is exactly this 126-config sweep, and each cell shows the
+`cluster-buster-NNN` subject set it maps to.
+:::
+
 ## Held constant (this phase)
 
 | Knob | Value | Why fixed |

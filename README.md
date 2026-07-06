@@ -43,6 +43,25 @@ The 4/5/6-arm fraction is enriched from ~19% (of 859) to 32% (of 500).
 - The 500-set, materialized for runs as symlinks:
   `astro/cluster-buster/artifacts/cluster_buster_galaxy_set/` (one `<gid>` → `../reviewed_859/tracings/<gid>`).
 - The arm-clustering pipeline (`arm_grouping`) points its `[parallel].folder_list` at that set folder.
+- **2026-07-06:** the set's tracings were manually cleaned — see
+  [Trace cleaning](#trace-cleaning-2026-07-06) below for the record and the corpus boundary.
+
+## Trace cleaning (2026-07-06)
+
+The 500-set tracings were reviewed one galaxy at a time with arm_grouping's
+`/clean` console page: **500/500 galaxies reviewed; 966 outlier tracings
+excluded (2.6%) across 389 galaxies; 35,871 active tracings remain** (no galaxy
+below 24 active tracings). An excluded tracing is *parked in place* —
+`arm_<n>_<gid>.fits` → `arm_<n>_<gid>.fits.excluded` — through the
+`cluster_buster_galaxy_set/<gid>` symlinks, so the clustering glob
+(`arms/*.fits`) never sees it and the rename stays fully reversible.
+
+- **`cleaning/excluded_manifest_2026-07-06.csv`** — the frozen record: one row
+  per excluded tracing (`gid, trace_filename`; 966 rows).
+- **Corpus boundary: sets `001`–`020` clustered the *pre-cleaning* corpus;
+  sets `021+` run on the *cleaned* corpus.** Forward-only by decision —
+  001–020 are not re-run. `run_set.py` prints the corpus state and writes a
+  `corpus_state.txt` into each run dir, so every run records which corpus it saw.
 
 ## Phase-1 config sampling
 

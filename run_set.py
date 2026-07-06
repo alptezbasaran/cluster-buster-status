@@ -55,6 +55,23 @@ def main() -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     os.chdir(outdir)
 
+    # Corpus provenance: sets 001-020 clustered the pre-cleaning corpus;
+    # 021+ run on the cleaned set (2026-07-06 pass — outliers parked as
+    # .fits.excluded are invisible to the arms/*.fits glob). Record what
+    # this run actually saw, both on stdout and durably in the run dir.
+    active = excluded = 0
+    for folder in cfg["parallel"]["folder_list"]:
+        for arms in Path(folder).glob("*/arms"):
+            active += sum(1 for _ in arms.glob("*.fits"))
+            excluded += sum(1 for _ in arms.glob("*.fits.excluded"))
+    corpus_note = (
+        f"[{set_name}] corpus: {active} active tracings, {excluded} parked "
+        "(.fits.excluded; cleaned set — see cleaning/excluded_manifest_2026-07-06.csv "
+        "in cluster-buster-status)"
+    )
+    print(corpus_note)
+    (outdir / "corpus_state.txt").write_text(corpus_note + "\n")
+
     print(
         f"[{set_name}] agree={row['agreement_threshold']} corr={row['correction_agreement']} "
         f"ratio={row['ratio_limit']} trace_support={row['trace_support']} nproc={nproc}"

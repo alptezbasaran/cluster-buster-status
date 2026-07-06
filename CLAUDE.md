@@ -28,6 +28,12 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 ## Key files
 
 - `selected-500.csv` — the **Cluster Buster galaxy set** (500 gids; seed `20260622`).
+- `cleaning/excluded_manifest_2026-07-06.csv` — the **trace-cleaning record** (966 excluded
+  tracings across 389 galaxies; the 2026-07-06 manual pass with arm_grouping's `/clean`).
+  **Corpus boundary: sets 001-020 = pre-cleaning, 021+ = cleaned corpus** (forward-only;
+  001-020 are not re-run). Exclusions live as `.fits.excluded` renames in the tracings DB —
+  invisible to the clustering glob; `run_set.py` records the corpus state per run
+  (`corpus_state.txt` in the run dir).
 - `phase1-configs.csv` — the **126-config grid**: `agreement_threshold` (50–90/5) ×
   `correction_agreement` (50–80/5) × `ratio_limit` ({1.0, 1.5}). One row = one set.
 - `docs/.vitepress/data/set-status.json` — **live per-set status** (clustered / uploaded

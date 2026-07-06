@@ -74,7 +74,10 @@ def main() -> None:
 
     print(
         f"[{set_name}] agree={row['agreement_threshold']} corr={row['correction_agreement']} "
-        f"ratio={row['ratio_limit']} trace_support={row['trace_support']} nproc={nproc}"
+        f"ratio={row['ratio_limit']} trace_support={row['trace_support']} "
+        f"longest_arm={row['longest_arm_support']} "
+        f"filter=({row['lower_perc']},{row['upper_perc']}) "
+        f"blurs={row['vanilla_blur']}/{row['arm_correction_blur']} nproc={nproc}"
     )
     print(f"[{set_name}] output dir: {outdir}")
     run(cfg)

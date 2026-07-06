@@ -31,26 +31,42 @@ bundle = max(run_dir.glob(f"{set_name}_*"), key=lambda p: p.stat().st_mtime)
 run_json = max(run_dir.glob("outputs_*/run.json"), key=lambda p: p.stat().st_mtime)
 file_hash = bundle.name.split("_")[-1]
 
-# --- 3-way hyperparameter guard ---
+# --- hyperparameter guard: EVERY phase1-configs knob, every time ---
+# 3-way (phase1-configs ↔ run.json ↔ bundle manifest) for the 5 knobs the
+# manifest carries as #columns; 2-way (phase1-configs ↔ run.json) for the
+# 4 knobs the manifest schema doesn't record (blurs + outlier percentiles).
+# run.json holds the config the run ACTUALLY used, so a 2-way match still
+# proves correct assignment end-to-end.
 exp = next(r for r in csv.DictReader(MANIFEST.open()) if r["set"] == set_name)
 cfg = json.load(run_json.open())["config"]
 with (bundle / "manifest.csv").open() as f:
     mrow = next(csv.DictReader(f))
 
-triples = {
-    "agreement": (exp["agreement_threshold"], cfg["vanilla"]["agreement_threshold"], mrow["#agreement_threshold"]),
-    "correction": (exp["correction_agreement"], cfg["arm_correction"]["correction_agreement"], mrow["#correction_agreement"]),
-    "ratio": (exp["ratio_limit"], cfg["decide_longest_arm"]["ratio_limit"], mrow["#ratio_limit"]),
-}
+KNOBS = [
+    # phase1-configs column   run.json (section, key)                  manifest column (None = absent)
+    ("agreement_threshold", ("vanilla", "agreement_threshold"), "#agreement_threshold"),
+    ("correction_agreement", ("arm_correction", "correction_agreement"), "#correction_agreement"),
+    ("ratio_limit", ("decide_longest_arm", "ratio_limit"), "#ratio_limit"),
+    ("trace_support", ("vanilla", "trace_support"), "#trace_support"),
+    ("longest_arm_support", ("decide_longest_arm", "longest_arm_support"), "#longest_arm_support"),
+    ("lower_perc", ("filter_outliers", "lower_perc"), None),
+    ("upper_perc", ("filter_outliers", "upper_perc"), None),
+    ("vanilla_blur", ("vanilla", "blur"), None),
+    ("arm_correction_blur", ("arm_correction", "blur"), None),
+]
 print(f"[{set_name}] guard (expected | run.json | manifest):")
 ok = True
-for k, (e, r, m) in triples.items():
-    match = len({float(e), float(r), float(m)}) == 1
+for col, (sec, key), mcol in KNOBS:
+    e = exp[col]
+    r = cfg[sec][key]
+    m = mrow[mcol] if mcol else None
+    vals = {float(e), float(r)} | ({float(m)} if m is not None else set())
+    match = len(vals) == 1
     ok = ok and match
-    print(f"  {k:11s} {e} | {r} | {m}   {'OK' if match else 'MISMATCH'}")
+    print(f"  {col:22s} {e} | {r} | {m if m is not None else '-'}   {'OK' if match else 'MISMATCH'}")
 if not ok:
     sys.exit(f"GUARD FAILED for {set_name}: manifest / run.json / phase1-configs disagree — NOT uploading")
-print(f"[{set_name}] guard PASSED ({bundle.name})")
+print(f"[{set_name}] guard PASSED, all 9 knobs ({bundle.name})")
 
 # --- verify bundle (offline) ---
 subprocess.run([str(PY), str(REPO / "zooniverse_upload.py"), "--verify-only", str(bundle)], check=True)

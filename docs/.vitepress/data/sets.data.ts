@@ -32,9 +32,13 @@ export default {
         hash: st.hash || null,
         subjects: st.subjects ?? null,
         classifications: st.classifications ?? 0,
+        retired: st.retired ?? null,
+        completeness: st.completeness ?? null,
         state,
       }
     })
+
+    const meta = status._meta || null
 
     const counts = {
       total: sets.length,
@@ -43,7 +47,7 @@ export default {
       uploaded: sets.filter((s) => s.state === 'uploaded').length,
     }
 
-    return { sets, counts }
+    return { sets, counts, meta }
   },
 }
 
@@ -59,6 +63,20 @@ export interface SetRow {
   hash: string | null
   subjects: number | null
   classifications: number
+  retired: number | null
+  completeness: number | null
   state: 'planned' | 'clustered' | 'uploaded'
 }
-export declare const data: { sets: SetRow[]; counts: Record<string, number> }
+export declare const data: {
+  sets: SetRow[]
+  counts: Record<string, number>
+  meta: {
+    workflow_id: string
+    workflow_active: boolean
+    linked_subject_sets: number
+    classifications: number
+    retired_subjects: number
+    subjects: number
+    synced: string
+  } | null
+}

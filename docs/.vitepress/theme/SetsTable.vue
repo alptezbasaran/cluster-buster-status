@@ -42,7 +42,7 @@ const rows = computed(() =>
           <th>Ratio</th>
           <th>Status</th>
           <th>Subjects</th>
-          <th>Classifications</th>
+          <th>Retired</th>
         </tr>
       </thead>
       <tbody>
@@ -53,9 +53,23 @@ const rows = computed(() =>
           <td>{{ s.ratio }}</td>
           <td><span class="cb-badge" :class="s.state">{{ s.state }}</span></td>
           <td>{{ s.subjects ?? '—' }}</td>
-          <td>{{ s.classifications || '—' }}</td>
+          <td>
+            <template v-if="s.retired != null && s.subjects">
+              {{ s.retired.toLocaleString() }}
+              <span class="retired-pct">{{ Math.round((s.retired / s.subjects) * 100) }}%</span>
+            </template>
+            <template v-else>—</template>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
+<style scoped>
+.retired-pct {
+  color: var(--vp-c-text-3);
+  font-size: 0.8em;
+  margin-left: 0.35em;
+}
+</style>

@@ -37,7 +37,13 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 - `phase1-configs.csv` — the **126-config grid**: `agreement_threshold` (50–90/5) ×
   `correction_agreement` (50–80/5) × `ratio_limit` ({1.0, 1.5}). One row = one set.
 - `docs/.vitepress/data/set-status.json` — **live per-set status** (clustered / uploaded
-  / subjects). Drives the site's Sets table. Edit this as sets progress.
+  / subjects / retired / completeness, plus workflow totals under `_meta`). Drives the
+  site's Sets table and stat chips. Upload state is edited by `upload_set.py`;
+  classification progress comes from `sync_progress.py`.
+- `sync_progress.py` — **classification-progress sync** (anonymous Zooniverse API reads,
+  no credentials): per-set retirement via subject-set completeness for workflow 26736 +
+  workflow totals into `_meta`. Run any time volunteers have been busy, commit
+  `set-status.json`, push to redeploy.
 - `run_set.py <set>` — cluster the 500-set with one config + build the bundle.
 - `upload_set.py <set>` — the **guard** (manifest ↔ run.json ↔ phase1-configs 3-way
   hyperparameter match) → `--verify-only` → upload → update `set-status.json`.

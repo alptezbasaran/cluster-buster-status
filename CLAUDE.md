@@ -44,6 +44,11 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
   no credentials): per-set retirement via subject-set completeness for workflow 26736 +
   workflow totals into `_meta`. Run any time volunteers have been busy, commit
   `set-status.json`, push to redeploy.
+- `set_progress.py <set>` — **per-subject drill-down** for one set (anonymous API):
+  exact classifications_count per subject via `subject_workflow_statuses` (batched
+  `subject_ids` filter), verdict distribution, and which subjects are still short of
+  the 15-verdict retirement. ~16 requests/set — fine per set, don't loop all 126
+  casually.
 - `run_set.py <set>` — cluster the 500-set with one config + build the bundle.
 - `upload_set.py <set>` — the **guard** (manifest ↔ run.json ↔ phase1-configs 3-way
   hyperparameter match) → `--verify-only` → upload → update `set-status.json`.

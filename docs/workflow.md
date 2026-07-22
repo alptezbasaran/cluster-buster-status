@@ -52,6 +52,17 @@ or mislabelling a set — before they contaminate the training labels. The match
 the upload outcome, and any later state change (uploaded → live → classification
 counts) are written back to `set-status.json`, which drives the [Sets](/sets) table.
 
+## Attention checks
+
+After an automated account submitted ~25k junk classifications in July 2026,
+a small set of **attention-check subjects** (`cluster-buster-qc`, 200 images
+that literally say "TEST SUBJECT — please answer YES/NO") is mixed into the
+serving pool at ~0.4%. Volunteers who read the image pass trivially; accounts
+that answer them wrong get flagged by `captcha_check.py`. These subjects are
+**excluded from all science aggregation** (see `captcha_subjects.json`), and
+they slightly inflate the workflow-level subject/retired totals shown on this
+site — the per-set table is unaffected.
+
 ## What's automated vs. manual
 
 | Step | How |
@@ -61,3 +72,5 @@ counts) are written back to `set-status.json`, which drives the [Sets](/sets) ta
 | Match manifest ↔ run.json | guard before upload |
 | Upload to Zooniverse | `zooniverse_upload.py` (needs creds) |
 | Update this site | edit `set-status.json` → push → GitHub Actions redeploys |
+| Captcha tripwire | `captcha_check.py` (manual, read-only; exit 3 on flags) |
+| Re-arm retired captchas | `captcha_check.py --unretire` (operator-only) |

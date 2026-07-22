@@ -52,6 +52,18 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 - `run_set.py <set>` — cluster the 500-set with one config + build the bundle.
 - `upload_set.py <set>` — the **guard** (manifest ↔ run.json ↔ phase1-configs 3-way
   hyperparameter match) → `--verify-only` → upload → update `set-status.json`.
+- `make_captcha_bundle.py` — generates the **attention-check ("captcha") bundle**
+  (see the Attention-check subjects section below).
+- `link_set.py <display-name>` — link/unlink a subject set to workflow 26736
+  (authenticated; `--dry-run`; the committed replacement for July's one-off).
+- `reconcile_captchas.py` — post-upload: writes `captcha_subjects.json`
+  (subject_id → expected answer; anonymous API reads).
+- `captcha_check.py` — the **captcha tripwire**: incremental authenticated
+  classification harvest (bookmark in gitignored `state/`), per-user
+  pass/fail verdicts (FLAG/WATCH/OK), live-pool status, `--unretire`
+  (operator-confirmed re-arm), `--write-incident`. Exit 3 = new FLAG accounts.
+- `captcha_subjects.json` — committed subject_id ↔ expected-answer map for the
+  qc set; read by the checker AND by any future label aggregation (see below).
 - `docs/public/demo/` + `docs/demo.md` — the **interactive hyperparameter explorer** (the
   *Explore* page). Static, precomputed, no server: 780 WebP panels for 4 galaxies, two views
   (Simple = the 126-config Phase-1 grid with per-cell `cluster-buster-NNN` badges; Full = the
@@ -98,6 +110,32 @@ Edit galaxies / knob axes at the top of `gen_tune_demo.py`. The Simple view's ax
 per-cell `cluster-buster-NNN` mapping are read from this repo's `phase1-configs.csv`, so the
 demo and the real subject sets stay in lockstep. `docs/demo.md` embeds the standalone page via
 an iframe (`layout: page`, no sidebar).
+
+## Attention-check ("captcha") subjects
+
+Deployed after the 2026-07-12 bot incident: subject set **`cluster-buster-qc`**
+(200 synthetic subjects, 100 YES / 100 NO) whose images instruct the volunteer
+which answer to pick ("TEST SUBJECT — Please answer: YES/NO" on all 3 frames).
+Served uniformly alongside the science sets (~0.4% of serves); accounts that
+answer them wrong were not reading — bot / careless-clicker flags with
+unambiguous ground truth. Answer is encoded in the gid prefix (`qcyes###` /
+`qcno###`) and `#data_set=attention_check`; `#expected_number_of_arms` is left
+EMPTY on purpose (a number there could mis-join arm-count aggregations).
+
+- **EXCLUSION RULE: every label aggregation must drop the subject ids in
+  `captcha_subjects.json`** (equivalently: subjects with
+  `#data_set == "attention_check"` or gid prefix `qc`), **and down-weight or
+  exclude accounts in `incidents/*captcha-flags*.json`, in addition to the
+  known bot user 3055564.**
+- Workflow-level totals (`subjects_count`, retired counts, `sync_progress.py`
+  `_meta` numbers) INCLUDE the 200 captchas; the per-set science table does
+  not (the qc set is not in `phase1-configs.csv`).
+- **Never upload the qc set via `upload_set.py`** — its hyperparameter guard
+  aborts on the empty knob columns. Use `zooniverse_upload.py` directly (the
+  exact command is in `make_captcha_bundle.py`'s docstring).
+- Captchas retire at 15 votes like any subject; `captcha_check.py` reports the
+  live count and `--unretire` re-arms the pool (operator-run, interactive).
+- All Zooniverse mutations (upload, link, unretire) are operator-triggered.
 
 ## Conventions
 

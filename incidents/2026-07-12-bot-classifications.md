@@ -1,5 +1,8 @@
 # Incident: automated classifications, 2026-07-12
 
+> Follow-up 2026-07-23: an attention-check tripwire was deployed in response to
+> this incident — see `2026-07-23-captcha-deploy.md` and `captcha_check.py`.
+
 ## Summary
 
 Zooniverse user **3055564 (`_.naitik09`)** submitted **25,427 classifications**

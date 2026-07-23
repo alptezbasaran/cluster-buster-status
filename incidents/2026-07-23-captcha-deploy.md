@@ -8,6 +8,11 @@ Please answer: YES/NO" on all three frames). A tripwire against the class of
 automated / careless classification seen on 2026-07-12 (see
 `2026-07-12-bot-classifications.md`).
 
+![Captcha qcyes001 live in the Cluster Buster classifier](assets/2026-07-23-captcha-live.png)
+
+*A captcha subject (`qcyes001`) as served by the live classifier — three
+frames in row mode, instruction on each, real Yes/No task panel.*
+
 ## Facts
 
 - Subject set: `cluster-buster-qc`, id **137851**, project 23492.

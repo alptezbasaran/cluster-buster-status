@@ -38,6 +38,7 @@ const retiredPct = m ? Math.round((m.retired_subjects / m.subjects) * 100) : nul
   <p v-if="m" class="cb-synced">
     Classification progress synced {{ m.synced }} — all {{ m.linked_subject_sets }} sets linked to the
     <a href="https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster" target="_blank" rel="noreferrer">live workflow</a>.
+    Totals include 200 attention-check subjects, excluded from the science.
   </p>
 </template>
 

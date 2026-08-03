@@ -2,6 +2,12 @@
  "_meta": {
   "workflow_id": "26736",
   "sets": {
+   "cluster-buster-qc2": {
+    "subject_set_id": "138095",
+    "yes": 100,
+    "no": 100,
+    "reconciled": "2026-08-03"
+   },
    "cluster-buster-qc": {
     "subject_set_id": "137851",
     "yes": 100,
@@ -10,11 +16,1411 @@
     "status": "unlinked 2026-08-03 (NO polarity unreliable)"
    }
   },
-  "total": 200,
+  "total": 400,
   "unreliable": 100,
   "note": "reliable=false subjects (v1 NO-captchas) are excluded from verdicts: their images showed a correct clustering while instructing NO, so failures were not inattention."
  },
  "subjects": {
+  "123223150": {
+   "gid": "qc2yes001",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223152": {
+   "gid": "qc2yes002",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223154": {
+   "gid": "qc2yes003",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223155": {
+   "gid": "qc2yes004",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223157": {
+   "gid": "qc2yes005",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223158": {
+   "gid": "qc2yes006",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223160": {
+   "gid": "qc2yes007",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223161": {
+   "gid": "qc2yes008",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223163": {
+   "gid": "qc2yes009",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223165": {
+   "gid": "qc2yes010",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223166": {
+   "gid": "qc2yes011",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223168": {
+   "gid": "qc2yes012",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223169": {
+   "gid": "qc2yes013",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223171": {
+   "gid": "qc2yes014",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223173": {
+   "gid": "qc2yes015",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223174": {
+   "gid": "qc2yes016",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223176": {
+   "gid": "qc2yes017",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223177": {
+   "gid": "qc2yes018",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223179": {
+   "gid": "qc2yes019",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223182": {
+   "gid": "qc2yes020",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223184": {
+   "gid": "qc2yes021",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223186": {
+   "gid": "qc2yes022",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223187": {
+   "gid": "qc2yes023",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223189": {
+   "gid": "qc2yes024",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223191": {
+   "gid": "qc2yes025",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223192": {
+   "gid": "qc2yes026",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223194": {
+   "gid": "qc2yes027",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223195": {
+   "gid": "qc2yes028",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223197": {
+   "gid": "qc2yes029",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223199": {
+   "gid": "qc2yes030",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223200": {
+   "gid": "qc2yes031",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223202": {
+   "gid": "qc2yes032",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223204": {
+   "gid": "qc2yes033",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223205": {
+   "gid": "qc2yes034",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223207": {
+   "gid": "qc2yes035",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223208": {
+   "gid": "qc2yes036",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223210": {
+   "gid": "qc2yes037",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223212": {
+   "gid": "qc2yes038",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223213": {
+   "gid": "qc2yes039",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223214": {
+   "gid": "qc2yes040",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223216": {
+   "gid": "qc2yes041",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223217": {
+   "gid": "qc2yes042",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223219": {
+   "gid": "qc2yes043",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223221": {
+   "gid": "qc2yes044",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223223": {
+   "gid": "qc2yes045",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223224": {
+   "gid": "qc2yes046",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223226": {
+   "gid": "qc2yes047",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223228": {
+   "gid": "qc2yes048",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223230": {
+   "gid": "qc2yes049",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223231": {
+   "gid": "qc2yes050",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223233": {
+   "gid": "qc2yes051",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223235": {
+   "gid": "qc2yes052",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223236": {
+   "gid": "qc2yes053",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223238": {
+   "gid": "qc2yes054",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223240": {
+   "gid": "qc2yes055",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223241": {
+   "gid": "qc2yes056",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223243": {
+   "gid": "qc2yes057",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223245": {
+   "gid": "qc2yes058",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223246": {
+   "gid": "qc2yes059",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223248": {
+   "gid": "qc2yes060",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223250": {
+   "gid": "qc2yes061",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223251": {
+   "gid": "qc2yes062",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223253": {
+   "gid": "qc2yes063",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223255": {
+   "gid": "qc2yes064",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223257": {
+   "gid": "qc2yes065",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223259": {
+   "gid": "qc2yes066",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223263": {
+   "gid": "qc2yes067",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223265": {
+   "gid": "qc2yes068",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223267": {
+   "gid": "qc2yes069",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223270": {
+   "gid": "qc2yes070",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223272": {
+   "gid": "qc2yes071",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223274": {
+   "gid": "qc2yes072",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223275": {
+   "gid": "qc2yes073",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223277": {
+   "gid": "qc2yes074",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223278": {
+   "gid": "qc2yes075",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223280": {
+   "gid": "qc2yes076",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223282": {
+   "gid": "qc2yes077",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223283": {
+   "gid": "qc2yes078",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223285": {
+   "gid": "qc2yes079",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223287": {
+   "gid": "qc2yes080",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223289": {
+   "gid": "qc2yes081",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223290": {
+   "gid": "qc2yes082",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223292": {
+   "gid": "qc2yes083",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223293": {
+   "gid": "qc2yes084",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223295": {
+   "gid": "qc2yes085",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223297": {
+   "gid": "qc2yes086",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223298": {
+   "gid": "qc2yes087",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223300": {
+   "gid": "qc2yes088",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223302": {
+   "gid": "qc2yes089",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223303": {
+   "gid": "qc2yes090",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223305": {
+   "gid": "qc2yes091",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223307": {
+   "gid": "qc2yes092",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223308": {
+   "gid": "qc2yes093",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223309": {
+   "gid": "qc2yes094",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223311": {
+   "gid": "qc2yes095",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223313": {
+   "gid": "qc2yes096",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223315": {
+   "gid": "qc2yes097",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223316": {
+   "gid": "qc2yes098",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223318": {
+   "gid": "qc2yes099",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223319": {
+   "gid": "qc2yes100",
+   "answer": "yes",
+   "expected_value": 0,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223321": {
+   "gid": "qc2no001",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223324": {
+   "gid": "qc2no002",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223326": {
+   "gid": "qc2no003",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223327": {
+   "gid": "qc2no004",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223329": {
+   "gid": "qc2no005",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223331": {
+   "gid": "qc2no006",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223332": {
+   "gid": "qc2no007",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223334": {
+   "gid": "qc2no008",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223336": {
+   "gid": "qc2no009",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223337": {
+   "gid": "qc2no010",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223339": {
+   "gid": "qc2no011",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223340": {
+   "gid": "qc2no012",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223342": {
+   "gid": "qc2no013",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223344": {
+   "gid": "qc2no014",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223345": {
+   "gid": "qc2no015",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223347": {
+   "gid": "qc2no016",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223349": {
+   "gid": "qc2no017",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223350": {
+   "gid": "qc2no018",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223352": {
+   "gid": "qc2no019",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223353": {
+   "gid": "qc2no020",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223355": {
+   "gid": "qc2no021",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223356": {
+   "gid": "qc2no022",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223358": {
+   "gid": "qc2no023",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223360": {
+   "gid": "qc2no024",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223361": {
+   "gid": "qc2no025",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223363": {
+   "gid": "qc2no026",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223365": {
+   "gid": "qc2no027",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223367": {
+   "gid": "qc2no028",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223368": {
+   "gid": "qc2no029",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223370": {
+   "gid": "qc2no030",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223371": {
+   "gid": "qc2no031",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223373": {
+   "gid": "qc2no032",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223375": {
+   "gid": "qc2no033",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223376": {
+   "gid": "qc2no034",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223378": {
+   "gid": "qc2no035",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223380": {
+   "gid": "qc2no036",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223382": {
+   "gid": "qc2no037",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223383": {
+   "gid": "qc2no038",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223385": {
+   "gid": "qc2no039",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223386": {
+   "gid": "qc2no040",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223388": {
+   "gid": "qc2no041",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223390": {
+   "gid": "qc2no042",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223391": {
+   "gid": "qc2no043",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223393": {
+   "gid": "qc2no044",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223394": {
+   "gid": "qc2no045",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223396": {
+   "gid": "qc2no046",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223397": {
+   "gid": "qc2no047",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223399": {
+   "gid": "qc2no048",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223401": {
+   "gid": "qc2no049",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223402": {
+   "gid": "qc2no050",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223404": {
+   "gid": "qc2no051",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223405": {
+   "gid": "qc2no052",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223407": {
+   "gid": "qc2no053",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223409": {
+   "gid": "qc2no054",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223410": {
+   "gid": "qc2no055",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223412": {
+   "gid": "qc2no056",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223416": {
+   "gid": "qc2no057",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223418": {
+   "gid": "qc2no058",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223420": {
+   "gid": "qc2no059",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223421": {
+   "gid": "qc2no060",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223423": {
+   "gid": "qc2no061",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223424": {
+   "gid": "qc2no062",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223426": {
+   "gid": "qc2no063",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223428": {
+   "gid": "qc2no064",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223429": {
+   "gid": "qc2no065",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223431": {
+   "gid": "qc2no066",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223433": {
+   "gid": "qc2no067",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223434": {
+   "gid": "qc2no068",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223436": {
+   "gid": "qc2no069",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223437": {
+   "gid": "qc2no070",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223439": {
+   "gid": "qc2no071",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223441": {
+   "gid": "qc2no072",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223442": {
+   "gid": "qc2no073",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223444": {
+   "gid": "qc2no074",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223445": {
+   "gid": "qc2no075",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223447": {
+   "gid": "qc2no076",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223448": {
+   "gid": "qc2no077",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223450": {
+   "gid": "qc2no078",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223452": {
+   "gid": "qc2no079",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223453": {
+   "gid": "qc2no080",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223455": {
+   "gid": "qc2no081",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223456": {
+   "gid": "qc2no082",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223458": {
+   "gid": "qc2no083",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223460": {
+   "gid": "qc2no084",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223461": {
+   "gid": "qc2no085",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223463": {
+   "gid": "qc2no086",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223464": {
+   "gid": "qc2no087",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223466": {
+   "gid": "qc2no088",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223468": {
+   "gid": "qc2no089",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223470": {
+   "gid": "qc2no090",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223472": {
+   "gid": "qc2no091",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223473": {
+   "gid": "qc2no092",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223475": {
+   "gid": "qc2no093",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223477": {
+   "gid": "qc2no094",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223478": {
+   "gid": "qc2no095",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223480": {
+   "gid": "qc2no096",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223482": {
+   "gid": "qc2no097",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223483": {
+   "gid": "qc2no098",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223485": {
+   "gid": "qc2no099",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
+  "123223487": {
+   "gid": "qc2no100",
+   "answer": "no",
+   "expected_value": 1,
+   "set": "cluster-buster-qc2",
+   "reliable": true
+  },
   "122967395": {
    "gid": "qcyes001",
    "answer": "yes",

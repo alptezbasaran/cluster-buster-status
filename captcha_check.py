@@ -71,13 +71,20 @@ def canon_value(v):
 
 
 def load_map():
+    """-> (meta, {subject_id: (gid, expected_value)}, {unreliable subject_ids}).
+
+    Unreliable subjects still get harvested and reported, but never count toward
+    a verdict — see reconcile_captchas.py for why the v1 NO-captchas are so
+    marked.
+    """
     if not MAP_FILE.exists():
         print(f"{MAP_FILE.name} missing — run reconcile_captchas.py first")
         sys.exit(2)
     doc = json.loads(MAP_FILE.read_text())
-    return doc["_meta"], {
-        sid: (v["gid"], v["expected_value"]) for sid, v in doc["subjects"].items()
-    }
+    cmap = {sid: (v["gid"], v["expected_value"]) for sid, v in doc["subjects"].items()}
+    unreliable = {sid for sid, v in doc["subjects"].items()
+                  if not v.get("reliable", True)}
+    return doc["_meta"], cmap, unreliable
 
 
 def load_state():
@@ -167,15 +174,20 @@ def dur_seconds(h):
         return None
 
 
-def report(hits, state, quiet):
+def report(hits, state, quiet, unreliable=frozenset()):
     per = defaultdict(list)
     for h in hits:
         per[h["user"] or "ANONYMOUS"].append(h)
 
     flagged = {}
     rows = []
+    n_excluded = sum(1 for h in hits if str(h["subject_id"]) in unreliable)
+    if n_excluded and not quiet:
+        print(f"\n({n_excluded} votes on retired/unreliable captcha subjects are "
+              f"shown but excluded from verdicts)")
     for u, hs in sorted(per.items(), key=lambda kv: -len(kv[1])):
-        fails = [h for h in hs if not h["ok"] and h["answered"] is not None]
+        fails = [h for h in hs if not h["ok"] and h["answered"] is not None
+                 and str(h["subject_id"]) not in unreliable]
         fail_pol = {h["expected"] for h in fails}
         if u == "ANONYMOUS":
             verdict = "n/a"
@@ -283,7 +295,7 @@ def main() -> int:
     ap.add_argument("--unretire", action="store_true")
     args = ap.parse_args()
 
-    meta, cmap = load_map()
+    meta, cmap, unreliable = load_map()
     state = load_state()
     if args.full:
         state["last_id"] = None
@@ -294,7 +306,7 @@ def main() -> int:
         harvest(state, cmap, args.quiet)
 
     hits = load_hits()
-    flagged = report(hits, state, args.quiet)
+    flagged = report(hits, state, args.quiet, unreliable)
     retired = live_status(cmap, args.quiet)
 
     new_flags = [u for u in flagged if u not in state.get("flagged", [])]

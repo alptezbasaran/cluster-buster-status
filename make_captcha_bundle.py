@@ -42,11 +42,22 @@ sys.path.insert(0, str(ARM_GROUPING))
 from arm_grouping.zooniverse import MANIFEST_FIELDNAMES  # noqa: E402
 from zooniverse_upload import verify_bundle  # noqa: E402
 
-DEFAULT_OUT = (
-    Path.home() / "Desktop/projects/astro/cluster-buster/artifacts/set_runs/cluster-buster-qc"
-)
+SET_RUNS = Path.home() / "Desktop/projects/astro/cluster-buster/artifacts/set_runs"
 # Project Set1 palette (RGB, blue brightened per brand decision)
 SET1 = ["#e41a1c", "#46a1eb", "#4daf4a", "#984ea3", "#ff7f00", "#ffff33"]
+
+# Attention-check palettes: (field, mark). YES renders mark-on-field, NO renders
+# the pair reversed (field-on-mark), so the two polarities are instantly
+# distinguishable while sharing one hue pair. Hues are chosen OUTSIDE the Set1
+# cluster palette so a captcha can never be mistaken for a real subject, and
+# every pair clears ~5:1 contrast (large text) in both directions.
+PALETTES = {
+    "mono":    ((0, 0, 0), (255, 255, 255)),
+    "amber":   ((255, 179, 0), (16, 16, 16)),
+    "cyan":    ((0, 211, 224), (10, 26, 30)),
+    "magenta": ((229, 0, 122), (255, 255, 255)),
+    "lime":    ((198, 255, 0), (16, 16, 16)),
+}
 FONT_CANDIDATES = [
     "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
     "/System/Library/Fonts/Supplemental/Arial Black.ttf",
@@ -54,6 +65,11 @@ FONT_CANDIDATES = [
     "/System/Library/Fonts/Helvetica.ttc",
 ]
 _font_cache: dict[int, ImageFont.FreeTypeFont] = {}
+
+# Wording shown on every captcha. "select" (not "answer") because the volunteer
+# is picking one of two buttons, not typing a reply.
+HEADLINE = "TEST SUBJECT"
+PROMPT = "Please select:"
 
 
 def load_font(size: int) -> ImageFont.FreeTypeFont:
@@ -156,26 +172,60 @@ def draw_clusters(draw: ImageDraw.ImageDraw, arms, colors):
             draw.line(t, fill=color, width=1)
 
 
-def draw_instruction(img: Image.Image, answer: str, jx: int, jy: int):
-    """White text with black stroke: maximal contrast normal AND color-inverted;
-    the word itself carries the meaning (no color-only cue)."""
+def draw_instruction(
+    img: Image.Image,
+    answer: str,
+    jx: int,
+    jy: int,
+    fg: tuple = (255, 255, 255),
+    stroke: tuple | None = (0, 0, 0),
+):
+    """The word itself carries the meaning (never colour alone), and the stroke
+    keeps it legible over traces and under the viewer's invert toggle."""
     d = ImageDraw.Draw(img)
     cx = img.width / 2 + jx
+    sw = 3 if stroke else 0
 
     def center(text: str, font: ImageFont.FreeTypeFont, y: int):
-        bb = d.textbbox((0, 0), text, font=font, stroke_width=3)
+        bb = d.textbbox((0, 0), text, font=font, stroke_width=sw)
         d.text(
             (cx - (bb[2] - bb[0]) / 2, y),
             text,
             font=font,
-            fill=(255, 255, 255),
-            stroke_width=3,
-            stroke_fill=(0, 0, 0),
+            fill=fg,
+            stroke_width=sw,
+            stroke_fill=stroke,
         )
 
-    center("TEST SUBJECT", load_font(44), 52 + jy)
-    center("Please answer:", load_font(34), 112 + jy)
+    center(HEADLINE, load_font(44), 52 + jy)
+    center(PROMPT, load_font(34), 112 + jy)
     center(answer, load_font(170), 210 + jy)
+
+
+def render_plain(gid: str, answer: str, seed: int, size: int, out: Path,
+                 palette: str = "mono", frame_px: int = 0):
+    """Style 'plain': no background at all — just the instruction on a flat
+    field, with the colour pair REVERSED between the two polarities. Nothing in
+    the image depicts a clustering, so the picture can never contradict the
+    instruction (the flaw that made the v1 NO-captchas unreliable), and a flat
+    saturated field is alien to the real corpus (black sky, thin traces) so a
+    captcha is never mistaken for a science subject. All three frames are
+    identical: there is no geometry to differ.
+    """
+    rng = random.Random(f"{seed}:{gid}")
+    jx, jy = rng.randint(-20, 20), rng.randint(-15, 15)
+    field, mark = PALETTES[palette]
+    bg, fg = (field, mark) if answer == "YES" else (mark, field)
+    frame = Image.new("RGB", (size, size), bg)
+    if frame_px:
+        # A border in the foreground colour. On the NO polarity (dark field) this
+        # is the saturated colour, which is what keeps that half from resembling
+        # a real dark-sky subject.
+        d = ImageDraw.Draw(frame)
+        d.rectangle([0, 0, size - 1, size - 1], outline=fg, width=frame_px)
+    draw_instruction(frame, answer, jx, jy, fg=fg, stroke=None)
+    for suffix in ("1", "2", "3"):
+        frame.save(out / f"{gid}_{suffix}.png")
 
 
 def render_subject(gid: str, answer: str, seed: int, size: int, out: Path):
@@ -210,19 +260,36 @@ def main() -> int:
     ap.add_argument("--n-no", type=int, default=100)
     ap.add_argument("--seed", type=int, default=20260723)
     ap.add_argument("--size", type=int, default=592)
-    ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    ap.add_argument("--out", type=Path, default=None,
+                    help="parent dir; defaults to set_runs/<set-name>")
+    ap.add_argument("--style", choices=("traces", "plain"), default="plain",
+                    help="plain (default): no background, colours reversed per "
+                         "polarity. traces: v1 look, synthetic spiral behind the text")
+    ap.add_argument("--palette", choices=tuple(PALETTES), default="mono",
+                    help="colour pair for plain style (default mono = white/black)")
+    ap.add_argument("--frame", type=int, default=0, metavar="PX",
+                    help="draw a border PX wide in the foreground colour; keeps the "
+                         "dark-field polarity from resembling a real subject")
+    ap.add_argument("--gid-prefix", default="qc2",
+                    help="gid prefix; must be alphanumeric and unique per batch")
+    ap.add_argument("--set-name", default="cluster-buster-qc2")
     args = ap.parse_args()
 
-    bundle = args.out / f"cluster-buster-qc_{args.seed}"
+    out = args.out or (SET_RUNS / args.set_name)
+    bundle = out / f"{args.set_name}_{args.seed}"
     bundle.mkdir(parents=True, exist_ok=True)
 
-    subjects = [(f"qcyes{i:03d}", "YES", 0) for i in range(1, args.n_yes + 1)]
-    subjects += [(f"qcno{i:03d}", "NO", 1) for i in range(1, args.n_no + 1)]
-
+    p = args.gid_prefix
+    subjects = [(f"{p}yes{i:03d}", "YES", 0) for i in range(1, args.n_yes + 1)]
+    subjects += [(f"{p}no{i:03d}", "NO", 1) for i in range(1, args.n_no + 1)]
     rows = []
     answers = []
     for gid, word, expected in subjects:
-        render_subject(gid, word, args.seed, args.size, bundle)
+        if args.style == "plain":
+            render_plain(gid, word, args.seed, args.size, bundle, args.palette,
+                         args.frame)
+        else:
+            render_subject(gid, word, args.seed, args.size, bundle)
         row = {col: "" for col in MANIFEST_FIELDNAMES}
         row["#image1"] = f"{gid}_1.png"
         row["#image2"] = f"{gid}_2.png"
@@ -240,12 +307,15 @@ def main() -> int:
         writer.writeheader()
         writer.writerows(answers)
     (bundle / "info.txt").write_text(
-        f"file_hash: qc{args.seed}\nkind: attention_check\n"
+        f"file_hash: {p}{args.seed}\nkind: attention_check\nstyle: {args.style}\n"
+        f"palette: {args.palette}\n"
         f"subjects: {len(subjects)} ({args.n_yes} yes / {args.n_no} no)\n"
     )
 
     rows_ok, _ = verify_bundle(bundle)
     print(f"bundle: {bundle}")
+    print(f"style: {args.style} | palette: {args.palette} | gid prefix: {p} "
+          f"| set name: {args.set_name}")
     print(f"subjects: {len(subjects)} ({args.n_yes} yes / {args.n_no} no)")
     print(f"verify_bundle: {rows_ok}/{len(subjects)} rows OK")
     return 0

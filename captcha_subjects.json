@@ -1,1012 +1,1419 @@
 {
  "_meta": {
-  "subject_set": "cluster-buster-qc",
-  "subject_set_id": "137851",
   "workflow_id": "26736",
-  "reconciled": "2026-07-22",
-  "yes": 100,
-  "no": 100
+  "sets": {
+   "cluster-buster-qc": {
+    "subject_set_id": "137851",
+    "yes": 100,
+    "no": 100,
+    "reconciled": "2026-07-22",
+    "status": "unlinked 2026-07-30 (NO polarity unreliable)"
+   }
+  },
+  "total": 200,
+  "unreliable": 100,
+  "note": "reliable=false subjects (v1 NO-captchas) are excluded from verdicts: their images showed a correct clustering while instructing NO, so failures were not inattention."
  },
  "subjects": {
   "122967395": {
    "gid": "qcyes001",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967396": {
    "gid": "qcyes002",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967397": {
    "gid": "qcyes003",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967398": {
    "gid": "qcyes004",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967399": {
    "gid": "qcyes005",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967400": {
    "gid": "qcyes006",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967401": {
    "gid": "qcyes007",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967402": {
    "gid": "qcyes008",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967403": {
    "gid": "qcyes009",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967404": {
    "gid": "qcyes010",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967405": {
    "gid": "qcyes011",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967406": {
    "gid": "qcyes012",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967407": {
    "gid": "qcyes013",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967408": {
    "gid": "qcyes014",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967409": {
    "gid": "qcyes015",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967410": {
    "gid": "qcyes016",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967411": {
    "gid": "qcyes017",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967412": {
    "gid": "qcyes018",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967413": {
    "gid": "qcyes019",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967414": {
    "gid": "qcyes020",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967415": {
    "gid": "qcyes021",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967416": {
    "gid": "qcyes022",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967417": {
    "gid": "qcyes023",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967418": {
    "gid": "qcyes024",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967419": {
    "gid": "qcyes025",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967420": {
    "gid": "qcyes026",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967421": {
    "gid": "qcyes027",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967422": {
    "gid": "qcyes028",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967423": {
    "gid": "qcyes029",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967424": {
    "gid": "qcyes030",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967425": {
    "gid": "qcyes031",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967426": {
    "gid": "qcyes032",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967427": {
    "gid": "qcyes033",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967428": {
    "gid": "qcyes034",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967429": {
    "gid": "qcyes035",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967430": {
    "gid": "qcyes036",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967431": {
    "gid": "qcyes037",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967432": {
    "gid": "qcyes038",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967433": {
    "gid": "qcyes039",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967434": {
    "gid": "qcyes040",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967435": {
    "gid": "qcyes041",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967436": {
    "gid": "qcyes042",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967437": {
    "gid": "qcyes043",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967438": {
    "gid": "qcyes044",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967439": {
    "gid": "qcyes045",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967440": {
    "gid": "qcyes046",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967441": {
    "gid": "qcyes047",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967442": {
    "gid": "qcyes048",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967443": {
    "gid": "qcyes049",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967444": {
    "gid": "qcyes050",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967445": {
    "gid": "qcyes051",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967446": {
    "gid": "qcyes052",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967447": {
    "gid": "qcyes053",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967448": {
    "gid": "qcyes054",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967449": {
    "gid": "qcyes055",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967450": {
    "gid": "qcyes056",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967451": {
    "gid": "qcyes057",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967452": {
    "gid": "qcyes058",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967453": {
    "gid": "qcyes059",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967454": {
    "gid": "qcyes060",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967455": {
    "gid": "qcyes061",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967456": {
    "gid": "qcyes062",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967457": {
    "gid": "qcyes063",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967458": {
    "gid": "qcyes064",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967459": {
    "gid": "qcyes065",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967460": {
    "gid": "qcyes066",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967461": {
    "gid": "qcyes067",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967462": {
    "gid": "qcyes068",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967463": {
    "gid": "qcyes069",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967464": {
    "gid": "qcyes070",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967465": {
    "gid": "qcyes071",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967466": {
    "gid": "qcyes072",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967467": {
    "gid": "qcyes073",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967468": {
    "gid": "qcyes074",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967469": {
    "gid": "qcyes075",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967470": {
    "gid": "qcyes076",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967471": {
    "gid": "qcyes077",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967472": {
    "gid": "qcyes078",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967473": {
    "gid": "qcyes079",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967474": {
    "gid": "qcyes080",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967475": {
    "gid": "qcyes081",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967476": {
    "gid": "qcyes082",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967477": {
    "gid": "qcyes083",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967478": {
    "gid": "qcyes084",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967479": {
    "gid": "qcyes085",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967480": {
    "gid": "qcyes086",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967481": {
    "gid": "qcyes087",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967482": {
    "gid": "qcyes088",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967483": {
    "gid": "qcyes089",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967484": {
    "gid": "qcyes090",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967485": {
    "gid": "qcyes091",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967486": {
    "gid": "qcyes092",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967487": {
    "gid": "qcyes093",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967488": {
    "gid": "qcyes094",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967489": {
    "gid": "qcyes095",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967490": {
    "gid": "qcyes096",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967491": {
    "gid": "qcyes097",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967492": {
    "gid": "qcyes098",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967493": {
    "gid": "qcyes099",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967494": {
    "gid": "qcyes100",
    "answer": "yes",
-   "expected_value": 0
+   "expected_value": 0,
+   "set": "cluster-buster-qc",
+   "reliable": true
   },
   "122967495": {
    "gid": "qcno001",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967496": {
    "gid": "qcno002",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967497": {
    "gid": "qcno003",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967498": {
    "gid": "qcno004",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967499": {
    "gid": "qcno005",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967500": {
    "gid": "qcno006",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967501": {
    "gid": "qcno007",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967502": {
    "gid": "qcno008",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967503": {
    "gid": "qcno009",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967504": {
    "gid": "qcno010",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967505": {
    "gid": "qcno011",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967506": {
    "gid": "qcno012",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967507": {
    "gid": "qcno013",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967508": {
    "gid": "qcno014",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967509": {
    "gid": "qcno015",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967510": {
    "gid": "qcno016",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967511": {
    "gid": "qcno017",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967512": {
    "gid": "qcno018",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967513": {
    "gid": "qcno019",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967514": {
    "gid": "qcno020",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967515": {
    "gid": "qcno021",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967516": {
    "gid": "qcno022",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967517": {
    "gid": "qcno023",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967518": {
    "gid": "qcno024",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967519": {
    "gid": "qcno025",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967520": {
    "gid": "qcno026",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967521": {
    "gid": "qcno027",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967522": {
    "gid": "qcno028",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967523": {
    "gid": "qcno029",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967524": {
    "gid": "qcno030",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967525": {
    "gid": "qcno031",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967526": {
    "gid": "qcno032",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967527": {
    "gid": "qcno033",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967528": {
    "gid": "qcno034",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967529": {
    "gid": "qcno035",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967530": {
    "gid": "qcno036",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967531": {
    "gid": "qcno037",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967532": {
    "gid": "qcno038",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967533": {
    "gid": "qcno039",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967534": {
    "gid": "qcno040",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967535": {
    "gid": "qcno041",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967536": {
    "gid": "qcno042",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967537": {
    "gid": "qcno043",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967538": {
    "gid": "qcno044",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967539": {
    "gid": "qcno045",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967540": {
    "gid": "qcno046",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967541": {
    "gid": "qcno047",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967542": {
    "gid": "qcno048",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967543": {
    "gid": "qcno049",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967544": {
    "gid": "qcno050",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967545": {
    "gid": "qcno051",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967546": {
    "gid": "qcno052",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967547": {
    "gid": "qcno053",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967548": {
    "gid": "qcno054",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967549": {
    "gid": "qcno055",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967550": {
    "gid": "qcno056",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967551": {
    "gid": "qcno057",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967552": {
    "gid": "qcno058",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967553": {
    "gid": "qcno059",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967554": {
    "gid": "qcno060",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967555": {
    "gid": "qcno061",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967556": {
    "gid": "qcno062",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967557": {
    "gid": "qcno063",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967558": {
    "gid": "qcno064",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967559": {
    "gid": "qcno065",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967560": {
    "gid": "qcno066",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967561": {
    "gid": "qcno067",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967562": {
    "gid": "qcno068",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967563": {
    "gid": "qcno069",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967564": {
    "gid": "qcno070",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967565": {
    "gid": "qcno071",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967566": {
    "gid": "qcno072",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967567": {
    "gid": "qcno073",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967568": {
    "gid": "qcno074",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967569": {
    "gid": "qcno075",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967570": {
    "gid": "qcno076",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967571": {
    "gid": "qcno077",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967572": {
    "gid": "qcno078",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967573": {
    "gid": "qcno079",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967574": {
    "gid": "qcno080",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967575": {
    "gid": "qcno081",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967576": {
    "gid": "qcno082",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967577": {
    "gid": "qcno083",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967578": {
    "gid": "qcno084",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967579": {
    "gid": "qcno085",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967580": {
    "gid": "qcno086",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967581": {
    "gid": "qcno087",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967582": {
    "gid": "qcno088",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967583": {
    "gid": "qcno089",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967584": {
    "gid": "qcno090",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967585": {
    "gid": "qcno091",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967586": {
    "gid": "qcno092",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967587": {
    "gid": "qcno093",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967588": {
    "gid": "qcno094",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967589": {
    "gid": "qcno095",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967590": {
    "gid": "qcno096",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967591": {
    "gid": "qcno097",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967592": {
    "gid": "qcno098",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967593": {
    "gid": "qcno099",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   },
   "122967594": {
    "gid": "qcno100",
    "answer": "no",
-   "expected_value": 1
+   "expected_value": 1,
+   "set": "cluster-buster-qc",
+   "reliable": false
   }
  }
 }

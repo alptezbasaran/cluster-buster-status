@@ -46,8 +46,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.99,
-    "retired": 495
+    "completeness": 0.992,
+    "retired": 496
   },
   "cluster-buster-006": {
     "clustered": true,
@@ -56,8 +56,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.9919,
-    "retired": 491
+    "completeness": 0.998,
+    "retired": 494
   },
   "cluster-buster-007": {
     "clustered": true,
@@ -96,8 +96,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 494
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-011": {
     "clustered": true,
@@ -106,8 +106,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.994,
-    "retired": 497
+    "completeness": 0.996,
+    "retired": 498
   },
   "cluster-buster-012": {
     "clustered": true,
@@ -116,8 +116,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.9939,
-    "retired": 492
+    "completeness": 0.996,
+    "retired": 493
   },
   "cluster-buster-013": {
     "clustered": true,
@@ -126,8 +126,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 499
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-014": {
     "clustered": true,
@@ -136,8 +136,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 493
+    "completeness": 0.998,
+    "retired": 494
   },
   "cluster-buster-015": {
     "clustered": true,
@@ -146,8 +146,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.992,
-    "retired": 496
+    "completeness": 0.998,
+    "retired": 499
   },
   "cluster-buster-016": {
     "clustered": true,
@@ -156,8 +156,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.9939,
-    "retired": 492
+    "completeness": 0.996,
+    "retired": 493
   },
   "cluster-buster-017": {
     "clustered": true,
@@ -166,8 +166,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.994,
-    "retired": 497
+    "completeness": 0.998,
+    "retired": 499
   },
   "cluster-buster-018": {
     "clustered": true,
@@ -186,8 +186,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.994,
-    "retired": 497
+    "completeness": 0.996,
+    "retired": 498
   },
   "cluster-buster-020": {
     "clustered": true,
@@ -196,8 +196,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.9919,
-    "retired": 491
+    "completeness": 0.998,
+    "retired": 494
   },
   "cluster-buster-021": {
     "clustered": true,
@@ -206,8 +206,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 0.004,
+    "retired": 2
   },
   "cluster-buster-022": {
     "clustered": true,
@@ -226,8 +226,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.002,
-    "retired": 1
+    "completeness": 0.004,
+    "retired": 2
   },
   "cluster-buster-024": {
     "clustered": true,
@@ -246,8 +246,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 0.006,
+    "retired": 3
   },
   "cluster-buster-026": {
     "clustered": true,
@@ -1263,9 +1263,9 @@
     "workflow_id": "26736",
     "workflow_active": true,
     "linked_subject_sets": 127,
-    "classifications": 300331,
-    "retired_subjects": 9909,
+    "classifications": 371895,
+    "retired_subjects": 9934,
     "subjects": 62703,
-    "synced": "2026-07-23"
+    "synced": "2026-08-03"
   }
 }

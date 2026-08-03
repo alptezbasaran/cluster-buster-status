@@ -202,8 +202,27 @@ def draw_instruction(
     center(answer, load_font(170), 210 + jy)
 
 
+JITTER_X = range(-20, 21)
+JITTER_Y = range(-15, 16)
+
+
+def unique_jitters(n: int, seed: int) -> list[tuple[int, int]]:
+    """n distinct (jx, jy) text offsets, sampled WITHOUT replacement.
+
+    Drawing them independently collides by the birthday problem — 100 subjects
+    over this 41x31 grid expects ~4 duplicate pairs, which produced 3
+    byte-identical subjects in the first qc2 build. Sampling without
+    replacement guarantees every subject is a distinct file.
+    """
+    grid = [(x, y) for x in JITTER_X for y in JITTER_Y]
+    if n > len(grid):
+        raise ValueError(f"cannot draw {n} unique offsets from {len(grid)} cells")
+    return random.Random(f"jitter:{seed}").sample(grid, n)
+
+
 def render_plain(gid: str, answer: str, seed: int, size: int, out: Path,
-                 palette: str = "mono", frame_px: int = 0):
+                 palette: str = "mono", frame_px: int = 0,
+                 jitter: tuple[int, int] | None = None):
     """Style 'plain': no background at all — just the instruction on a flat
     field, with the colour pair REVERSED between the two polarities. Nothing in
     the image depicts a clustering, so the picture can never contradict the
@@ -212,8 +231,11 @@ def render_plain(gid: str, answer: str, seed: int, size: int, out: Path,
     captcha is never mistaken for a science subject. All three frames are
     identical: there is no geometry to differ.
     """
-    rng = random.Random(f"{seed}:{gid}")
-    jx, jy = rng.randint(-20, 20), rng.randint(-15, 15)
+    if jitter is None:
+        rng = random.Random(f"{seed}:{gid}")
+        jx, jy = rng.randint(-20, 20), rng.randint(-15, 15)
+    else:
+        jx, jy = jitter
     field, mark = PALETTES[palette]
     bg, fg = (field, mark) if answer == "YES" else (mark, field)
     frame = Image.new("RGB", (size, size), bg)
@@ -282,12 +304,13 @@ def main() -> int:
     p = args.gid_prefix
     subjects = [(f"{p}yes{i:03d}", "YES", 0) for i in range(1, args.n_yes + 1)]
     subjects += [(f"{p}no{i:03d}", "NO", 1) for i in range(1, args.n_no + 1)]
+    jitters = unique_jitters(len(subjects), args.seed)
     rows = []
     answers = []
-    for gid, word, expected in subjects:
+    for (gid, word, expected), jit in zip(subjects, jitters):
         if args.style == "plain":
             render_plain(gid, word, args.seed, args.size, bundle, args.palette,
-                         args.frame)
+                         args.frame, jit)
         else:
             render_subject(gid, word, args.seed, args.size, bundle)
         row = {col: "" for col in MANIFEST_FIELDNAMES}

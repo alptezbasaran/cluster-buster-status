@@ -1255,11 +1255,9 @@
     "hash": "518d09a2",
     "subjects": 491,
     "classifications": 0,
-    "live": false,
+    "live": true,
     "completeness": 0.0,
-    "retired": 0,
-    "unlinked": "2026-07-29",
-    "classifications_at_unlink": 1696
+    "retired": 0
   },
   "_meta": {
     "workflow_id": "26736",

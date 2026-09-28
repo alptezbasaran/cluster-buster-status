@@ -18,6 +18,13 @@ timeline is shifted by whole days (+-1..7) and the counts recomputed, so two
 people who simply both classify on weekday evenings do not look linked.
 A classroom shows the opposite: high co-activity, no handoffs.
 
+  RELAY      on the scale of weeks: do the no-information accounts (from the
+             latest forensics.py run) follow one another -- one stops, the next
+             starts days later on the same time zone and device -- or overlap
+             in coordinated waves? Both are compared with the same accounts'
+             activity spans placed at random start dates. Timing that matches
+             the random placement means independent people.
+
 Device fingerprints (browser family and OS without version numbers, window
 size, time zone, language) and hashed IPs from the classification export are
 printed as corroboration only. Results go to the gitignored
@@ -29,7 +36,7 @@ import json
 import math
 import sys
 from collections import Counter, defaultdict
-from datetime import date
+from datetime import date, timedelta
 
 import numpy as np
 
@@ -54,6 +61,53 @@ def device(ua):
                               ("Headless", "HeadlessChrome"), ("Chrome", "Chrome/"),
                               ("Safari", "Safari/")) if k in ua), ua[:20])
     return f"{br}/{os_}"
+
+
+def relay(rows, bad, trials=300, seed=7):
+    """Week-scale test: overlapping waves or one-after-another succession?"""
+    import random
+
+    days, fp = defaultdict(set), defaultdict(Counter)
+    for r in rows:
+        if r[F.WHO] in bad:
+            days[r[F.WHO]].add(r[F.CREATED].date())
+            fp[r[F.WHO]][(device(r[F.UA]), r[F.OFF])] += 1
+    core = [u for u in days if len(days[u]) and sum(fp[u].values()) >= 300]
+    if len(core) < 3:
+        return
+    era0 = min(min(d) for d in days.values())
+    era1 = max(max(d) for d in days.values())
+    top = {u: fp[u].most_common(1)[0][0] for u in core}
+    span = {u: sorted(days[u]) for u in core}
+
+    def stats(sp):
+        pairs = [(a, b) for i, a in enumerate(core) for b in core[i + 1:]]
+        ov = np.mean([bool(set(sp[a]) & set(sp[b])) for a, b in pairs])
+        succ = sum(1 for a in core for b in core if a != b and top[a] == top[b]
+                   and 0 <= (sp[b][0] - sp[a][-1]).days <= 3)
+        return ov, succ
+
+    rng = random.Random(seed)
+
+    def placed():
+        out = {}
+        for u in core:
+            ds = span[u]
+            length = (ds[-1] - ds[0]).days
+            start = era0 + timedelta(days=rng.randint(0, max(0, (era1 - era0).days - length)))
+            out[u] = [start + (d - ds[0]) for d in ds]
+        return out
+
+    ov, succ = stats(span)
+    null = [stats(placed()) for _ in range(trials)]
+    nov = np.array([x[0] for x in null])
+    nsu = np.array([x[1] for x in null])
+    print(f"\nRELAY: {len(core)} no-information accounts (>= 300 rows)")
+    print(f"  pairs active on a common day: {ov:.1%} (random start dates: {nov.mean():.1%}, "
+          f"95% range {np.percentile(nov, 2.5):.1%}-{np.percentile(nov, 97.5):.1%})")
+    print(f"  successions (next starts 0-3 days after one stops, same device family and time zone): "
+          f"{succ} (random: {nsu.mean():.1f}, 95% range {np.percentile(nsu, 2.5):.0f}-"
+          f"{np.percentile(nsu, 97.5):.0f})")
 
 
 def main() -> int:
@@ -153,6 +207,8 @@ def main() -> int:
     fr = F.STATE / f"forensics_{date.today().isoformat()}.json"
     if fr.exists():
         tiers = {u: x.get("tier") for u, x in json.loads(fr.read_text())["accounts"].items()}
+        no_info = {u for u, x in json.loads(fr.read_text())["accounts"].items()
+                   if x.get("tier") in ("AUTOMATION", "FIXED", "AT CHANCE") and (x.get("J") or 0) < F.LOW_J}
     ips, through = F.ip_map()
     ip_of = defaultdict(set)
     for r in rows:
@@ -176,6 +232,8 @@ def main() -> int:
               f"{'; ' + str(shared_ip) + ' IP(s)' if shared_ip else ''}")
         p.update({"device_match": same, "shared_ips": shared_ip,
                   "fp_a": list(map(str, fa)), "fp_b": list(map(str, fb))})
+
+    relay(rows, no_info if fr.exists() else set())
 
     out = F.STATE / f"linkage_{date.today().isoformat()}.json"
     out.write_text(json.dumps(pairs[:200], indent=1))

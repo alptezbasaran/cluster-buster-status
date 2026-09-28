@@ -37,7 +37,9 @@ the validation behind every threshold):
             viewing times longer than the time that actually elapsed, and
             viewing windows overlapping another browser session's (several
             windows worked in parallel).
-  DRIFT     weekly J and answer share per heavy account.
+  DRIFT     weekly J and answer share per heavy account, and BAD DAYS: single
+            days (>= 200 votes) carrying no information inside accounts whose
+            lifetime score keeps them out of the no-information tiers.
   CAPTCHA   reliable attention checks by polarity, with failure RATES tested
             against the population; exposure by client.
   LINKS     browser sessions and hashed IPs (classification export) shared by
@@ -404,7 +406,7 @@ def main() -> int:
 
     # ---- content: Dawid-Skene over deduplicated science votes
     first_vote, dupes = {}, Counter()
-    vote_week = {}
+    vote_week, vote_day = {}, {}
     for r in sci_rows:
         if r[VAL] not in (0, 1):
             continue
@@ -414,6 +416,7 @@ def main() -> int:
             continue
         first_vote[key] = r[VAL]
         vote_week[key] = (r[CREATED] - timedelta(days=r[CREATED].weekday())).date()
+        vote_day[key] = r[CREATED].date()
     accts = sorted({a for a, _ in first_vote})
     subs = sorted({s for _, s in first_vote})
     ai = {a: i for i, a in enumerate(accts)}
@@ -592,6 +595,35 @@ def main() -> int:
     print(f"  declining (first->last week drop > 0.15, ending below {LOW_J}): "
           f"{', '.join(drifters) or 'none'}")
 
+    # ---- bad days inside accounts the lifetime tiers let through
+    no_info_t = {"AUTOMATION", "FIXED", "AT CHANCE"}
+    vday = np.array([vote_day[k].toordinal() for k in first_vote], dtype=np.int64)
+    dkey = aidx.astype(np.int64) * 1_000_000 + vday
+    uk, inv = np.unique(dkey, return_inverse=True)
+    dn = np.bincount(inv)
+    dtp, dfn = np.bincount(inv, weights=v * ql), np.bincount(inv, weights=(1 - v) * ql)
+    dtn, dfp = np.bincount(inv, weights=(1 - v) * (1 - ql)), np.bincount(inv, weights=v * (1 - ql))
+    dj = (dtp + .5) / (dtp + dfn + 1) + (dtn + .5) / (dtn + dfp + 1) - 1
+    dyes = np.bincount(inv, weights=(v == 0)) / dn
+    bad_day = (dn >= 200) & ((dj < CHANCE_J) | (np.maximum(dyes, 1 - dyes) >= FIXED_SHARE))
+    caught = [i for i in np.nonzero(bad_day)[0] if tier[accts[uk[i] // 1_000_000]] in no_info_t]
+    missed = [i for i in np.nonzero(bad_day)[0] if tier[accts[uk[i] // 1_000_000]] not in no_info_t]
+    print(f"\n== BAD DAYS (an account's day with >= 200 votes and J < {CHANCE_J} or >= "
+          f"{FIXED_SHARE:.0%} one answer) ==")
+    print(f"  {int(bad_day.sum())} such account-days ({int(dn[bad_day].sum()):,} votes); "
+          f"{len(caught)} inside the no-information tiers, {len(missed)} in accounts whose lifetime "
+          f"score lets them through ({int(dn[missed].sum()):,} votes)")
+    bad_days = defaultdict(list)
+    for i in missed:
+        a = accts[uk[i] // 1_000_000]
+        bad_days[a].append((date.fromordinal(int(uk[i] % 1_000_000)).isoformat(), int(dn[i]),
+                            round(float(dj[i]), 2)))
+    for a, ds in sorted(bad_days.items(), key=lambda kv: -sum(n for _, n, _ in kv[1]))[:args.top]:
+        print(f"  {a:>22} [{tier[a]}, lifetime J {report[a].get('J')}] "
+              + ", ".join(f"{d[5:]} ({n} votes, J {jj:.2f})" for d, n, jj in ds[:6])
+              + (" ..." if len(ds) > 6 else ""))
+        report[a]["bad_days"] = ds
+
     # ---- captcha
     print("\n== CAPTCHA (reliable cards) ==")
     byc = defaultdict(lambda: [0, 0])
@@ -735,6 +767,7 @@ def main() -> int:
                                          "tiers": {t: sorted(u for u in tier if tier[u] == t)
                                                    for t in order if t != "OK" and t != "UNSCORED"},
                                          "drifting": drifters,
+                                         "bad_days_outside_tiers": {a: ds for a, ds in bad_days.items()},
                                          "captcha_flags": [u for u, _ in flags]},
                                "accounts": report}, indent=0))
     print(f"\nper-account results -> {out.relative_to(HERE)}")

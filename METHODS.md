@@ -128,6 +128,20 @@ Lifetime scores lag. Weekly J and the weekly share of "good" answers are
 tracked for every heavy account; a volunteer whose standard or attention
 changes over weeks shows up here before the lifetime number moves.
 
+Lifetime scores also average over good and bad days. The review therefore
+also scores every account-day with at least 200 votes and lists the days that
+carry no information (J < 0.10, or ≥97% one answer) inside accounts whose
+lifetime score keeps them out of the no-information tiers. On 2026-09-28 the
+tiers caught 90% of such votes; the day screen found the rest (1.8% of all
+classifications, 18 accounts).
+
+When is behaviour bad? On the 2026-09-28 data, careful volunteers scored the
+same at every local time of day (J 0.54–0.55), so time of day is not a
+signal. Very long unbroken sessions are: careful volunteers dropped only
+slightly after 1,000 consecutive classifications (0.56 → 0.49), while the
+votes cast that deep into a session were dominated by no-information
+accounts.
+
 ### 4. Attention checks ("captchas")
 
 200 synthetic subjects instruct the answer. They are scored **separately by
@@ -194,6 +208,14 @@ no handoffs.
 nodes, school networks and mobile carriers put unrelated people behind one
 address; managed school devices share identical fingerprints. A shared IP or
 device, without a timing signature, is read as "same place", not "same person".
+
+**On the scale of weeks** the same file asks whether the no-information
+accounts follow one another — one stops and another starts a few days later on
+the same device and time zone, as a single operator rotating accounts would —
+or appear together in coordinated waves. Both are compared with the same
+activity spans placed at random start dates; timing that matches random
+placement points to independent people. A lack of overlap is therefore not
+evidence of anything by itself: it has to be *more* systematic than chance.
 
 ### 7. Impact on the labels
 

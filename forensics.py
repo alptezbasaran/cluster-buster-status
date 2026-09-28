@@ -21,9 +21,10 @@ the validation behind every threshold):
             0 for any fixed answer or coin flip. d' and c (signal detection)
             split that into discrimination and leniency, so a strict-but-careful
             volunteer is not mistaken for a guesser.
-  TIERS     AUTOMATION   client evidence only: automation user agent, zero
+  TIERS     AUTOMATION   client or server evidence: automation user agent, zero
                          recorded viewing time, sub-0.5 s median over >= 500 rows,
-                         or mass re-voting of already-seen subjects (>= 20%)
+                         mass re-voting of already-seen subjects (>= 20%), or a
+                         superhuman sustained rate on the server's clock
             FIXED        >= 97% one answer
             AT CHANCE    two independent base-rate-immune models agree the
                          account cannot tell good from bad (J and d')
@@ -31,6 +32,11 @@ the validation behind every threshold):
             BIASED       informative but grades far more leniently or harshly
                          than the crowd (Dawid-Skene corrects for it)
             OK
+  SPEED     measured on the server's receipt times, which a client cannot fake:
+            peak classifications per minute / 10 minutes / hour, claimed
+            viewing times longer than the time that actually elapsed, and
+            viewing windows overlapping another browser session's (several
+            windows worked in parallel).
   DRIFT     weekly J and answer share per heavy account.
   CAPTCHA   reliable attention checks by polarity, with failure RATES tested
             against the population; exposure by client.
@@ -93,6 +99,8 @@ LOW_J = 0.25
 BIASED_C = 0.80        # |criterion| beyond this, with d' >= 1, = strongly biased
 DS_STRENGTH = 6.0      # pseudo-votes pulling light accounts toward the population
 RETIRE = 15
+SUPERHUMAN_10MIN = 1500  # server-side: 2.5 classifications/s sustained for 10 min
+PARALLEL_SHARE = 0.20    # share of classifications overlapping another session's
 
 
 # ---------------------------------------------------------------- loading ---
@@ -171,7 +179,8 @@ def ua_family(ua):
     return "other"
 
 
-ID, WHO, SUBJ, VAL, CREATED, DUR, LAT, SESS, CLIENT, DIMS, SEEN, REV, LOGGED, UA, VP, OFF = range(16)
+(ID, WHO, SUBJ, VAL, CREATED, DUR, LAT, SESS, CLIENT, DIMS, SEEN, REV, LOGGED, UA, VP, OFF,
+ A_TS, B_TS) = range(18)
 
 
 def load(sets, cmap):
@@ -191,7 +200,8 @@ def load(sets, cmap):
         rows.append((r["id"], who, s, r.get("v"), ts(r.get("c")), dur, lat,
                      r.get("sess"), sys.intern(ua_family(ua)), r.get("dims"),
                      bool(r.get("seen")), r.get("rev"), bool(u), ua,
-                     sys.intern(r.get("vp") or ""), r.get("off")))
+                     sys.intern(r.get("vp") or ""), r.get("off"),
+                     a.timestamp() if a else None, b.timestamp() if b else None))
     rows.sort(key=lambda x: x[0])
     return rows
 
@@ -345,6 +355,31 @@ def main() -> int:
                 p["cn"] += 1
                 p["cno"] += r[VAL] == 1
 
+    speed = {}
+    ends = defaultdict(list)
+    for r in rows:
+        ends[r[WHO]].append((r[CREATED].timestamp(), r[A_TS], r[B_TS], r[SESS]))
+    for u, ev in ends.items():
+        if len(ev) < 100:
+            continue
+        c = np.array([e[0] for e in ev])
+        cs = np.sort(c)
+        pk = {w: int(np.max(np.searchsorted(cs, cs + w, "right") - np.arange(len(cs))))
+              for w in (60, 600, 3600)}
+        cross = impossible = checked = 0
+        for prev, nxt in zip(ev, ev[1:]):
+            if nxt[1] is None or prev[2] is None:
+                continue
+            checked += 1
+            if nxt[1] < prev[2] - 1.0 and nxt[3] != prev[3]:
+                cross += 1
+            gap = nxt[0] - prev[0]
+            if nxt[2] is not None and 0 < gap < 600 and (nxt[2] - nxt[1]) > gap + 2.0:
+                impossible += 1
+        speed[u] = {"peak_1min": pk[60], "peak_10min": pk[600], "peak_1h": pk[3600],
+                    "parallel_share": round(cross / max(checked, 1), 3),
+                    "impossible_share": round(impossible / max(checked, 1), 3)}
+
     # ---- volume
     print("\n== VOLUME ==")
     wk = defaultdict(lambda: {"n": 0, "anon": 0, "acc": Counter(), "new": 0})
@@ -420,6 +455,7 @@ def main() -> int:
             "seen": round(p["seen"] / p["n"], 3),
             "captcha": [p["cyo"], p["cy"], p["cno"], p["cn"]],
             "rows_since_qc2": p["cap_after"],
+            **speed.get(u, {}),
         }
         if i is not None:
             x.update({
@@ -434,7 +470,8 @@ def main() -> int:
         # tiers, in order of evidence strength
         if auto_ua >= 20 or x["zero_dur"] >= 20 or (x["med_dur"] is not None and x["med_dur"] < 0.5
                                                      and p["n"] >= 500) \
-                or (x["dupes"] >= 500 and x["dupes"] / p["n"] >= 0.20):
+                or (x["dupes"] >= 500 and x["dupes"] / p["n"] >= 0.20) \
+                or x.get("peak_10min", 0) >= SUPERHUMAN_10MIN:
             t = "AUTOMATION"
         elif i is None or nvotes[i] < MIN_SCORED:
             t = "UNSCORED"
@@ -500,6 +537,8 @@ def main() -> int:
                     why.append(f"{x['dupes']:,} re-votes")
                 if x["med_dur"] is not None and x["med_dur"] < 0.5:
                     why.append(f"median {x['med_dur']}s")
+                if x.get("peak_10min", 0) >= SUPERHUMAN_10MIN:
+                    why.append(f"{x['peak_10min']:,} in 10 min")
             print(row(u, "; ".join(why) + ("  " + KNOWN[u] if u in KNOWN else "")))
 
     rec = sorted((u for u in report if report[u]["recent"] > 0), key=lambda u: -report[u]["recent"])
@@ -507,6 +546,24 @@ def main() -> int:
     print(hdr)
     for u in rec[:args.top]:
         print(row(u, f"[{tier[u]}] {KNOWN.get(u, '')}"))
+
+    # ---- speed on the server's clock
+    print("\n== SPEED (server receipt times; a client cannot fake these) ==")
+    sp = [(u, report[u]) for u in report if "peak_10min" in report[u]]
+    p10 = np.array([x["peak_10min"] for _, x in sp])
+    print(f"  peak classifications in any 10 minutes: median account {np.median(p10):.0f}, "
+          f"99th pct {np.percentile(p10, 99):.0f}; superhuman line {SUPERHUMAN_10MIN:,} "
+          f"(2.5/s sustained)")
+    print(f"  {'account':>22}{'rows':>8}{'/min':>6}{'/10min':>8}{'/hour':>7}{'parallel':>9}"
+          f"{'impossible':>11}  tier")
+    fastest = sorted(sp, key=lambda t: -t[1]["peak_10min"])[:8]
+    parallel = sorted((t for t in sp if t[1]["parallel_share"] >= PARALLEL_SHARE and t[1]["rows"] >= 200),
+                      key=lambda t: -t[1]["parallel_share"])
+    for u, x in fastest + [t for t in parallel if t not in fastest]:
+        print(f"  {u:>22}{x['rows']:>8,}{x['peak_1min']:>6}{x['peak_10min']:>8,}{x['peak_1h']:>7,}"
+              f"{pct(x['parallel_share']):>9}{pct(x['impossible_share']):>11}  {tier[u]}")
+    print(f"  working several browser sessions in parallel (>= {PARALLEL_SHARE:.0%} of classifications "
+          f"overlapping another session's viewing window): {', '.join(u for u, _ in parallel) or 'none'}")
 
     # ---- drift
     print("\n== DRIFT (weekly leave-one-out J / share answering Yes) ==")

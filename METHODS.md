@@ -111,7 +111,7 @@ order of precedence:
 
 | Tier | Rule | Meaning |
 |---|---|---|
-| AUTOMATION | automation user agent (headless browser, scripting libraries, CLI tools), zero recorded viewing time on ≥20 rows, sub-0.5 s median over ≥500 rows, or re-voting already-seen subjects on ≥20% of rows | submitted by software. Says nothing about label quality: one scripted account in this project gives good labels |
+| AUTOMATION | automation user agent (headless browser, scripting libraries, CLI tools), zero recorded viewing time on ≥20 rows, sub-0.5 s median over ≥500 rows, re-voting already-seen subjects on ≥20% of rows, or a superhuman sustained rate on the server's clock (≥1,500 classifications in 10 minutes) | submitted by software. Says nothing about label quality: one scripted account in this project gives good labels |
 | FIXED | ≥97% one answer | answers do not depend on the subject |
 | AT CHANCE | upper 95% bound of J < 0.10 **and** upper 95% bound of d′ < 0.8 | two independent models agree it cannot tell good from bad |
 | LOW INFO | J < 0.25 | some information, well below typical |
@@ -163,6 +163,19 @@ would not re-serve, unusually regular gaps between submissions, front-end
 builds nobody else runs. They catch careless scripts only — every metadata
 field is set by the client and a careful script can fake all of them — which
 is why they are corroborating evidence, not the verdict.
+
+**Speed is measured on the server's clock.** The viewing time a classification
+reports (`finished_at − started_at`) is set by the client, so a script can claim
+four seconds. The time the server *received* each classification cannot be
+faked, so the review also reports, per account:
+
+- peak classifications in any minute, 10 minutes and hour. The superhuman line
+  is 1,500 in 10 minutes (2.5 per second sustained); on 2026-09-28 the fastest
+  human peak was 658 and the July 2026 bot's was 4,456;
+- claimed viewing times longer than the time that actually passed since the
+  previous submission (impossible for one window);
+- viewing windows that overlap another browser session's — several windows
+  worked side by side, which no one can do while actually judging each image.
 
 ### 6. Linked accounts
 

@@ -632,14 +632,16 @@ def main() -> int:
           f"({int(((maj == 0) & (ds == 1) & m).sum()):,} majority-good -> DS-bad, "
           f"{int(((maj == 1) & (ds == 0) & m).sum()):,} the other way); "
           f"share labelled good: majority {np.mean(maj[m] == 0):.1%}, DS {np.mean(ds[m] == 0):.1%}")
+    # automation that still carries information (a scripted client giving good
+    # labels) is a method question, not a quality one -- keep its votes
     bad_t = {"AUTOMATION", "FIXED", "AT CHANCE"}
-    bad = np.array([tier.get(a) in bad_t for a in accts])
+    bad = np.array([tier.get(a) in bad_t and report[a].get("J", 0) < LOW_J for a in accts])
     keep = ~bad[aidx]
     o2 = np.bincount(sidx[keep], weights=v[keep], minlength=n_s)
     c2 = np.bincount(sidx[keep], minlength=n_s)
     maj2 = np.where(o2 * 2 > c2, 1, np.where(o2 * 2 < c2, 0, -1))
     mm = m & (maj2 >= 0)
-    print(f"  majority label flips when AUTOMATION/FIXED/AT CHANCE votes are removed: "
+    print(f"  majority label flips when no-information votes (AUTOMATION/FIXED/AT CHANCE with J < {LOW_J}) are removed: "
           f"{int((maj2[mm] != maj[mm]).sum()):,} ({np.mean(maj2[mm] != maj[mm]):.1%}); "
           f"{int((m & (maj2 < 0)).sum()):,} become ties")
     nbad = np.bincount(sidx, weights=bad[aidx].astype(float), minlength=n_s)

@@ -64,6 +64,27 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
   (operator-confirmed re-arm), `--write-incident`. Exit 3 = new FLAG accounts.
 - `captcha_subjects.json` — committed subject_id ↔ expected-answer map for the
   qc set; read by the checker AND by any future label aggregation (see below).
+- **Classification quality review** — methods, validation and thresholds in
+  `METHODS.md`; run `harvest.py` → `forensics.py` → `linkage.py` →
+  `triangulate.py` (commands in METHODS.md).
+  - `harvest.py` — the **raw classification store**: every project
+    classification, compact, under gitignored `state/raw/` (parallel `--full`
+    rebuild ~4 min; incremental otherwise). Analyses read this instead of
+    re-harvesting into scratch dirs (lost twice in July/August).
+  - `forensics.py` — Dawid–Skene content scoring (J, d′, criterion), tiers
+    (AUTOMATION / FIXED / AT CHANCE / LOW INFO / BIASED / OK), drift, captcha
+    rates + exposure, linked accounts, impact on labels.
+  - `linkage.py` — same-operator detection from timing (handoffs, co-activity,
+    day-shift null); IP / device only as corroboration.
+  - `triangulate.py` — cross-validates the content scores with independent
+    methods (majority, anchor consensus, GLAD, SDT, person-fit, reliability,
+    robust outliers, aggregator comparison).
+  - Inputs downloaded by hand into `state/`: `export_subjects.csv.gz` (subject →
+    set) and the classification export (hashed IPs → `state/ip_map.tsv.gz`).
+  - **This repo is public: never commit account-level findings or volunteer
+    names.** Per-account results stay in `state/` (gitignored); notes on
+    investigated accounts live in `state/known_accounts.json`; dated reviews
+    that name accounts go in `state/reviews/<date>/`, not `incidents/`.
 - `docs/public/demo/` + `docs/demo.md` — the **interactive hyperparameter explorer** (the
   *Explore* page). Static, precomputed, no server: 780 WebP panels for 4 galaxies, two views
   (Simple = the 126-config Phase-1 grid with per-cell `cluster-buster-NNN` badges; Full = the

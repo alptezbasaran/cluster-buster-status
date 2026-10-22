@@ -15,6 +15,13 @@ read as one map.
 
 Columns match phase1-configs.csv (run_set.py / upload_set.py read either file)
 plus `wave`. Held as in Phase 1: longest_arm_support 1, outlier filter (5, 99).
+
+Blur kernels never take the sizes {3, 5, 7, 15, 21}: on Apple-silicon Macs the
+OpenCV wheels route those Gaussian sizes through a vendor HAL that rounds
+differently (+-1) from every other platform, so a run here would not match one
+on Linux or HPC (found while porting the engine to Rust, linecluster-rs). A
+sampled value on one of them moves up to the next odd size (21 -> 23, 15 ->
+17); Phase 1 only used 51 and 31, which are unaffected.
 """
 
 import csv
@@ -38,6 +45,7 @@ LEVELS = {
     "arm_correction_blur": list(range(11, 62, 2)),
 }
 HELD = {"longest_arm_support": 1, "lower_perc": 5, "upper_perc": 99}
+PLATFORM_DEPENDENT_KERNELS = {3, 5, 7, 15, 21}
 COLUMNS = ["set", "agreement_threshold", "correction_agreement", "ratio_limit",
            "trace_support", "longest_arm_support", "lower_perc", "upper_perc",
            "vanilla_blur", "arm_correction_blur", "wave"]
@@ -50,6 +58,9 @@ def main():
         row = {"set": f"cluster-buster-{FIRST_SET + i:03d}", **HELD, "wave": i // WAVE + 1}
         for x, (knob, levels) in zip(point, LEVELS.items()):
             row[knob] = levels[min(int(x * len(levels)), len(levels) - 1)]
+        for knob in ("vanilla_blur", "arm_correction_blur"):
+            if row[knob] in PLATFORM_DEPENDENT_KERNELS:
+                row[knob] += 2
         rows.append(row)
     with OUT.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=COLUMNS, lineterminator="\n")

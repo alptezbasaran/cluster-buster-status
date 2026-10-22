@@ -42,8 +42,14 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 - `base-config.json` — the frozen Phase-1 base config (set 021's run.json; all 126 Phase-1
   runs share it outside the swept knobs). Phase-2 runs start from it, **not** from
   arm_grouping's `input.toml`, which has since been repurposed for another dataset.
-  (`run_set.py` / `upload_set.py` still read `phase1-configs.csv` + `input.toml`; switch them
-  before building Phase-2 sets.)
+- `configs.py` — the one place a set's row is looked up (either configs file) and its nine
+  knobs applied to `base-config.json`; also the knob → run.json → manifest-column table
+  the upload guard checks. Used by `run_set.py`, `upload_set.py`, the dry run.
+- `collect_no_arms.py` → **`no-arm-galaxies.csv`**: every (set, galaxy) whose clustering
+  has no arm, read from the bundles' `skipped.txt`. Those galaxies are never uploaded and
+  **count as unsuccessful** in the hyperparameter → verdict map (user decision 2026-10-22,
+  both phases; Phase 1 had 497 across 63 sets). Also refreshes `no_arms` per set in
+  `set-status.json`. Re-run after building sets.
 - `analysis/phase1_morphology.py` → `state/phase1/morphology.json`: which Phase-1 subjects show
   the same image. `analysis/probe_phase2.py --wave N`: in-memory dry run of one wave (failures,
   arm counts, repeats of already-judged images) → `state/phase2/probe_wave<N>.json`.
@@ -60,9 +66,15 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
   `subject_ids` filter), verdict distribution, and which subjects are still short of
   the 15-verdict retirement. ~16 requests/set — fine per set, don't loop all 126
   casually.
-- `run_set.py <set>` — cluster the 500-set with one config + build the bundle.
-- `upload_set.py <set>` — the **guard** (manifest ↔ run.json ↔ phase1-configs 3-way
-  hyperparameter match) → `--verify-only` → upload → update `set-status.json`.
+- `run_set.py <set>` — cluster the 500-set with one config (either phase, via `configs.py`,
+  starting from `base-config.json`) + build the bundle; writes `corpus_state.txt` and
+  `provenance.txt` (arm_grouping commit + uncommitted-diff hash, library versions,
+  platform), deletes the per-galaxy FITS (`outputs_*/outputs_arms`, ~5 GB/set,
+  regenerable), and marks the set clustered (subjects, no_arms) in `set-status.json`.
+  Refuses to run over an existing bundle.
+- `upload_set.py <set>` — the **guard** (configs ↔ run.json ↔ manifest, all nine knobs;
+  3-way wherever the manifest records the knob, i.e. all nine for bundles built since
+  2026-10-22) → `--verify-only` → upload → update `set-status.json`.
 - `make_captcha_bundle.py` — generates the **attention-check ("captcha") bundle**
   (see the Attention-check subjects section below).
 - `link_set.py <display-name>` — link/unlink a subject set to workflow 26736

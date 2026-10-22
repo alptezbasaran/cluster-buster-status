@@ -8,7 +8,8 @@ const corrections = [50, 55, 60, 65, 70, 75, 80] //        cols  (correction_agr
 const ratios = [1.0, 1.5]
 
 const byKey = new Map<string, SetRow>()
-for (const s of data.sets) byKey.set(`${s.ratio}|${s.agreement}|${s.correction}`, s)
+for (const s of data.sets.filter((s) => s.phase === 1))
+  byKey.set(`${s.ratio}|${s.agreement}|${s.correction}`, s)
 
 const cell = (ratio: number, agreement: number, correction: number) =>
   byKey.get(`${ratio}|${agreement}|${correction}`)
@@ -19,7 +20,7 @@ function title(s: SetRow | undefined): string {
   return `${s.set} · agreement ${s.agreement} · correction ${s.correction} · ${s.state}${subj}`
 }
 
-const c = data.counts
+const c = data.phaseCounts[1]
 const legend = [
   { state: 'planned', label: 'planned', n: c.planned },
   { state: 'clustered', label: 'clustered', n: c.clustered },

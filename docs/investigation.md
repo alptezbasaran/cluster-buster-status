@@ -72,9 +72,17 @@ waves 1, 2 and 4. Phase 1's 126 sets are the slice of the same space at `trace_s
 and blurs 51 / 31, so the two phases form one map. Same 500 galaxies, same manually cleaned
 tracings, 15 verdicts per subject.
 
+- **No arm, no upload.** A galaxy whose clustering has no arm counts as unsuccessful straight
+  away, in both phases; it is listed in `no-arm-galaxies.csv` instead of being uploaded.
+- **Every image goes up**, including ones identical to an image volunteers already judged
+  under another config. Those repeats show how consistently the same image is judged.
+- **Blur kernels skip sizes 15 and 21.** OpenCV on Apple-silicon Macs rounds those two
+  sizes differently from every other platform, so a sampled 15 or 21 moves up to 17 or 23
+  and every set reproduces exactly on any machine.
+
 Every config is test-clustered on all 500 galaxies before its set is built. Wave 1: all 16
-configs ran cleanly, giving 7,816 subjects; 15% of those images repeat one volunteers
-already judged, against 77% in Phase 1's finer grid.
+configs ran cleanly, giving 7,846 subjects plus 154 galaxy/config pairs with no arm; 15% of
+the images repeat one volunteers already judged, against 77% in Phase 1's finer grid.
 
 ## What the sensitivity sweep told us
 

@@ -7,7 +7,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-002": {
     "clustered": true,
@@ -17,7 +18,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-003": {
     "clustered": true,
@@ -27,7 +29,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-004": {
     "clustered": true,
@@ -37,7 +40,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-005": {
     "clustered": true,
@@ -47,7 +51,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-006": {
     "clustered": true,
@@ -57,7 +62,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-007": {
     "clustered": true,
@@ -67,7 +73,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-008": {
     "clustered": true,
@@ -77,7 +84,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-009": {
     "clustered": true,
@@ -87,7 +95,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-010": {
     "clustered": true,
@@ -97,7 +106,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-011": {
     "clustered": true,
@@ -107,7 +117,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-012": {
     "clustered": true,
@@ -117,7 +128,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-013": {
     "clustered": true,
@@ -127,7 +139,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-014": {
     "clustered": true,
@@ -137,7 +150,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-015": {
     "clustered": true,
@@ -147,7 +161,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-016": {
     "clustered": true,
@@ -157,7 +172,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-017": {
     "clustered": true,
@@ -167,7 +183,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-018": {
     "clustered": true,
@@ -177,7 +194,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-019": {
     "clustered": true,
@@ -187,7 +205,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-020": {
     "clustered": true,
@@ -197,7 +216,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-021": {
     "clustered": true,
@@ -207,7 +227,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-022": {
     "clustered": true,
@@ -217,7 +238,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-023": {
     "clustered": true,
@@ -227,7 +249,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-024": {
     "clustered": true,
@@ -237,7 +260,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-025": {
     "clustered": true,
@@ -247,7 +271,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-026": {
     "clustered": true,
@@ -257,7 +282,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-027": {
     "clustered": true,
@@ -267,7 +293,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-028": {
     "clustered": true,
@@ -277,7 +304,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-029": {
     "clustered": true,
@@ -287,7 +315,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-030": {
     "clustered": true,
@@ -297,7 +326,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-031": {
     "clustered": true,
@@ -307,7 +337,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-032": {
     "clustered": true,
@@ -317,7 +348,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-033": {
     "clustered": true,
@@ -327,7 +359,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-034": {
     "clustered": true,
@@ -337,7 +370,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-035": {
     "clustered": true,
@@ -347,7 +381,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-036": {
     "clustered": true,
@@ -357,7 +392,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-037": {
     "clustered": true,
@@ -367,7 +403,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-038": {
     "clustered": true,
@@ -377,7 +414,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-039": {
     "clustered": true,
@@ -387,7 +425,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-040": {
     "clustered": true,
@@ -397,7 +436,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-041": {
     "clustered": true,
@@ -407,7 +447,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-042": {
     "clustered": true,
@@ -417,7 +458,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 486
+    "retired": 486,
+    "no_arms": 14
   },
   "cluster-buster-043": {
     "clustered": true,
@@ -427,7 +469,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-044": {
     "clustered": true,
@@ -437,7 +480,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-045": {
     "clustered": true,
@@ -447,7 +491,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-046": {
     "clustered": true,
@@ -457,7 +502,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-047": {
     "clustered": true,
@@ -467,7 +513,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-048": {
     "clustered": true,
@@ -477,7 +524,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-049": {
     "clustered": true,
@@ -487,7 +535,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-050": {
     "clustered": true,
@@ -497,7 +546,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-051": {
     "clustered": true,
@@ -507,7 +557,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-052": {
     "clustered": true,
@@ -517,7 +568,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-053": {
     "clustered": true,
@@ -527,7 +579,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-054": {
     "clustered": true,
@@ -537,7 +590,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-055": {
     "clustered": true,
@@ -547,7 +601,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-056": {
     "clustered": true,
@@ -557,7 +612,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 493
+    "retired": 493,
+    "no_arms": 7
   },
   "cluster-buster-057": {
     "clustered": true,
@@ -567,7 +623,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-058": {
     "clustered": true,
@@ -577,7 +634,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-059": {
     "clustered": true,
@@ -587,7 +645,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-060": {
     "clustered": true,
@@ -597,7 +656,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-061": {
     "clustered": true,
@@ -607,7 +667,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-062": {
     "clustered": true,
@@ -617,7 +678,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-063": {
     "clustered": true,
@@ -627,7 +689,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-064": {
     "clustered": true,
@@ -637,7 +700,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-065": {
     "clustered": true,
@@ -647,7 +711,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-066": {
     "clustered": true,
@@ -657,7 +722,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-067": {
     "clustered": true,
@@ -667,7 +733,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-068": {
     "clustered": true,
@@ -677,7 +744,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-069": {
     "clustered": true,
@@ -687,7 +755,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-070": {
     "clustered": true,
@@ -697,7 +766,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 490
+    "retired": 490,
+    "no_arms": 10
   },
   "cluster-buster-071": {
     "clustered": true,
@@ -707,7 +777,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-072": {
     "clustered": true,
@@ -717,7 +788,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-073": {
     "clustered": true,
@@ -727,7 +799,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-074": {
     "clustered": true,
@@ -737,7 +810,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-075": {
     "clustered": true,
@@ -747,7 +821,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-076": {
     "clustered": true,
@@ -757,7 +832,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-077": {
     "clustered": true,
@@ -767,7 +843,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-078": {
     "clustered": true,
@@ -777,7 +854,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-079": {
     "clustered": true,
@@ -787,7 +865,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-080": {
     "clustered": true,
@@ -797,7 +876,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-081": {
     "clustered": true,
@@ -807,7 +887,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-082": {
     "clustered": true,
@@ -817,7 +898,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-083": {
     "clustered": true,
@@ -827,7 +909,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-084": {
     "clustered": true,
@@ -837,7 +920,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-085": {
     "clustered": true,
@@ -847,7 +931,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-086": {
     "clustered": true,
@@ -857,7 +942,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-087": {
     "clustered": true,
@@ -867,7 +953,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-088": {
     "clustered": true,
@@ -877,7 +964,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-089": {
     "clustered": true,
@@ -887,7 +975,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-090": {
     "clustered": true,
@@ -897,7 +986,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-091": {
     "clustered": true,
@@ -907,7 +997,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-092": {
     "clustered": true,
@@ -917,7 +1008,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-093": {
     "clustered": true,
@@ -927,7 +1019,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-094": {
     "clustered": true,
@@ -937,7 +1030,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-095": {
     "clustered": true,
@@ -947,7 +1041,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-096": {
     "clustered": true,
@@ -957,7 +1052,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-097": {
     "clustered": true,
@@ -967,7 +1063,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-098": {
     "clustered": true,
@@ -977,7 +1074,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 489
+    "retired": 489,
+    "no_arms": 11
   },
   "cluster-buster-099": {
     "clustered": true,
@@ -987,7 +1085,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-100": {
     "clustered": true,
@@ -997,7 +1096,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-101": {
     "clustered": true,
@@ -1007,7 +1107,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-102": {
     "clustered": true,
@@ -1017,7 +1118,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-103": {
     "clustered": true,
@@ -1027,7 +1129,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-104": {
     "clustered": true,
@@ -1037,7 +1140,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-105": {
     "clustered": true,
@@ -1047,7 +1151,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-106": {
     "clustered": true,
@@ -1057,7 +1162,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-107": {
     "clustered": true,
@@ -1067,7 +1173,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-108": {
     "clustered": true,
@@ -1077,7 +1184,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-109": {
     "clustered": true,
@@ -1087,7 +1195,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-110": {
     "clustered": true,
@@ -1097,7 +1206,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-111": {
     "clustered": true,
@@ -1107,7 +1217,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-112": {
     "clustered": true,
@@ -1117,7 +1228,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 495
+    "retired": 495,
+    "no_arms": 5
   },
   "cluster-buster-113": {
     "clustered": true,
@@ -1127,7 +1239,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-114": {
     "clustered": true,
@@ -1137,7 +1250,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-115": {
     "clustered": true,
@@ -1147,7 +1261,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-116": {
     "clustered": true,
@@ -1157,7 +1272,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-117": {
     "clustered": true,
@@ -1167,7 +1283,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-118": {
     "clustered": true,
@@ -1177,7 +1294,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-119": {
     "clustered": true,
@@ -1187,7 +1305,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-120": {
     "clustered": true,
@@ -1197,7 +1316,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-121": {
     "clustered": true,
@@ -1207,7 +1327,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-122": {
     "clustered": true,
@@ -1217,7 +1338,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-123": {
     "clustered": true,
@@ -1227,7 +1349,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-124": {
     "clustered": true,
@@ -1237,7 +1360,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "cluster-buster-125": {
     "clustered": true,
@@ -1247,7 +1371,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 500
+    "retired": 500,
+    "no_arms": 0
   },
   "cluster-buster-126": {
     "clustered": true,
@@ -1257,7 +1382,8 @@
     "classifications": 0,
     "live": true,
     "completeness": 1.0,
-    "retired": 491
+    "retired": 491,
+    "no_arms": 9
   },
   "_meta": {
     "workflow_id": "26736",
@@ -1270,5 +1396,101 @@
     "project_state": "paused",
     "finished_at": "2026-10-21",
     "synced": "2026-10-21"
+  },
+  "cluster-buster-127": {
+    "clustered": true,
+    "hash": "2ea67483",
+    "subjects": 488,
+    "no_arms": 12
+  },
+  "cluster-buster-128": {
+    "clustered": true,
+    "hash": "a5824c8b",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-129": {
+    "clustered": true,
+    "hash": "c2d1f76a",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-130": {
+    "clustered": true,
+    "hash": "84d0933a",
+    "subjects": 391,
+    "no_arms": 109
+  },
+  "cluster-buster-131": {
+    "clustered": true,
+    "hash": "1100fc28",
+    "subjects": 475,
+    "no_arms": 25
+  },
+  "cluster-buster-132": {
+    "clustered": true,
+    "hash": "d9904942",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-133": {
+    "clustered": true,
+    "hash": "7873e87c",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-134": {
+    "clustered": true,
+    "hash": "7b021df3",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-135": {
+    "clustered": true,
+    "hash": "864ce1eb",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-136": {
+    "clustered": true,
+    "hash": "d0bdeb25",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-137": {
+    "clustered": true,
+    "hash": "82b37f1e",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-138": {
+    "clustered": true,
+    "hash": "af97669c",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-139": {
+    "clustered": true,
+    "hash": "573f6916",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-140": {
+    "clustered": true,
+    "hash": "efc52953",
+    "subjects": 500,
+    "no_arms": 0
+  },
+  "cluster-buster-141": {
+    "clustered": true,
+    "hash": "dc9d2f55",
+    "subjects": 492,
+    "no_arms": 8
+  },
+  "cluster-buster-142": {
+    "clustered": true,
+    "hash": "56bac721",
+    "subjects": 500,
+    "no_arms": 0
   }
 }

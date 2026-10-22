@@ -9,15 +9,20 @@ status site stays in sync.
 python run_set.py cluster-buster-NNN          # most cores by default
 ```
 
-`run_set.py` (in this repo) reads the config row from `phase1-configs.csv` and runs
-the arm-clustering pipeline once over the **500-galaxy Cluster Buster set**:
+`run_set.py` (in this repo) reads the set's row from `phase1-configs.csv` or
+`phase2-configs.csv`, applies its nine knobs to `base-config.json` (the frozen Phase-1
+base config), and runs the arm-clustering pipeline once over the **500-galaxy Cluster
+Buster set**:
 
-1. **Cluster** all 500 galaxies with that config's `agreement` / `correction` /
-   `ratio` (and the held-constant knobs).
+1. **Cluster** all 500 galaxies with that config.
 2. **Render** each result with the fixed `Set1` arm palette and the split panels
    `[overlay · clusters · tracings]`.
-3. **Bundle** into `<set>_<hash>/` — 500 manifest rows + 1,500 split PNGs — alongside
-   a `run.json` recording the exact hyperparameters and a content hash.
+3. **Bundle** into `<set>_<hash>/`: one manifest row and three PNGs per galaxy with at
+   least one arm, every row stamped with all nine knobs, alongside a `run.json` recording
+   the exact config. Galaxies whose clustering has no arm are left out and counted
+   unsuccessful (`skipped.txt`, then `no-arm-galaxies.csv`).
+4. **Record** the corpus state and the code and environment (`provenance.txt`), mark the
+   set clustered in `set-status.json`, and delete the per-galaxy FITS (regenerable).
 
 Output lands in `artifacts/set_runs/<set>/`. Nothing uploads yet.
 

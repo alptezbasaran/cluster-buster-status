@@ -41,7 +41,7 @@ Drive these three knobs on real galaxies in the **[interactive explorer](/demo)*
 `cluster-buster-NNN` subject set it maps to.
 :::
 
-## Held constant (this phase)
+## Held constant (Phase 1)
 
 | Knob | Value | Why fixed |
 |---|---|---|
@@ -49,6 +49,32 @@ Drive these three knobs on real galaxies in the **[interactive explorer](/demo)*
 | `filter_outliers` | (5, 99) percentile | morphology, not elimination — never swept |
 | `vanilla.blur` / `arm_correction.blur` | 51 / 31 | deferred to Phase 2 |
 | post-check, pre-filter, correction toggles | on | structural, diagnostic only |
+
+## What we sweep — Phase 2
+
+Phase 2 varies all six knobs together: the three Phase-1 knobs plus the three it held fixed.
+
+| Knob | Range |
+|---|---|
+| `agreement_threshold` | 50–90 |
+| `correction_agreement` | 50–80 |
+| `ratio_limit` | 1.00–1.50, in 0.05 steps (Phase 1 used only the two ends) |
+| `trace_support` | 2–5 |
+| `vanilla.blur` | 21–81 (odd kernel sizes) |
+| `arm_correction.blur` | 11–61 (odd kernel sizes) |
+
+A full grid over six knobs would need thousands of sets, so Phase 2 samples the space
+instead: 64 configs from a scrambled Sobol sequence, uploaded in four waves of 16 as
+`cluster-buster-127` to `cluster-buster-190`
+([`phase2-configs.csv`](https://github.com/alptezbasaran/cluster-buster-status/blob/main/phase2-configs.csv)).
+Each wave spans every knob's full range on its own, and the sample stays balanced after
+waves 1, 2 and 4. Phase 1's 126 sets are the slice of the same space at `trace_support` 2
+and blurs 51 / 31, so the two phases form one map. Same 500 galaxies, same manually cleaned
+tracings, 15 verdicts per subject.
+
+Every config is test-clustered on all 500 galaxies before its set is built. Wave 1: all 16
+configs ran cleanly, giving 7,816 subjects; 15% of those images repeat one volunteers
+already judged, against 77% in Phase 1's finer grid.
 
 ## What the sensitivity sweep told us
 
@@ -77,7 +103,7 @@ us when to expand into the stronger knobs.
 | Phase | Adds | Status |
 |---|---|---|
 | **Phase 1** | `agreement` × `correction` × `ratio` (126 configs) | **complete** — 941,794 classifications, finished 2026-10-21 |
-| **Phase 2** | `trace_support`, `vanilla.blur`, `arm_correction.blur` | **in preparation** |
+| **Phase 2** | all six knobs together (64 configs, 4 waves of 16) | **wave 1 in preparation** |
 | Phase 3 | the `filter_outliers` percentiles — only if responses warrant | conditional |
 
 ## How a config becomes evidence

@@ -36,6 +36,17 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
   (`corpus_state.txt` in the run dir).
 - `phase1-configs.csv` — the **126-config grid**: `agreement_threshold` (50–90/5) ×
   `correction_agreement` (50–80/5) × `ratio_limit` ({1.0, 1.5}). One row = one set.
+- `phase2-configs.csv` + `make_phase2_design.py` — the **Phase-2 design**: 64 configs
+  (`cluster-buster-127`…`-190`) sampling all six knobs (scrambled Sobol, seed 20261021),
+  `wave` column = upload waves of 16. Same columns as `phase1-configs.csv` plus `wave`.
+- `base-config.json` — the frozen Phase-1 base config (set 021's run.json; all 126 Phase-1
+  runs share it outside the swept knobs). Phase-2 runs start from it, **not** from
+  arm_grouping's `input.toml`, which has since been repurposed for another dataset.
+  (`run_set.py` / `upload_set.py` still read `phase1-configs.csv` + `input.toml`; switch them
+  before building Phase-2 sets.)
+- `analysis/phase1_morphology.py` → `state/phase1/morphology.json`: which Phase-1 subjects show
+  the same image. `analysis/probe_phase2.py --wave N`: in-memory dry run of one wave (failures,
+  arm counts, repeats of already-judged images) → `state/phase2/probe_wave<N>.json`.
 - `docs/.vitepress/data/set-status.json` — **live per-set status** (clustered / uploaded
   / subjects / retired / completeness, plus workflow totals under `_meta`). Drives the
   site's Sets table and stat chips. Upload state is edited by `upload_set.py`;

@@ -1,0 +1,168 @@
+{
+  "cleanup": {
+    "fresh": true,
+    "arms_fits": false,
+    "arms_png": false,
+    "galaxy_fits": false,
+    "galaxy_png": false,
+    "corrected_arm_directories": true,
+    "outputs": true,
+    "json_output": false,
+    "log": false
+  },
+  "decide_longest_arm": {
+    "longest_arm_support": 1,
+    "ratio_limit": 1.5,
+    "log": false
+  },
+  "arm_correction": {
+    "correction_agreement": 60.0,
+    "keep_corrected": true,
+    "blur": 31,
+    "log": false
+  },
+  "filter_outliers": {
+    "lower_perc": 5,
+    "upper_perc": 99
+  },
+  "vanilla": {
+    "agreement_threshold": 50,
+    "blur": 51,
+    "trace_support": 2,
+    "padding_threshold": 85,
+    "correction": true,
+    "pre_filter": true,
+    "post_check": true,
+    "log": false
+  },
+  "masking": {
+    "save_background": false,
+    "num_regions": 1000,
+    "percent_square": 0.01,
+    "percent_padded": 0.075,
+    "arm_transparency": 1,
+    "kernel": "gaussian",
+    "blurring_sigma": 0
+  },
+  "parallel": {
+    "num_processes": 13,
+    "hash": true,
+    "folder_list": [
+      "/Users/atezbas/Desktop/projects/astro/cluster-buster/artifacts/cluster_buster_galaxy_set"
+    ]
+  },
+  "visualization": {
+    "show_on_original": false,
+    "auto_mask": false,
+    "change_scale": true,
+    "new_limits": [
+      200,
+      255
+    ],
+    "background_rotation_k": 1,
+    "background_flip": "none"
+  },
+  "outputs": {
+    "trace_lists": true,
+    "utilization": true
+  },
+  "render": {
+    "palette": [
+      [
+        28,
+        26,
+        228
+      ],
+      [
+        235,
+        161,
+        70
+      ],
+      [
+        74,
+        175,
+        77
+      ],
+      [
+        163,
+        78,
+        152
+      ],
+      [
+        0,
+        127,
+        255
+      ],
+      [
+        51,
+        255,
+        255
+      ],
+      [
+        40,
+        86,
+        166
+      ],
+      [
+        191,
+        129,
+        247
+      ]
+    ],
+    "background_color": [
+      0,
+      0,
+      0
+    ],
+    "crop": "square"
+  },
+  "combine_pics": {
+    "gif_output": false,
+    "keep_combined_image": false,
+    "split_output": true,
+    "invert_colors": false
+  },
+  "skeletonization": {
+    "skeletonize": true,
+    "iterative_skeletonize": true,
+    "blur": 51,
+    "thresh": 8,
+    "iter_start": 11,
+    "iter_step": 10,
+    "iter_max": 151
+  },
+  "pitch": {
+    "enabled": false,
+    "diagnostics": false,
+    "min_arm_pixels": 20,
+    "strategies": [
+      "unweighted",
+      "arc_length",
+      "inverse_variance"
+    ],
+    "auto_trim_inner": false,
+    "trim_tolerance": 0.05
+  },
+  "zooniverse": {
+    "enabled": true,
+    "metadata_csv": "/Users/atezbas/Desktop/projects/arm_grouping/set_004_manifest_proposed.csv",
+    "bundle_prefix": "",
+    "upload": {
+      "enabled": false,
+      "project_slug": "astro-lab-ncmns/spiral-graph-cluster-buster",
+      "subject_set_name": "",
+      "dry_run": false
+    }
+  },
+  "dashboard": {
+    "enabled": false,
+    "host": "0.0.0.0",
+    "port": 8770,
+    "linger": false
+  },
+  "notify": {
+    "enabled": false,
+    "discord": false,
+    "ntfy": false
+  }
+}

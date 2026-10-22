@@ -32,9 +32,10 @@ Two panels for the `ratio_limit` split; hover any cell for its set and subject c
 
 ## What's next
 
-Phase 2 varies the hyperparameters Phase 1 held fixed (see [The Investigation](/investigation#phasing)),
-on the same 500 galaxies and the same manually cleaned tracings. The design is being finalised; new
-sets will appear here as they go live.
+Phase 2 varies all six clustering knobs together, including the three Phase 1 held fixed: 64 configs
+in four waves of 16, on the same 500 galaxies and the same manually cleaned tracings
+(see [The Investigation](/investigation#what-we-sweep-—-phase-2)). Wave 1 is being prepared; new sets
+will appear here as they go live.
 
 ## Why this exists
 

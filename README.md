@@ -85,11 +85,17 @@ grid.
 `agreement=65` block (anchor `001` = agree 65 / corr 55 / ratio 1.5); `015–126`
 expand `agreement`. `trace_support` + blurs are a later phase.
 
+## Phase-2 config sampling
+
+Phase 2 varies all six knobs together: `agreement_threshold` 50–90, `correction_agreement`
+50–80, `ratio_limit` 1.00–1.50 (0.05 steps), `trace_support` 2–5, `vanilla.blur` 21–81 and
+`arm_correction.blur` 11–61 (odd). **`phase2-configs.csv`** holds 64 configs
+(`cluster-buster-127` … `-190`) drawn by `make_phase2_design.py` (scrambled Sobol, seed
+`20261021`), uploaded in waves of 16 (`wave` column). Runs start from **`base-config.json`**,
+the frozen Phase-1 base config, on the same 500 galaxies and the cleaned tracings. Each wave is
+test-clustered in memory first (`analysis/probe_phase2.py --wave N`).
+
 ## Run / upload status
 
-**Naming convention:** each set is a Zooniverse subject set `cluster-buster-NNN`,
-set in `input.toml`'s `[zooniverse.upload].subject_set_name` before each run.
-
-| Set | agree | corr | ratio | Clustered | Uploaded | Classifications | run.json |
-|-----|---|---|---|---|---|---|---|
-| `cluster-buster-001` | 65 | 55 | 1.5 | | | | |
+Each set is a Zooniverse subject set `cluster-buster-NNN`. Live per-set status lives in
+`docs/.vitepress/data/set-status.json` and on the site's Sets page.

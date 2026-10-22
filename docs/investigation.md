@@ -111,7 +111,7 @@ us when to expand into the stronger knobs.
 | Phase | Adds | Status |
 |---|---|---|
 | **Phase 1** | `agreement` × `correction` × `ratio` (126 configs) | **complete** — 941,794 classifications, finished 2026-10-21 |
-| **Phase 2** | all six knobs together (64 configs, 4 waves of 16) | **wave 1 in preparation** |
+| **Phase 2** | all six knobs together (64 configs, 4 waves of 16) | **wave 1 live** since 2026-10-22 |
 | Phase 3 | the `filter_outliers` percentiles — only if responses warrant | conditional |
 
 ## How a config becomes evidence

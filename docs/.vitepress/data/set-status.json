@@ -1388,14 +1388,14 @@
   "_meta": {
     "workflow_id": "26736",
     "workflow_active": true,
-    "linked_subject_sets": 127,
-    "classifications": 941794,
+    "linked_subject_sets": 143,
+    "classifications": 941904,
     "retired_subjects": 62703,
-    "subjects": 62703,
+    "subjects": 70249,
     "volunteers": 2939,
-    "project_state": "paused",
-    "finished_at": "2026-10-21",
-    "synced": "2026-10-21"
+    "project_state": "live",
+    "finished_at": null,
+    "synced": "2026-10-22"
   },
   "cluster-buster-127": {
     "clustered": true,
@@ -1403,7 +1403,9 @@
     "subjects": 488,
     "no_arms": 12,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-128": {
     "clustered": true,
@@ -1411,7 +1413,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-129": {
     "clustered": true,
@@ -1419,7 +1423,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-130": {
     "clustered": true,
@@ -1427,7 +1433,9 @@
     "subjects": 391,
     "no_arms": 109,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-131": {
     "clustered": true,
@@ -1435,7 +1443,9 @@
     "subjects": 475,
     "no_arms": 25,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-132": {
     "clustered": true,
@@ -1443,7 +1453,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-133": {
     "clustered": true,
@@ -1451,7 +1463,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-134": {
     "clustered": true,
@@ -1459,7 +1473,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-135": {
     "clustered": true,
@@ -1467,7 +1483,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-136": {
     "clustered": true,
@@ -1475,7 +1493,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-137": {
     "clustered": true,
@@ -1483,7 +1503,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-138": {
     "clustered": true,
@@ -1491,7 +1513,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-139": {
     "clustered": true,
@@ -1499,7 +1523,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-140": {
     "clustered": true,
@@ -1507,7 +1533,9 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-141": {
     "clustered": true,
@@ -1515,7 +1543,9 @@
     "subjects": 492,
     "no_arms": 8,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   },
   "cluster-buster-142": {
     "clustered": true,
@@ -1523,6 +1553,8 @@
     "subjects": 500,
     "no_arms": 0,
     "uploaded": true,
-    "live": true
+    "live": true,
+    "completeness": 0.0,
+    "retired": 0
   }
 }

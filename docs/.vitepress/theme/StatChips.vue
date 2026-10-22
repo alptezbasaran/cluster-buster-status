@@ -53,10 +53,10 @@ const finished = !!(m && m.finished_at && m.retired_subjects === m.subjects)
       Synced {{ m.synced }}.
     </template>
     <template v-else>
-      Classification progress synced {{ m.synced }} — all {{ m.linked_subject_sets }} sets linked to the
+      Classification progress synced {{ m.synced }} — {{ m.linked_subject_sets }} subject sets linked to the
       <a href="https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster" target="_blank" rel="noreferrer">live workflow</a>.
     </template>
-    Totals include 200 attention-check subjects, excluded from the science.
+    Workflow totals include the attention-check subjects, which are excluded from the science.
   </p>
 </template>
 

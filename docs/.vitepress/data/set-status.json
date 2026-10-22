@@ -1401,96 +1401,128 @@
     "clustered": true,
     "hash": "2ea67483",
     "subjects": 488,
-    "no_arms": 12
+    "no_arms": 12,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-128": {
     "clustered": true,
     "hash": "a5824c8b",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-129": {
     "clustered": true,
     "hash": "c2d1f76a",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-130": {
     "clustered": true,
     "hash": "84d0933a",
     "subjects": 391,
-    "no_arms": 109
+    "no_arms": 109,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-131": {
     "clustered": true,
     "hash": "1100fc28",
     "subjects": 475,
-    "no_arms": 25
+    "no_arms": 25,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-132": {
     "clustered": true,
     "hash": "d9904942",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-133": {
     "clustered": true,
     "hash": "7873e87c",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-134": {
     "clustered": true,
     "hash": "7b021df3",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-135": {
     "clustered": true,
     "hash": "864ce1eb",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-136": {
     "clustered": true,
     "hash": "d0bdeb25",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-137": {
     "clustered": true,
     "hash": "82b37f1e",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-138": {
     "clustered": true,
     "hash": "af97669c",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-139": {
     "clustered": true,
     "hash": "573f6916",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-140": {
     "clustered": true,
     "hash": "efc52953",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-141": {
     "clustered": true,
     "hash": "dc9d2f55",
     "subjects": 492,
-    "no_arms": 8
+    "no_arms": 8,
+    "uploaded": true,
+    "live": true
   },
   "cluster-buster-142": {
     "clustered": true,
     "hash": "56bac721",
     "subjects": 500,
-    "no_arms": 0
+    "no_arms": 0,
+    "uploaded": true,
+    "live": true
   }
 }

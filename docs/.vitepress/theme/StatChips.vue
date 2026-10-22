@@ -2,9 +2,10 @@
 import { data } from '../data/sets.data'
 const c = data.counts
 const m = data.meta
-const uploadedSubjects = data.sets
-  .filter((s) => s.uploaded)
-  .reduce((n, s) => n + (s.subjects || 0), 0)
+const subjectsIn = (state: string) =>
+  data.sets.filter((s) => s.state === state).reduce((n, s) => n + (s.subjects || 0), 0)
+const classifiedSubjects = subjectsIn('complete')
+const openSubjects = subjectsIn('uploaded')
 const retiredPct = m ? Math.round((m.retired_subjects / m.subjects) * 100) : null
 const building = c.uploaded + c.complete < c.total
 const finished = !!(m && m.finished_at && m.retired_subjects === m.subjects)
@@ -24,9 +25,13 @@ const finished = !!(m && m.finished_at && m.retired_subjects === m.subjects)
       <div class="num">{{ c.uploaded + c.complete }}</div>
       <div class="label">Uploaded</div>
     </div>
-    <div class="cb-stat" style="--accent: var(--cb-pink)">
-      <div class="num">{{ uploadedSubjects.toLocaleString() }}</div>
-      <div class="label">{{ finished ? 'Subjects classified' : 'Subjects live' }}</div>
+    <div v-if="classifiedSubjects" class="cb-stat" style="--accent: var(--cb-pink)">
+      <div class="num">{{ classifiedSubjects.toLocaleString() }}</div>
+      <div class="label">Subjects classified</div>
+    </div>
+    <div v-if="openSubjects" class="cb-stat" style="--accent: var(--cb-pink-soft)">
+      <div class="num">{{ openSubjects.toLocaleString() }}</div>
+      <div class="label">Subjects awaiting verdicts</div>
     </div>
     <div v-if="m" class="cb-stat" style="--accent: var(--cb-magenta-light)">
       <div class="num">{{ m.classifications.toLocaleString() }}</div>

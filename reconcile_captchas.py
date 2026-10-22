@@ -13,10 +13,19 @@ correct clustering while instructing "NO", so careful volunteers failed them
 (measured: slow users passed 47%, fast users 88% — inverted). The checker counts
 only reliable subjects toward verdicts.
 
+Sets built with opaque ids (v3, make_captcha_bundle.py --opaque-ids) carry no
+polarity in the gid: pass the bundle's captcha_answers.csv via --answers, and
+--private to write state/captcha_subjects_private.json (gitignored) instead of
+the committed file, so the answer map is not published with the repository.
+
+    python3 reconcile_captchas.py --set cluster-buster-qc3 --private \
+        --answers <bundle>/captcha_answers.csv
+
 Anonymous public API reads only (no credentials).
 """
 
 import argparse
+import csv
 import json
 import sys
 import urllib.request
@@ -27,6 +36,7 @@ API = "https://panoptes.zooniverse.org/api"
 PROJECT_ID = "23492"
 WORKFLOW_ID = "26736"
 OUT = Path(__file__).parent / "captcha_subjects.json"
+PRIVATE = Path(__file__).parent / "state" / "captcha_subjects_private.json"
 
 
 def get(url):
@@ -44,7 +54,18 @@ def main() -> int:
     ap.add_argument("--replace", action="store_true",
                     help="drop existing entries instead of merging")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--answers", type=Path,
+                    help="captcha_answers.csv of an opaque-id bundle (gid -> answer)")
+    ap.add_argument("--private", action="store_true",
+                    help=f"write {PRIVATE.relative_to(PRIVATE.parent.parent)} "
+                         "instead of the committed map")
     args = ap.parse_args()
+    out = PRIVATE if args.private else OUT
+    answers = {}
+    if args.answers:
+        with args.answers.open() as fh:
+            answers = {r["gid"]: (r["answer"], int(r["expected_value"]))
+                       for r in csv.DictReader(fh)}
 
     set_id = None
     url = f"{API}/subject_sets?project_id={PROJECT_ID}&page_size=100"
@@ -69,7 +90,12 @@ def main() -> int:
             if not gid.startswith("qc"):
                 print(f"subject {s['id']} has unexpected #gid {gid!r} — aborting")
                 return 2
-            if "yes" in gid:
+            if answers:
+                if gid not in answers:
+                    print(f"subject {s['id']} gid {gid!r} not in {args.answers} — aborting")
+                    return 2
+                answer, expected = answers[gid]
+            elif "yes" in gid:
                 answer, expected = "yes", 0
             elif "no" in gid:
                 answer, expected = "no", 1
@@ -95,8 +121,8 @@ def main() -> int:
     merged = dict(subjects)
     sets_meta = {args.set: {"subject_set_id": set_id, "yes": n_yes, "no": n_no,
                             "reconciled": date.today().isoformat()}}
-    if OUT.exists() and not args.replace:
-        old = json.loads(OUT.read_text())
+    if out.exists() and not args.replace:
+        old = json.loads(out.read_text())
         kept = {sid: v for sid, v in old.get("subjects", {}).items()
                 if sid not in merged}
         merged.update(kept)
@@ -106,7 +132,8 @@ def main() -> int:
               f"{sorted({v.get('set','?') for v in kept.values()})}")
 
     unreliable = sum(1 for v in merged.values() if not v.get("reliable", True))
-    OUT.write_text(json.dumps({
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(json.dumps({
         "_meta": {
             "workflow_id": WORKFLOW_ID,
             "sets": sets_meta,
@@ -118,7 +145,7 @@ def main() -> int:
         },
         "subjects": merged,
     }, indent=1) + "\n")
-    print(f"wrote {OUT}: {len(merged)} subjects total, {unreliable} marked unreliable")
+    print(f"wrote {out}: {len(merged)} subjects total, {unreliable} marked unreliable")
     return 0
 
 

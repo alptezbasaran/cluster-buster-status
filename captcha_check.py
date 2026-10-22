@@ -38,6 +38,8 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 MAP_FILE = HERE / "captcha_subjects.json"
+# opaque-id sets (v3+) keep their answers out of the public repo
+PRIVATE_MAP_FILE = HERE / "state" / "captcha_subjects_private.json"
 STATE_DIR = HERE / "state"
 STATE_FILE = STATE_DIR / "captcha_check_state.json"
 HITS_FILE = STATE_DIR / "captcha_hits.jsonl"
@@ -81,8 +83,13 @@ def load_map():
         print(f"{MAP_FILE.name} missing — run reconcile_captchas.py first")
         sys.exit(2)
     doc = json.loads(MAP_FILE.read_text())
-    cmap = {sid: (v["gid"], v["expected_value"]) for sid, v in doc["subjects"].items()}
-    unreliable = {sid for sid, v in doc["subjects"].items()
+    subjects = dict(doc["subjects"])
+    if PRIVATE_MAP_FILE.exists():
+        private = json.loads(PRIVATE_MAP_FILE.read_text())
+        subjects.update(private["subjects"])
+        doc["_meta"].setdefault("sets", {}).update(private["_meta"].get("sets", {}))
+    cmap = {sid: (v["gid"], v["expected_value"]) for sid, v in subjects.items()}
+    unreliable = {sid for sid, v in subjects.items()
                   if not v.get("reliable", True)}
     return doc["_meta"], cmap, unreliable
 

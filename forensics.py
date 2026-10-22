@@ -73,7 +73,17 @@ HERE = Path(__file__).resolve().parent
 STATE = HERE / "state"
 API = "https://panoptes.zooniverse.org/api"
 PROJECT_ID = "23492"
-CAPTCHA_SETS = {"137851", "138095"}
+# captcha answer maps: the committed one (v1/v2) and the gitignored one for
+# opaque-id sets (v3+), whose answers must stay out of this public repository
+CAPTCHA_MAPS = (HERE / "captcha_subjects.json", STATE / "captcha_subjects_private.json")
+
+
+def _captcha_docs():
+    return [json.loads(p.read_text()) for p in CAPTCHA_MAPS if p.exists()]
+
+
+CAPTCHA_SETS = {"137851", "138095"} | {
+    m["subject_set_id"] for d in _captcha_docs() for m in d["_meta"].get("sets", {}).values()}
 PHI_INV = NormalDist().inv_cdf
 AUTOMATION_UA = re.compile(
     r"headless|phantom|selenium|webdriver|puppeteer|playwright|python|curl|wget|"
@@ -147,9 +157,8 @@ def set_names():
 
 
 def captcha_map():
-    doc = json.loads((HERE / "captcha_subjects.json").read_text())
     return {sid: (v["expected_value"], v.get("reliable", True))
-            for sid, v in doc["subjects"].items()}
+            for d in _captcha_docs() for sid, v in d["subjects"].items()}
 
 
 def ip_map():

@@ -18,6 +18,17 @@ populated; answer is encoded in the gid prefix qcyes/qcno), captcha_answers.csv
 and info.txt. Generation is deterministic per (seed, gid) and finishes by
 running the uploader's verify_bundle, so a completed run is upload-ready.
 
+--opaque-ids (v3 on): gids become <prefix><6 random hex> and the manifest is
+shuffled, so neither the subject metadata (#gid, #image1-3 file names) nor the
+upload order (= Panoptes subject id order) reveals the expected answer — both
+are readable through the public API, and v2's qc2yes001 / qc2no001 ids gave
+the answer away. The answers then live only in the bundle's
+captcha_answers.csv; reconcile with `reconcile_captchas.py --answers ...
+--private` so the subject-id map stays out of this public repository. v3:
+
+    ... make_captcha_bundle.py --opaque-ids --gid-prefix qc3 \
+        --set-name cluster-buster-qc3 --palette amber --frame 26 --seed 20261021
+
 NEVER upload this set with upload_set.py (its hyperparameter guard aborts on
 the empty knob columns) — use zooniverse_upload.py directly:
 
@@ -295,6 +306,9 @@ def main() -> int:
     ap.add_argument("--gid-prefix", default="qc2",
                     help="gid prefix; must be alphanumeric and unique per batch")
     ap.add_argument("--set-name", default="cluster-buster-qc2")
+    ap.add_argument("--opaque-ids", action="store_true",
+                    help="random hex gids + shuffled order, so nothing readable "
+                         "through the API reveals the answer (v3)")
     args = ap.parse_args()
 
     out = args.out or (SET_RUNS / args.set_name)
@@ -302,8 +316,19 @@ def main() -> int:
     bundle.mkdir(parents=True, exist_ok=True)
 
     p = args.gid_prefix
-    subjects = [(f"{p}yes{i:03d}", "YES", 0) for i in range(1, args.n_yes + 1)]
-    subjects += [(f"{p}no{i:03d}", "NO", 1) for i in range(1, args.n_no + 1)]
+    if args.opaque_ids:
+        polarity = [("YES", 0)] * args.n_yes + [("NO", 1)] * args.n_no
+        rng = random.Random(f"ids:{args.seed}")
+        tokens: list[str] = []
+        while len(tokens) < len(polarity):
+            t = f"{rng.getrandbits(24):06x}"
+            if t not in tokens:
+                tokens.append(t)
+        subjects = [(f"{p}{t}", word, exp) for t, (word, exp) in zip(tokens, polarity)]
+        random.Random(f"order:{args.seed}").shuffle(subjects)
+    else:
+        subjects = [(f"{p}yes{i:03d}", "YES", 0) for i in range(1, args.n_yes + 1)]
+        subjects += [(f"{p}no{i:03d}", "NO", 1) for i in range(1, args.n_no + 1)]
     jitters = unique_jitters(len(subjects), args.seed)
     rows = []
     answers = []
@@ -331,7 +356,8 @@ def main() -> int:
         writer.writerows(answers)
     (bundle / "info.txt").write_text(
         f"file_hash: {p}{args.seed}\nkind: attention_check\nstyle: {args.style}\n"
-        f"palette: {args.palette}\n"
+        f"palette: {args.palette}\nframe: {args.frame}\n"
+        f"opaque_ids: {args.opaque_ids}\n"
         f"subjects: {len(subjects)} ({args.n_yes} yes / {args.n_no} no)\n"
     )
 

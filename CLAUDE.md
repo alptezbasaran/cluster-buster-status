@@ -57,13 +57,18 @@ trace-filtering constant (the model should read morphology, not learn to drop tr
 - `link_set.py <display-name>` — link/unlink a subject set to workflow 26736
   (authenticated; `--dry-run`; the committed replacement for July's one-off).
 - `reconcile_captchas.py` — post-upload: writes `captcha_subjects.json`
-  (subject_id → expected answer; anonymous API reads).
+  (subject_id → expected answer; anonymous API reads). For opaque-id sets (v3+):
+  `--answers <bundle>/captcha_answers.csv --private` → gitignored
+  `state/captcha_subjects_private.json` instead.
 - `captcha_check.py` — the **captcha tripwire**: incremental authenticated
   classification harvest (bookmark in gitignored `state/`), per-user
   pass/fail verdicts (FLAG/WATCH/OK), live-pool status, `--unretire`
   (operator-confirmed re-arm), `--write-incident`. Exit 3 = new FLAG accounts.
 - `captcha_subjects.json` — committed subject_id ↔ expected-answer map for the
-  qc set; read by the checker AND by any future label aggregation (see below).
+  v1/v2 qc sets; read by the checker AND by any future label aggregation (see
+  below). Opaque-id sets (v3+) live in the gitignored
+  `state/captcha_subjects_private.json` — never commit it; `captcha_check.py`
+  and `forensics.captcha_map()` / `CAPTCHA_SETS` merge both files.
 - **Classification quality review** — methods, validation and thresholds in
   `METHODS.md`; run `harvest.py` → `forensics.py` → `linkage.py` →
   `triangulate.py` (commands in METHODS.md).
@@ -143,8 +148,18 @@ unambiguous ground truth. Answer is encoded in the gid prefix (`qcyes###` /
 `qcno###`) and `#data_set=attention_check`; `#expected_number_of_arms` is left
 EMPTY on purpose (a number there could mis-join arm-count aggregations).
 
+**v3 (`cluster-buster-qc3`, built 2026-10-21, not yet uploaded):** same amber
+look as v2 (`--style plain --palette amber --frame 26`), but `--opaque-ids` —
+gids are `qc3` + 6 random hex digits and the manifest order is shuffled, so no
+metadata and no subject-id order carry the answer. The answers stay in the
+bundle's `captcha_answers.csv` (under `set_runs/`, outside this repo) and,
+after upload, in the private map via `reconcile_captchas.py --private`. Upload
+and link it together with the next science sets, never alone (an otherwise
+out-of-data workflow would serve nothing but captchas).
+
 - **EXCLUSION RULE: every label aggregation must drop the subject ids in
-  `captcha_subjects.json`** (equivalently: subjects with
+  `captcha_subjects.json` and `state/captcha_subjects_private.json`**
+  (equivalently: subjects with
   `#data_set == "attention_check"` or gid prefix `qc`), **and down-weight or
   exclude accounts in `incidents/*captcha-flags*.json`, in addition to the
   known bot user 3055564.**
@@ -156,6 +171,9 @@ EMPTY on purpose (a number there could mis-join arm-count aggregations).
   exact command is in `make_captcha_bundle.py`'s docstring).
 - Captchas retire at 15 votes like any subject; `captcha_check.py` reports the
   live count and `--unretire` re-arms the pool (operator-run, interactive).
+  Re-arming a fully retired pool buys almost nothing: retirement counts total
+  classifications, so a card already at 15 retires again on its next vote —
+  build a fresh pool instead (as for v3).
 - All Zooniverse mutations (upload, link, unretire) are operator-triggered.
 
 ## Conventions

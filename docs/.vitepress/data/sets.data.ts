@@ -19,7 +19,14 @@ export default {
       const row: Record<string, string> = {}
       cols.forEach((c, i) => (row[c] = v[i]))
       const st = status[row.set] || {}
-      const state = st.uploaded ? 'uploaded' : st.clustered ? 'clustered' : 'planned'
+      const state =
+        st.uploaded && st.completeness >= 1
+          ? 'complete'
+          : st.uploaded
+            ? 'uploaded'
+            : st.clustered
+              ? 'clustered'
+              : 'planned'
       return {
         set: row.set,
         n: Number(row.set.split('-').pop()),
@@ -45,6 +52,7 @@ export default {
       planned: sets.filter((s) => s.state === 'planned').length,
       clustered: sets.filter((s) => s.state === 'clustered').length,
       uploaded: sets.filter((s) => s.state === 'uploaded').length,
+      complete: sets.filter((s) => s.state === 'complete').length,
     }
 
     return { sets, counts, meta }
@@ -65,7 +73,7 @@ export interface SetRow {
   classifications: number
   retired: number | null
   completeness: number | null
-  state: 'planned' | 'clustered' | 'uploaded'
+  state: 'planned' | 'clustered' | 'uploaded' | 'complete'
 }
 export declare const data: {
   sets: SetRow[]
@@ -77,6 +85,9 @@ export declare const data: {
     classifications: number
     retired_subjects: number
     subjects: number
+    volunteers?: number
+    project_state?: string
+    finished_at?: string | null
     synced: string
   } | null
 }

@@ -76,8 +76,8 @@ us when to expand into the stronger knobs.
 
 | Phase | Adds | Status |
 |---|---|---|
-| **Phase 1** | `agreement` × `correction` × `ratio` (126 configs) | **active** |
-| Phase 2 | `trace_support`, `vanilla.blur`, `arm_correction.blur` | planned |
+| **Phase 1** | `agreement` × `correction` × `ratio` (126 configs) | **complete** — 941,794 classifications, finished 2026-10-21 |
+| **Phase 2** | `trace_support`, `vanilla.blur`, `arm_correction.blur` | **in preparation** |
 | Phase 3 | the `filter_outliers` percentiles — only if responses warrant | conditional |
 
 ## How a config becomes evidence

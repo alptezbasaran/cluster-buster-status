@@ -26,6 +26,7 @@ const rows = computed(() =>
       <option value="planned">planned</option>
       <option value="clustered">clustered</option>
       <option value="uploaded">uploaded</option>
+      <option value="complete">complete</option>
     </select>
     <span style="color: var(--vp-c-text-2); font-size: 0.85rem">
       {{ rows.length }} / {{ data.sets.length }} sets

@@ -36,8 +36,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 494
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-005": {
     "clustered": true,
@@ -46,8 +46,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.992,
-    "retired": 496
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-006": {
     "clustered": true,
@@ -56,8 +56,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 494
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-007": {
     "clustered": true,
@@ -86,8 +86,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 498
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-010": {
     "clustered": true,
@@ -106,8 +106,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 498
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-012": {
     "clustered": true,
@@ -116,8 +116,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 493
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-013": {
     "clustered": true,
@@ -136,8 +136,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 494
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-015": {
     "clustered": true,
@@ -146,8 +146,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 499
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-016": {
     "clustered": true,
@@ -156,8 +156,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 493
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-017": {
     "clustered": true,
@@ -166,8 +166,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 499
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-018": {
     "clustered": true,
@@ -176,8 +176,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.9939,
-    "retired": 492
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-019": {
     "clustered": true,
@@ -186,8 +186,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.996,
-    "retired": 498
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-020": {
     "clustered": true,
@@ -196,8 +196,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.998,
-    "retired": 494
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-021": {
     "clustered": true,
@@ -206,8 +206,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.004,
-    "retired": 2
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-022": {
     "clustered": true,
@@ -216,8 +216,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-023": {
     "clustered": true,
@@ -226,8 +226,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.004,
-    "retired": 2
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-024": {
     "clustered": true,
@@ -236,8 +236,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-025": {
     "clustered": true,
@@ -246,8 +246,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.006,
-    "retired": 3
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-026": {
     "clustered": true,
@@ -256,8 +256,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-027": {
     "clustered": true,
@@ -266,8 +266,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-028": {
     "clustered": true,
@@ -276,8 +276,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-029": {
     "clustered": true,
@@ -286,8 +286,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-030": {
     "clustered": true,
@@ -296,8 +296,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-031": {
     "clustered": true,
@@ -306,8 +306,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-032": {
     "clustered": true,
@@ -316,8 +316,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-033": {
     "clustered": true,
@@ -326,8 +326,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-034": {
     "clustered": true,
@@ -336,8 +336,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-035": {
     "clustered": true,
@@ -346,8 +346,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-036": {
     "clustered": true,
@@ -356,8 +356,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-037": {
     "clustered": true,
@@ -366,8 +366,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-038": {
     "clustered": true,
@@ -376,8 +376,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-039": {
     "clustered": true,
@@ -386,8 +386,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-040": {
     "clustered": true,
@@ -396,8 +396,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-041": {
     "clustered": true,
@@ -406,8 +406,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-042": {
     "clustered": true,
@@ -416,8 +416,8 @@
     "subjects": 486,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 486
   },
   "cluster-buster-043": {
     "clustered": true,
@@ -426,8 +426,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-044": {
     "clustered": true,
@@ -436,8 +436,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-045": {
     "clustered": true,
@@ -446,8 +446,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-046": {
     "clustered": true,
@@ -456,8 +456,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-047": {
     "clustered": true,
@@ -466,8 +466,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-048": {
     "clustered": true,
@@ -476,8 +476,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-049": {
     "clustered": true,
@@ -486,8 +486,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-050": {
     "clustered": true,
@@ -496,8 +496,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-051": {
     "clustered": true,
@@ -506,8 +506,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-052": {
     "clustered": true,
@@ -516,8 +516,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-053": {
     "clustered": true,
@@ -526,8 +526,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-054": {
     "clustered": true,
@@ -536,8 +536,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-055": {
     "clustered": true,
@@ -546,8 +546,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-056": {
     "clustered": true,
@@ -556,8 +556,8 @@
     "subjects": 493,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 493
   },
   "cluster-buster-057": {
     "clustered": true,
@@ -566,8 +566,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-058": {
     "clustered": true,
@@ -576,8 +576,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-059": {
     "clustered": true,
@@ -586,8 +586,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-060": {
     "clustered": true,
@@ -596,8 +596,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-061": {
     "clustered": true,
@@ -606,8 +606,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-062": {
     "clustered": true,
@@ -616,8 +616,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-063": {
     "clustered": true,
@@ -626,8 +626,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-064": {
     "clustered": true,
@@ -636,8 +636,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-065": {
     "clustered": true,
@@ -646,8 +646,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-066": {
     "clustered": true,
@@ -656,8 +656,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-067": {
     "clustered": true,
@@ -666,8 +666,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-068": {
     "clustered": true,
@@ -676,8 +676,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-069": {
     "clustered": true,
@@ -686,8 +686,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-070": {
     "clustered": true,
@@ -696,8 +696,8 @@
     "subjects": 490,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 490
   },
   "cluster-buster-071": {
     "clustered": true,
@@ -706,8 +706,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-072": {
     "clustered": true,
@@ -716,8 +716,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-073": {
     "clustered": true,
@@ -726,8 +726,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-074": {
     "clustered": true,
@@ -736,8 +736,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-075": {
     "clustered": true,
@@ -746,8 +746,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-076": {
     "clustered": true,
@@ -756,8 +756,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-077": {
     "clustered": true,
@@ -766,8 +766,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-078": {
     "clustered": true,
@@ -776,8 +776,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-079": {
     "clustered": true,
@@ -786,8 +786,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-080": {
     "clustered": true,
@@ -796,8 +796,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-081": {
     "clustered": true,
@@ -806,8 +806,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-082": {
     "clustered": true,
@@ -816,8 +816,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-083": {
     "clustered": true,
@@ -826,8 +826,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-084": {
     "clustered": true,
@@ -836,8 +836,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-085": {
     "clustered": true,
@@ -846,8 +846,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-086": {
     "clustered": true,
@@ -856,8 +856,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-087": {
     "clustered": true,
@@ -866,8 +866,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-088": {
     "clustered": true,
@@ -876,8 +876,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-089": {
     "clustered": true,
@@ -886,8 +886,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-090": {
     "clustered": true,
@@ -896,8 +896,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-091": {
     "clustered": true,
@@ -906,8 +906,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-092": {
     "clustered": true,
@@ -916,8 +916,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-093": {
     "clustered": true,
@@ -926,8 +926,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-094": {
     "clustered": true,
@@ -936,8 +936,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-095": {
     "clustered": true,
@@ -946,8 +946,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-096": {
     "clustered": true,
@@ -956,8 +956,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-097": {
     "clustered": true,
@@ -966,8 +966,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-098": {
     "clustered": true,
@@ -976,8 +976,8 @@
     "subjects": 489,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 489
   },
   "cluster-buster-099": {
     "clustered": true,
@@ -986,8 +986,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-100": {
     "clustered": true,
@@ -996,8 +996,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-101": {
     "clustered": true,
@@ -1006,8 +1006,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-102": {
     "clustered": true,
@@ -1016,8 +1016,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-103": {
     "clustered": true,
@@ -1026,8 +1026,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-104": {
     "clustered": true,
@@ -1036,8 +1036,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-105": {
     "clustered": true,
@@ -1046,8 +1046,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-106": {
     "clustered": true,
@@ -1056,8 +1056,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-107": {
     "clustered": true,
@@ -1066,8 +1066,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-108": {
     "clustered": true,
@@ -1076,8 +1076,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-109": {
     "clustered": true,
@@ -1086,8 +1086,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-110": {
     "clustered": true,
@@ -1096,8 +1096,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-111": {
     "clustered": true,
@@ -1106,8 +1106,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-112": {
     "clustered": true,
@@ -1116,8 +1116,8 @@
     "subjects": 495,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 495
   },
   "cluster-buster-113": {
     "clustered": true,
@@ -1126,8 +1126,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-114": {
     "clustered": true,
@@ -1136,8 +1136,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-115": {
     "clustered": true,
@@ -1146,8 +1146,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-116": {
     "clustered": true,
@@ -1156,8 +1156,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-117": {
     "clustered": true,
@@ -1166,8 +1166,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-118": {
     "clustered": true,
@@ -1176,8 +1176,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-119": {
     "clustered": true,
@@ -1186,8 +1186,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-120": {
     "clustered": true,
@@ -1196,8 +1196,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-121": {
     "clustered": true,
@@ -1206,8 +1206,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-122": {
     "clustered": true,
@@ -1216,8 +1216,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-123": {
     "clustered": true,
@@ -1226,8 +1226,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-124": {
     "clustered": true,
@@ -1236,8 +1236,8 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "cluster-buster-125": {
     "clustered": true,
@@ -1246,8 +1246,8 @@
     "subjects": 500,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 500
   },
   "cluster-buster-126": {
     "clustered": true,
@@ -1256,16 +1256,19 @@
     "subjects": 491,
     "classifications": 0,
     "live": true,
-    "completeness": 0.0,
-    "retired": 0
+    "completeness": 1.0,
+    "retired": 491
   },
   "_meta": {
     "workflow_id": "26736",
     "workflow_active": true,
     "linked_subject_sets": 127,
-    "classifications": 371895,
-    "retired_subjects": 9934,
+    "classifications": 941794,
+    "retired_subjects": 62703,
     "subjects": 62703,
-    "synced": "2026-08-03"
+    "volunteers": 2939,
+    "project_state": "paused",
+    "finished_at": "2026-10-21",
+    "synced": "2026-10-21"
   }
 }

@@ -2,11 +2,11 @@
 layout: home
 hero:
   name: Cluster Buster
-  text: Live status of the spiral-arm clustering sweep
-  tagline: A 126-config hyperparameter study, validated by Zooniverse volunteers — tracking which clustering settings produce good spiral arms.
+  text: Status of the spiral-arm clustering study
+  tagline: Phase 1 is complete — 126 clustering configs, every subject judged by 15 Zooniverse volunteers. The next batch of sets, with new hyperparameters, is in preparation.
   actions:
     - theme: brand
-      text: Classify on Zooniverse
+      text: Cluster Buster on Zooniverse
       link: https://www.zooniverse.org/projects/astro-lab-ncmns/spiral-graph-cluster-buster
     - theme: alt
       text: All 126 sets
@@ -22,12 +22,19 @@ hero:
 
 <StatChips />
 
-## Sweep status
+## Phase 1 — complete
 
-The headline view: every config in the Phase-1 grid, coloured by where it is in the
-pipeline. Two panels for the `ratio_limit` split; hover any cell for its set and subject count.
+Every config in the Phase-1 grid, coloured by where it is in the pipeline. All 126 sets
+were uploaded, classified and retired; volunteers finished the last subject on 21 October 2026.
+Two panels for the `ratio_limit` split; hover any cell for its set and subject count.
 
 <SweepGrid />
+
+## What's next
+
+Phase 2 varies the hyperparameters Phase 1 held fixed (see [The Investigation](/investigation#phasing)),
+on the same 500 galaxies and the same manually cleaned tracings. The design is being finalised; new
+sets will appear here as they go live.
 
 ## Why this exists
 

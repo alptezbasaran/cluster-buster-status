@@ -23,7 +23,8 @@ const c = data.counts
 const legend = [
   { state: 'planned', label: 'planned', n: c.planned },
   { state: 'clustered', label: 'clustered', n: c.clustered },
-  { state: 'uploaded', label: 'uploaded', n: c.uploaded },
+  { state: 'uploaded', label: 'live', n: c.uploaded },
+  { state: 'complete', label: 'complete', n: c.complete },
 ]
 </script>
 

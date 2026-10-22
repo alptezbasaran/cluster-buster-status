@@ -28,6 +28,7 @@ def get(url):
 
 def main():
     wf = get(f"{API}/workflows/{WORKFLOW_ID}")["workflows"][0]
+    project = get(f"{API}/projects/{PROJECT_ID}")["projects"][0]
 
     completeness = {}
     url = f"{API}/subject_sets?project_id={PROJECT_ID}&page_size=100"
@@ -56,6 +57,11 @@ def main():
         "classifications": wf["classifications_count"],
         "retired_subjects": wf["retired_set_member_subjects_count"],
         "subjects": wf["subjects_count"],
+        "volunteers": project["classifiers_count"],
+        "project_state": project["state"],
+        # set by Zooniverse when every linked subject is retired; cleared
+        # again once new subject sets are linked
+        "finished_at": (wf.get("finished_at") or "")[:10] or None,
         "synced": date.today().isoformat(),
     }
     STATUS.write_text(json.dumps(status, indent=2) + "\n")

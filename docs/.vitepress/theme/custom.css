@@ -62,6 +62,7 @@
 .cb-badge.clustered { color: var(--cb-amber); background: rgba(251,176,64,0.12); border-color: rgba(251,176,64,0.30); }
 .cb-badge.uploaded  { color: var(--cb-lime); background: rgba(141,198,63,0.14); border-color: rgba(141,198,63,0.32); }
 .cb-badge.live      { color: var(--cb-pink-soft); background: rgba(239,81,153,0.14); border-color: rgba(239,81,153,0.32); }
+.cb-badge.complete  { color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); border-color: rgba(176,66,178,0.40); }
 
 /* ---------- Stat chips row ---------- */
 .cb-stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 26px 0; }
@@ -142,6 +143,7 @@ table.cb-sets .anchor-row td.set-id::after { content: ' ★'; color: var(--cb-am
 .cb-sweep-cell.planned   { background: rgba(154, 160, 170, 0.16); border-color: rgba(154, 160, 170, 0.22); }
 .cb-sweep-cell.clustered { background: var(--cb-amber); }
 .cb-sweep-cell.uploaded  { background: var(--cb-lime); }
+.cb-sweep-cell.complete  { background: var(--cb-magenta-light); }
 .cb-sweep-cell.empty     { background: transparent; }
 .cb-sweep-cell.is-anchor::after {
   content: '★';
@@ -157,6 +159,7 @@ table.cb-sets .anchor-row td.set-id::after { content: ' ★'; color: var(--cb-am
 .cb-sweep-swatch.planned   { background: rgba(154, 160, 170, 0.3); border: 1px solid rgba(154, 160, 170, 0.4); }
 .cb-sweep-swatch.clustered { background: var(--cb-amber); }
 .cb-sweep-swatch.uploaded  { background: var(--cb-lime); }
+.cb-sweep-swatch.complete  { background: var(--cb-magenta-light); }
 .cb-sweep-anchor { color: var(--cb-amber); font-size: 0.9rem; }
 .cb-sweep-axes { font-size: 0.8rem; color: var(--vp-c-text-3); margin: 10px 0 0; }
 .cb-sweep-axes code { font-size: 0.86em; }
